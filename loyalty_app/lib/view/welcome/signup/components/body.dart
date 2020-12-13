@@ -3,17 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loyalty_app/component/already_have_account_check.dart';
 import 'package:loyalty_app/component/rounded_input_field.dart';
 import 'package:loyalty_app/component/rounded_password_field.dart';
-import 'package:loyalty_app/view/home/home_screen.dart';
-import 'package:loyalty_app/view/welcome/signup/signup_screen.dart';
-import 'package:loyalty_app/view/welcome/welcomee/components/background.dart';
+import 'package:loyalty_app/view/welcome/login/login_screen.dart';
+import 'package:loyalty_app/view/welcome/signup/components/background.dart';
+import 'package:loyalty_app/view/welcome/signup/components/or_divider.dart';
+import 'package:loyalty_app/view/welcome/signup/components/social_icon.dart';
 
 import '../../../../constant.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,10 +20,9 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SvgPicture.asset(
-              "assets/images/login.svg",
-              height: size.height * 0.3,
+              "assets/images/signup.svg",
+              height: size.height * 0.35,
             ),
-            SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {},
@@ -34,7 +30,6 @@ class Body extends StatelessWidget {
             RoundedPasswordField(
               onChanged: (value) {},
             ),
-            SizedBox(height: size.height * 0.03),
             SizedBox(
               width: 200,
               child: RaisedButton(
@@ -43,18 +38,9 @@ class Body extends StatelessWidget {
                     side: BorderSide(color: mPrimaryColor)),
                 color: mPrimaryColor,
                 textColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
-                    ),
-                  );
-                },
+                onPressed: () {},
                 child: Text(
-                  "LOGIN".toUpperCase(),
+                  "sign up".toUpperCase(),
                   style: TextStyle(
                     fontSize: 18.0,
                   ),
@@ -63,17 +49,32 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
+              login: false,
               press: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return SignUpScreen();
+                      return LoginScreen();
                     },
                   ),
                 );
               },
             ),
+            OrDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SocalIcon(
+                  iconSrc: "assets/icons/facebook.svg",
+                  press: () {},
+                ),
+                SocalIcon(
+                  iconSrc: "assets/icons/google-plus.svg",
+                  press: () {},
+                ),
+              ],
+            )
           ],
         ),
       ),

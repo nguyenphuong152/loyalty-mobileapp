@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/view/welcome/login/login_screen.dart';
+import 'package:loyalty_app/view/welcome/signup/signup_screen.dart';
 import 'package:loyalty_app/view/welcome/welcomee/components/background.dart';
 
 class Body extends StatelessWidget {
@@ -17,7 +19,7 @@ class Body extends StatelessWidget {
           height: size.height * 0.05,
         ),
         SvgPicture.asset(
-          "assets/images/Welcome.svg",
+          "assets/images/welcome.svg",
           height: size.height * 0.6,
         ),
         SizedBox(
@@ -25,10 +27,19 @@ class Body extends StatelessWidget {
           child: RaisedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                side: BorderSide(color: Colors.white)),
+                side: BorderSide(color: mPrimaryColor)),
             color: mPrimaryColor,
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SignUpScreen();
+                  },
+                ),
+              );
+            },
             child: Text(
               "SIGN UP".toUpperCase(),
               style: TextStyle(
@@ -45,7 +56,16 @@ class Body extends StatelessWidget {
                 side: BorderSide(color: mSecondPrimaryColor)),
             color: Colors.white,
             textColor: mSecondPrimaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LoginScreen();
+                  },
+                ),
+              );
+            },
             child: Text(
               "LOGIN".toUpperCase(),
               style: TextStyle(
