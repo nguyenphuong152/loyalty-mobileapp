@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-              hintText: "Your Email",
+              hintText: "Số điện thoại",
               onChanged: (value) {},
             ),
             RoundedPasswordField(
@@ -54,7 +54,7 @@ class Body extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "LOGIN".toUpperCase(),
+                  "đăng nhập".toUpperCase(),
                   style: TextStyle(
                     fontSize: 18.0,
                   ),

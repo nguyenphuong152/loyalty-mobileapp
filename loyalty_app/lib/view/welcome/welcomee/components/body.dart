@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
               );
             },
             child: Text(
-              "SIGN UP".toUpperCase(),
+              "Đăng kí".toUpperCase(),
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -67,7 +67,7 @@ class Body extends StatelessWidget {
               );
             },
             child: Text(
-              "LOGIN".toUpperCase(),
+              "Đăng nhập".toUpperCase(),
               style: TextStyle(
                 fontSize: 18.0,
               ),
