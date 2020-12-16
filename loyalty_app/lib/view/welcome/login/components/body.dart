@@ -55,9 +55,7 @@ class Body extends StatelessWidget {
                 },
                 child: Text(
                   "đăng nhập".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
                 ),
               ),
             ),
