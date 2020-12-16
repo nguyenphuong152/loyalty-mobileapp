@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -13,50 +15,87 @@ class _BodyState extends State<Body> {
       padding: EdgeInsets.zero,
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.account_circle_outlined),
-          title: Text('Thông tin tài khoản'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.user,
+            size: 18,
+          ),
+          title: Text('Thông tin tài khoản',
+              style: TextStyle(fontSize: mFontSize)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return AccountInfoScreen();
+                },
+              ),
+            );
+          },
+        ),
+        ListTile(
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.store,
+            size: 18,
+          ),
+          title:
+              Text('Danh sách cửa hàng', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          leading: Icon(Icons.store_outlined),
-          title: Text('Danh sách cửa hàng'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.history,
+            size: 18,
+          ),
+          title: Text('Lịch sử điểm', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          leading: Icon(Icons.history_outlined),
-          title: Text('Lịch sử điểm'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.questionCircle,
+            size: 18,
+          ),
+          title: Text('Hướng dẫn', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          leading: Icon(Icons.help_outline_outlined),
-          title: Text('Hướng dẫn'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.info,
+            size: 18,
+          ),
+          title: Text('Giới thiệu', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          leading: Icon(Icons.info_outline),
-          title: Text('Giới thiệu'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.slidersH,
+            size: 18,
+          ),
+          title: Text('Cài đặt', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          leading: Icon(Icons.settings_applications_outlined),
-          title: Text('Cài đặt'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.logout),
-          title: Text('Đăng xuất'),
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.signOutAlt,
+            size: 18,
+          ),
+          title: Text('Đăng xuất', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.pop(context);
           },

@@ -40,10 +40,8 @@ class Body extends StatelessWidget {
                 textColor: Colors.white,
                 onPressed: () {},
                 child: Text(
-                  "sign up".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
+                  "Đăng kí".toUpperCase(),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
                 ),
               ),
             ),
