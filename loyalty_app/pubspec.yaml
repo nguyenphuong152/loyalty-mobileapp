@@ -33,6 +33,9 @@ dependencies:
   intl: ^0.16.1
   chips_choice: ^2.0.1
   font_awesome_flutter: ^8.10.1
+  rxdart: ^0.25.0
+  http: ^0.12.2
+  flutter_session: ^0.1.1
 
 dev_dependencies:
   flutter_test:
