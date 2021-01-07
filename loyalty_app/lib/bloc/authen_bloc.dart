@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:loyalty_app/mixins/validator_mixin.dart';
 import 'package:loyalty_app/src/services/auth_service.dart';
 import 'package:loyalty_app/view/home/home_screen.dart';
@@ -10,6 +12,7 @@ class AuthenBloc with ValidationMixin {
   final _email = new BehaviorSubject<String>();
   final _password = new BehaviorSubject<String>();
   final _errorMessage = new BehaviorSubject<String>();
+  static final SESSION = FlutterSession();
 
   // getters: Changers
   Function(String) get changeEmail {
@@ -38,10 +41,12 @@ class AuthenBloc with ValidationMixin {
 
   dynamic login(BuildContext context) async {
     authInfo = AuthService();
-
-    final res = await authInfo.login(_email.value, _password.value);
+    // final res = await authInfo.login(_email.value, _password.value);
+    final res = await authInfo.login("user-1@oloy.com", "loyalty");
     final data = jsonDecode(res) as Map<String, dynamic>;
     if (data.isNotEmpty) {
+      AuthService.setToken(data['token'], data['refresh_token']);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -52,7 +57,15 @@ class AuthenBloc with ValidationMixin {
       );
       return data;
     } else {
-      print("loi \n");
+      print("error \n");
+    }
+  }
+
+  decodeToken(token) {
+    try {
+      return JwtDecoder.decode(token);
+    } catch (err) {
+      return null;
     }
   }
 

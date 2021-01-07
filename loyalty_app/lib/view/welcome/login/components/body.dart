@@ -4,8 +4,6 @@ import 'package:loyalty_app/bloc/authen_bloc.dart';
 import 'package:loyalty_app/component/already_have_account_check.dart';
 import 'package:loyalty_app/component/rounded_input_field.dart';
 import 'package:loyalty_app/component/rounded_password_field.dart';
-import 'package:loyalty_app/providers/providers.dart';
-import 'package:loyalty_app/view/home/home_screen.dart';
 import 'package:loyalty_app/view/welcome/signup/signup_screen.dart';
 import 'package:loyalty_app/view/welcome/welcomee/components/background.dart';
 
@@ -37,6 +35,8 @@ class Body extends StatelessWidget {
                   return RoundedInputField(
                     hintText: "Email",
                     onChanged: authen.changeEmail,
+                    textController:
+                        TextEditingController(text: "user-1@oloy.com"),
                   );
                 }),
             StreamBuilder<String>(
@@ -44,6 +44,7 @@ class Body extends StatelessWidget {
                 builder: (context, snapshot) {
                   return RoundedPasswordField(
                     onChanged: authen.changePassword,
+                    textController: TextEditingController(text: "loyalty"),
                   );
                 }),
             SizedBox(height: size.height * 0.03),

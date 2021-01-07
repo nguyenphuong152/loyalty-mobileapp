@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:loyalty_app/bloc/card_bloc.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/models/customer_model.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -8,6 +10,21 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  // static Future<CustomerModel> cardBloc;
+  // cardBloc =CardBloc().fetchCustomer('11111111-0000-474c-b092-b0dd880c07e1');
+
+  @override
+  void initState() {
+    super.initState();
+    CardBloc().fetchCustomer();
+  }
+
+  @override
+  void dispose() {
+    CardBloc().dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,12 +51,30 @@ class _BodyState extends State<Body> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const ListTile(
-                    title: Text(
-                      'Song Thi Meo',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
+                  // const ListTile(
+                  //   title: Text(
+                  //     'Song Thi Meo',
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  // ),
+                  StreamBuilder<CustomerModel>(
+                      stream: CardBloc().customer,
+                      builder:
+                          (context, AsyncSnapshot<CustomerModel> snapshot) {
+                        print(snapshot.connectionState);
+                        if (snapshot.hasData) {
+                          print("snapshot " + snapshot.toString());
+                          return const ListTile(
+                            title: Text(
+                              'Song Thi Meo',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      }),
                   Container(
                     child: BarcodeWidget(
                       barcode: Barcode.code128(), // Barcode type and settings

@@ -1,8 +1,9 @@
 import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
+import 'package:loyalty_app/constant.dart';
 
 class AuthService {
-  final baseUrl = 'http://13.65.26.62/app_dev.php/api';
+  // final baseUrl = ;
 
   static final SESSION = FlutterSession();
 
@@ -24,5 +25,32 @@ class AuthService {
         return null;
       }
     } finally {}
+  }
+
+  static setToken(String token, String refreshToken) async {
+    _AuthData data = _AuthData(token, refreshToken);
+    await SESSION.set('tokens', data);
+  }
+
+  static Future<Map<String, dynamic>> getToken() async {
+    return await SESSION.get('tokens');
+  }
+
+  static removeToken() async {
+    await SESSION.prefs.clear();
+  }
+}
+
+class _AuthData {
+  String token, refreshToken;
+  _AuthData(this.token, this.refreshToken);
+
+  // toJson
+  // required by Session lib
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['token'] = token;
+    data['refresh_token'] = refreshToken;
+    return data;
   }
 }
