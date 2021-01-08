@@ -5,3 +5,4 @@ const mSecondPrimaryColor = Color(0xFF2C2C2C);
 const mSecondaryColor = Color(0xFFEAEAEA);
 
 const mFontSize = 16.0;
+const baseUrl = 'http://13.65.26.62/app_dev.php/api';

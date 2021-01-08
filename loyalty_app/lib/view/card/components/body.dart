@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:loyalty_app/bloc/card_bloc.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/models/customer_model.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -8,6 +10,21 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  // static Future<CustomerModel> cardBloc;
+  // cardBloc =CardBloc().fetchCustomer('11111111-0000-474c-b092-b0dd880c07e1');
+
+  @override
+  void initState() {
+    super.initState();
+    cardBloc.fetchCustomer();
+  }
+
+  @override
+  void dispose() {
+    cardBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -31,27 +48,42 @@ class _BodyState extends State<Body> {
               ),
               padding: EdgeInsets.fromLTRB(0, 0, 0, 15.0),
               margin: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    title: Text(
-                      'Song Thi Meo',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  Container(
-                    child: BarcodeWidget(
-                      barcode: Barcode.code128(), // Barcode type and settings
-                      data: '1111111321554646456', // Content
-                      width: 310,
-                      height: 100,
-                    ),
-                  ),
-                ],
-              ),
+              child: StreamBuilder<CustomerModel>(
+                  stream: cardBloc.customer,
+                  builder: (context, AsyncSnapshot<CustomerModel> snapshot) {
+                    print(snapshot.connectionState);
+                    if (snapshot.hasData) {
+                      return cardInfo(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
             )
           ]),
+    );
+  }
+
+  Widget cardInfo(CustomerModel customer) {
+    var _fullName = customer.lastName + " " + customer.firstName;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            _fullName,
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+        Container(
+          child: BarcodeWidget(
+            barcode: Barcode.code128(), // Barcode type and settings
+            data: customer.customerId, // Content
+            width: 310,
+            height: 100,
+          ),
+        ),
+      ],
     );
   }
 }
