@@ -4,11 +4,9 @@ import 'package:loyalty_app/constant.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  final TextEditingController textController;
   const RoundedPasswordField({
     Key key,
     this.onChanged,
-    this.textController,
   }) : super(key: key);
 
   @override
@@ -18,7 +16,6 @@ class RoundedPasswordField extends StatelessWidget {
         obscureText: true,
         onChanged: onChanged,
         cursorColor: mPrimaryColor,
-        controller: textController,
         decoration: InputDecoration(
           hintText: "Mật khẩu",
           icon: Icon(

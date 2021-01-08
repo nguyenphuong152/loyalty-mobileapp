@@ -16,12 +16,12 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    CardBloc().fetchCustomer();
+    cardBloc.fetchCustomer();
   }
 
   @override
   void dispose() {
-    CardBloc().dispose();
+    cardBloc.dispose();
     super.dispose();
   }
 
@@ -48,45 +48,42 @@ class _BodyState extends State<Body> {
               ),
               padding: EdgeInsets.fromLTRB(0, 0, 0, 15.0),
               margin: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  // const ListTile(
-                  //   title: Text(
-                  //     'Song Thi Meo',
-                  //     style: TextStyle(fontSize: 20),
-                  //   ),
-                  // ),
-                  StreamBuilder<CustomerModel>(
-                      stream: CardBloc().customer,
-                      builder:
-                          (context, AsyncSnapshot<CustomerModel> snapshot) {
-                        print(snapshot.connectionState);
-                        if (snapshot.hasData) {
-                          print("snapshot " + snapshot.toString());
-                          return const ListTile(
-                            title: Text(
-                              'Song Thi Meo',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        }
-                        return Center(child: CircularProgressIndicator());
-                      }),
-                  Container(
-                    child: BarcodeWidget(
-                      barcode: Barcode.code128(), // Barcode type and settings
-                      data: '1111111321554646456', // Content
-                      width: 310,
-                      height: 100,
-                    ),
-                  ),
-                ],
-              ),
+              child: StreamBuilder<CustomerModel>(
+                  stream: cardBloc.customer,
+                  builder: (context, AsyncSnapshot<CustomerModel> snapshot) {
+                    print(snapshot.connectionState);
+                    if (snapshot.hasData) {
+                      return cardInfo(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
             )
           ]),
+    );
+  }
+
+  Widget cardInfo(CustomerModel customer) {
+    var _fullName = customer.lastName + " " + customer.firstName;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            _fullName,
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+        Container(
+          child: BarcodeWidget(
+            barcode: Barcode.code128(), // Barcode type and settings
+            data: customer.customerId, // Content
+            width: 310,
+            height: 100,
+          ),
+        ),
+      ],
     );
   }
 }

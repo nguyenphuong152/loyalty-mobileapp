@@ -4,8 +4,6 @@ import 'package:loyalty_app/providers/customer_api_provider.dart';
 class Repository {
   final customerApiProvider = CustomerApiProvider();
 
-  Future<CustomerModel> fetchCustomerData() {
-    print("vo repository");
-    return customerApiProvider.fetchCustomerData();
-  }
+  Future<CustomerModel> fetchCustomerData() =>
+      customerApiProvider.fetchCustomerData();
 }

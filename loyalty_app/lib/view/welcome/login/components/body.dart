@@ -35,8 +35,6 @@ class Body extends StatelessWidget {
                   return RoundedInputField(
                     hintText: "Email",
                     onChanged: authen.changeEmail,
-                    textController:
-                        TextEditingController(text: "user-1@oloy.com"),
                   );
                 }),
             StreamBuilder<String>(
@@ -44,7 +42,6 @@ class Body extends StatelessWidget {
                 builder: (context, snapshot) {
                   return RoundedPasswordField(
                     onChanged: authen.changePassword,
-                    textController: TextEditingController(text: "loyalty"),
                   );
                 }),
             SizedBox(height: size.height * 0.03),

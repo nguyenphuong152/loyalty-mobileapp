@@ -7,6 +7,7 @@ import 'package:loyalty_app/mixins/validator_mixin.dart';
 import 'package:loyalty_app/src/services/auth_service.dart';
 import 'package:loyalty_app/view/home/home_screen.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenBloc with ValidationMixin {
   final _email = new BehaviorSubject<String>();
@@ -41,11 +42,19 @@ class AuthenBloc with ValidationMixin {
 
   dynamic login(BuildContext context) async {
     authInfo = AuthService();
-    // final res = await authInfo.login(_email.value, _password.value);
+    //final res = await authInfo.login(_email.value, _password.value);
     final res = await authInfo.login("user-1@oloy.com", "loyalty");
     final data = jsonDecode(res) as Map<String, dynamic>;
     if (data.isNotEmpty) {
       AuthService.setToken(data['token'], data['refresh_token']);
+
+      final decodedToken = decodeToken(data['token']) as Map<String, dynamic>;
+
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', data['token']);
+      prefs.setString('customerId', decodedToken['id']);
+
+      print(prefs.getString("customerId") + "\n" + prefs.getString("token"));
 
       Navigator.push(
         context,
@@ -61,12 +70,8 @@ class AuthenBloc with ValidationMixin {
     }
   }
 
-  decodeToken(token) {
-    try {
-      return JwtDecoder.decode(token);
-    } catch (err) {
-      return null;
-    }
+  decodeToken(String token) {
+    return JwtDecoder.decode(token);
   }
 
   // close streams
