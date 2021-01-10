@@ -8,6 +8,7 @@ class CustomerModel {
   final String phone;
   final String birthDate;
   final String levelId;
+  final String loyaltyCardNumber;
   final bool agreement1;
   final bool agreement2;
   final bool agreement3;
@@ -22,6 +23,7 @@ class CustomerModel {
       this.gender,
       this.levelId,
       this.phone,
+      this.loyaltyCardNumber,
       this.agreement1,
       this.agreement2,
       this.agreement3});
@@ -37,6 +39,7 @@ class CustomerModel {
       phone: parsedJson["phone"],
       birthDate: parsedJson["birthDate"],
       levelId: parsedJson["levelId"],
+      loyaltyCardNumber: parsedJson["loyaltyCardNumber"],
       agreement1: parsedJson["agreement1"],
       agreement2: parsedJson["agreement2"],
       agreement3: parsedJson["agreement3"],

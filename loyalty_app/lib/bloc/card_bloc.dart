@@ -9,14 +9,14 @@ class CardBloc {
   Stream<CustomerModel> get customer => _customerFetcher.stream;
 
   fetchCustomer() async {
-    print("fetch customer");
-    CustomerModel customerModel = await _repository.fetchCustomerData();
-    _customerFetcher.sink.add(customerModel);
+    if (!_customerFetcher.isClosed) {
+      print("fetch customer");
+      CustomerModel customerModel = await _repository.fetchCustomerData();
+      _customerFetcher.sink.add(customerModel);
+    }
   }
 
   dispose() {
     _customerFetcher.close();
   }
 }
-
-final cardBloc = CardBloc();

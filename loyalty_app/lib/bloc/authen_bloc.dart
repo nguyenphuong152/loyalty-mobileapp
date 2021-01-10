@@ -43,18 +43,16 @@ class AuthenBloc with ValidationMixin {
   dynamic login(BuildContext context) async {
     authInfo = AuthService();
     //final res = await authInfo.login(_email.value, _password.value);
-    final res = await authInfo.login("user-1@oloy.com", "loyalty");
+    final res = await authInfo.login("user@oloy.com", "loyalty");
     final data = jsonDecode(res) as Map<String, dynamic>;
     if (data.isNotEmpty) {
       AuthService.setToken(data['token'], data['refresh_token']);
-
       final decodedToken = decodeToken(data['token']) as Map<String, dynamic>;
 
+      //save token and customerId into sharedPreferences
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', data['token']);
       prefs.setString('customerId', decodedToken['id']);
-
-      print(prefs.getString("customerId") + "\n" + prefs.getString("token"));
 
       Navigator.push(
         context,
