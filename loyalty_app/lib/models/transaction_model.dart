@@ -19,7 +19,7 @@ class TransactionModel {
   String transactionId;
   String customerId;
   String documentType;
-  String purchaseDate;
+  DateTime purchaseDate;
   String purchasePlace;
   List<TransactionDetail> transactionDetails = [];
   double grossValue;
@@ -29,7 +29,7 @@ class TransactionModel {
   TransactionModel(item) {
     customerId = item["customerId"];
     documentType = item["documentType"];
-    purchaseDate = item["purchaseDate"];
+    purchaseDate = DateTime.parse(item["purchaseDate"]);
     purchasePlace = item["purchasePlace"];
     transactionId = item["transactionId"];
     currency = item["currency"];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/transaction_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
@@ -43,7 +44,10 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildList(AsyncSnapshot<ListTransactionModel> snapshot) {
-    return ListView.builder(
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(
+        color: mDividerColor,
+      ),
       itemCount: snapshot.data.total,
       itemBuilder: (context, index) {
         return transaction(snapshot.data.transactionModels[index]);
@@ -72,8 +76,12 @@ class _BodyState extends State<Body> {
   }
 
   Widget detailInfo(TransactionModel transactionModel) {
+    String amount = transactionModel.grossValue.toString() +
+        " " +
+        transactionModel.currency;
+    String point = transactionModel.pointEarned.toString() + " pt";
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 50.0, 0),
+      padding: EdgeInsets.fromLTRB(0, 0, 30.0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -96,7 +104,8 @@ class _BodyState extends State<Body> {
               ),
               Expanded(
                 child: Text(
-                  transactionModel.purchaseDate,
+                  DateFormat("dd-MM-yyyy hh:mm a")
+                      .format(transactionModel.purchaseDate),
                   style: const TextStyle(fontSize: mFontListTile),
                   textAlign: TextAlign.end,
                 ),
@@ -115,7 +124,7 @@ class _BodyState extends State<Body> {
               ),
               Expanded(
                 child: Text(
-                  transactionModel.grossValue.toString(),
+                  amount,
                   style: const TextStyle(fontSize: mFontListTile),
                   textAlign: TextAlign.end,
                 ),
@@ -134,7 +143,7 @@ class _BodyState extends State<Body> {
               ),
               Expanded(
                 child: Text(
-                  transactionModel.pointEarned.toString(),
+                  point,
                   style: const TextStyle(fontSize: mFontListTile),
                   textAlign: TextAlign.end,
                 ),

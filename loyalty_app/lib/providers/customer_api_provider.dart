@@ -55,4 +55,27 @@ class CustomerApiProvider {
       throw Exception('Failed to load transactionn info');
     }
   }
+
+  //fetch customer status
+  Future<CustomerStatusModel> fetchCustomerStatus() async {
+    print("entered");
+    //get value store in SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+    String customerId = prefs.getString('customerId');
+
+    Response response = await http.get(
+      '$baseUrl/customer/$customerId/status',
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return CustomerStatusModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load user status');
+    }
+  }
 }

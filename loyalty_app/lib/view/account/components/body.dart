@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/view/transaction/transaction_screen.dart';
+import 'package:loyalty_app/view/points/point_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -74,12 +75,19 @@ class _BodyState extends State<Body> {
         ListTile(
           dense: true,
           leading: FaIcon(
-            FontAwesomeIcons.history,
+            FontAwesomeIcons.star,
             size: 18,
           ),
-          title: Text('Lịch sử điểm', style: TextStyle(fontSize: mFontSize)),
+          title: Text('Điểm của tôi', style: TextStyle(fontSize: mFontSize)),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return PointScreen();
+                },
+              ),
+            );
           },
         ),
         ListTile(

@@ -10,4 +10,7 @@ class Repository {
 
   Future<ListTransactionModel> fetchTransactions() =>
       customerApiProvider.fetchTransactions();
+
+  Future<CustomerStatusModel> fetchCustomerStatus() =>
+      customerApiProvider.fetchCustomerStatus();
 }
