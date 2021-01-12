@@ -103,6 +103,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
               Expanded(
+                flex: 2,
                 child: Text(
                   DateFormat("dd-MM-yyyy hh:mm a")
                       .format(transactionModel.purchaseDate),

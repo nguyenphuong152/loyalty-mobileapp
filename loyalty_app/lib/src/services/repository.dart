@@ -1,5 +1,6 @@
 import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
+import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/providers/customer_api_provider.dart';
 
 class Repository {
@@ -13,4 +14,7 @@ class Repository {
 
   Future<CustomerStatusModel> fetchCustomerStatus() =>
       customerApiProvider.fetchCustomerStatus();
+
+  Future<ListPointTransferModel> fetchPointTransfer() =>
+      customerApiProvider.fetchCustomerPointTransfer();
 }

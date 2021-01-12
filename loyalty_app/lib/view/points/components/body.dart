@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +6,7 @@ import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/view/home/components/app_bar.dart';
 import 'package:loyalty_app/bloc/point_bloc.dart';
+import 'package:loyalty_app/view/point_transfer/point_transfer_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class Body extends StatefulWidget {
@@ -169,23 +168,35 @@ class _BodyState extends State<Body> {
                   ),
                 )
               },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: Row(
-                  children: [
-                    Text(
-                      "Lịch sử điểm ",
-                      style: TextStyle(fontSize: 15, color: Colors.grey[800]),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PointTransfer();
+                      },
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.angleRight,
-                      size: 18,
-                      color: Colors.grey[500],
-                    )
-                  ],
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Lịch sử điểm ",
+                        style: TextStyle(fontSize: 15, color: Colors.grey[800]),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      FaIcon(
+                        FontAwesomeIcons.angleRight,
+                        size: 18,
+                        color: Colors.grey[500],
+                      )
+                    ],
+                  ),
                 ),
               ),
             )
@@ -260,7 +271,7 @@ class _BodyState extends State<Body> {
               trailing: Icon(Icons.mood),
               linearStrokeCap: LinearStrokeCap.roundAll,
               backgroundColor: Colors.grey[300],
-              progressColor: mPrimaryColor,
+              progressColor: mLinear,
             ),
           ),
           Container(

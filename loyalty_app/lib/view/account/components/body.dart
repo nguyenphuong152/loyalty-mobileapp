@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/view/transaction/transaction_screen.dart';
+import 'package:loyalty_app/view/campaign/campaign_screen.dart';
 import 'package:loyalty_app/view/points/point_screen.dart';
 
 class Body extends StatefulWidget {
@@ -47,7 +48,7 @@ class _BodyState extends State<Body> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return AccountInfoScreen();
+                  return CampaignScreen();
                 },
               ),
             );
