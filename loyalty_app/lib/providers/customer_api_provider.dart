@@ -7,6 +7,7 @@ import 'package:loyalty_app/models/customer_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:loyalty_app/models/transaction_model.dart';
 import 'package:loyalty_app/models/point_model.dart';
+import 'package:loyalty_app/models/campaign_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerApiProvider {
@@ -97,6 +98,28 @@ class CustomerApiProvider {
 
     if (response.statusCode == 200) {
       return ListPointTransferModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load point transfer');
+    }
+  }
+
+  //fetch customer campaign
+  Future<ListCampaignModel> fetchCustomerCampaign() async {
+    print("entered");
+    //get value store in SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    Response response = await http.get(
+      '$baseUrl/customer/campaign/available',
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return ListCampaignModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load point transfer');
     }

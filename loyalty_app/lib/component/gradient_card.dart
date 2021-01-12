@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_svg/svg.dart';
+import 'package:loyalty_app/constant.dart';
 
 class GradientCard extends StatelessWidget {
   final String name;
@@ -24,7 +25,7 @@ class GradientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
         child: Stack(
           children: <Widget>[
             Container(
@@ -62,10 +63,10 @@ class GradientCard extends StatelessWidget {
                       "assets/images/present.svg",
                       height: 70,
                     ),
-                    flex: 2,
+                    flex: 3,
                   ),
                   Expanded(
-                    flex: 4,
+                    flex: 3,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,42 +74,61 @@ class GradientCard extends StatelessWidget {
                         Text(
                           name,
                           style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Avenir',
+                              fontSize: mFontTitle,
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
                           campaignActivity,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Avenir',
+                            fontSize: mFontSize,
                           ),
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: 10),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
                           children: <Widget>[
                             Icon(
-                              Icons.location_on,
-                              color: Colors.white,
+                              Icons.offline_bolt_outlined,
+                              color: Colors.yellowAccent,
                               size: 16,
                             ),
                             SizedBox(
                               width: 8,
                             ),
                             Flexible(
-                              child: Text(
-                                costInPoints,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Avenir',
-                                ),
-                              ),
+                              child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  children: [
+                                    Text(
+                                      costInPoints,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      " điểm",
+                                      style: TextStyle(
+                                        fontSize: mFontSize,
+                                      ),
+                                    ),
+                                  ]),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
+                  Expanded(
+                      flex: 3,
+                      child: RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 2.0,
+                        fillColor: Colors.white,
+                        child: Text("Đổi điểm"),
+                        padding: EdgeInsets.all(10.0),
+                        // shape: CircleBorder(),
+                      )),
                 ],
               ),
             ),
