@@ -63,10 +63,10 @@ class GradientCard extends StatelessWidget {
                       "assets/images/present.svg",
                       height: 70,
                     ),
-                    flex: 3,
+                    flex: 2,
                   ),
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class GradientCard extends StatelessWidget {
                         Text(
                           campaignActivity,
                           style: TextStyle(
-                            fontSize: mFontSize,
+                            fontSize: mFontListTile,
                           ),
                         ),
                         SizedBox(height: 10),
@@ -89,7 +89,7 @@ class GradientCard extends StatelessWidget {
                           children: <Widget>[
                             Icon(
                               Icons.offline_bolt_outlined,
-                              color: Colors.yellowAccent,
+                              color: Colors.amber[900],
                               size: 16,
                             ),
                             SizedBox(
@@ -114,21 +114,21 @@ class GradientCard extends StatelessWidget {
                                     ),
                                   ]),
                             ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Đổi điểm",
+                                style: TextStyle(
+                                    color: Colors.amber[900],
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            )
                           ],
                         ),
                       ],
                     ),
                   ),
-                  Expanded(
-                      flex: 3,
-                      child: RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.white,
-                        child: Text("Đổi điểm"),
-                        padding: EdgeInsets.all(10.0),
-                        // shape: CircleBorder(),
-                      )),
                 ],
               ),
             ),

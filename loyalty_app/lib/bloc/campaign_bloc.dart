@@ -9,12 +9,9 @@ class CampaignBloc {
   Stream<ListCampaignModel> get campaign => _campaignFetcher.stream;
 
   fetchCustomerCampaign() async {
-    if (!_campaignFetcher.isClosed) {
-      print("fetch campaign");
-      ListCampaignModel campaignModel =
-          await _repository.fetchCustomerCampaign();
-      _campaignFetcher.sink.add(campaignModel);
-    }
+    print("fetch campaign");
+    ListCampaignModel campaignModel = await _repository.fetchCustomerCampaign();
+    _campaignFetcher.sink.add(campaignModel);
   }
 
   dispose() {

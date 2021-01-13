@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
 import 'package:loyalty_app/view/home/components/app_bar.dart';
 import 'package:loyalty_app/component/gradient_card.dart';
@@ -9,13 +10,47 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
-class _BodyState extends State<Body> {
-  final CampaignBloc campaignBloc = CampaignBloc();
+class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
+  TabController _controller;
+  int _selectedIndex = 0;
+
+  List<Widget> list = [
+    Tab(
+      child: Text(
+        "Mới nhất",
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.w400, fontSize: 16),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Đã đổi",
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.w400, fontSize: 16),
+      ),
+    ),
+  ];
+
+  CampaignBloc campaignBloc = CampaignBloc();
   @override
   void initState() {
     super.initState();
     campaignBloc.fetchCustomerCampaign();
+    _controller = TabController(length: list.length, vsync: this);
+    _controller.addListener(() {
+      setState(() {
+        _selectedIndex = _controller.index;
+      });
+      print("Selected Index: " + _controller.index.toString());
+    });
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   print("heleo");
+  //   campaignBloc.fetchCustomerCampaign();
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -25,18 +60,58 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: homeAppBar(context),
-      body: StreamBuilder(
-        stream: campaignBloc.campaign,
-        builder: (context, AsyncSnapshot<ListCampaignModel> snapshot) {
-          if (snapshot.hasData) {
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
-        },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          bottom: TabBar(
+            onTap: (index) {
+              // Tab index when user select it, it start from zero
+            },
+            controller: _controller,
+            tabs: list,
+          ),
+          title: Text(
+            'Điểm thưởng',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+                fontSize: mFontTitle),
+          ),
+        ),
+        body: TabBarView(
+          controller: _controller,
+          children: [
+            StreamBuilder(
+              stream: campaignBloc.campaign,
+              builder: (context, AsyncSnapshot<ListCampaignModel> snapshot) {
+                print(
+                    "connection state: " + snapshot.connectionState.toString());
+                if (snapshot.hasData) {
+                  return buildList(snapshot);
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                }
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+            StreamBuilder(
+              stream: campaignBloc.campaign,
+              builder: (context, AsyncSnapshot<ListCampaignModel> snapshot) {
+                print(
+                    "connection state: " + snapshot.connectionState.toString());
+                if (snapshot.hasData) {
+                  return buildList(snapshot);
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                }
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -57,8 +132,8 @@ class _BodyState extends State<Body> {
           name: campaignModel.name,
           campaignActivity: "All time active",
           costInPoints: campaignModel.costInPoints.toString(),
-          startColor: Color(0xffa1c4fd),
-          endColor: Color(0xffc2e9fb),
+          startColor: Color(0xfffdfcfb),
+          endColor: Color(0xffe2d1c3),
         ));
   }
 }
