@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
+import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 
 class Body extends StatefulWidget {
@@ -11,17 +12,19 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  Future<String> _booking;
   DateTime _currentDate;
   String formattedDate;
   EventList<Event> _markedDateMap;
-  int tag = 1;
+  int tag = 0;
   String _time = '8:00';
-  // bool isDateValid = false;
+  TextEditingController _productSku = new TextEditingController();
+  final MaintenanceBookingBloc maintenanceBookingBloc =
+      new MaintenanceBookingBloc();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        // margin: EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
       children: <Widget>[
         Container(
@@ -70,7 +73,13 @@ class _BodyState extends State<Body> {
               color: mPrimaryColor,
               textColor: Colors.white,
               child: Text('Xác nhận', style: TextStyle(fontSize: 18)),
-              onPressed: _showMaterialDialog,
+              onPressed: () {
+                _showMaterialDialog();
+                setState(() {
+                  maintenanceBookingBloc.booking(_productSku.text, "KTX KHU B",
+                      _currentDate, _time, DateTime.now());
+                });
+              },
             ),
           ),
         )
@@ -229,6 +238,7 @@ class _BodyState extends State<Body> {
                   Container(
                     width: 150,
                     child: TextField(
+                      controller: _productSku,
                       decoration: InputDecoration(hintText: 'SP1522219999'),
                     ),
                   )

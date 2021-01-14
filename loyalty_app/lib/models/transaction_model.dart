@@ -34,7 +34,6 @@ class TransactionModel {
     transactionId = item["transactionId"];
     currency = item["currency"];
     grossValue = item["grossValue"].toDouble();
-    print(grossValue);
     pointEarned = item["pointsEarned"].toDouble();
 
     List<TransactionDetail> temp = [];

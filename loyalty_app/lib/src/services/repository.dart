@@ -1,4 +1,6 @@
+import 'package:loyalty_app/models/coupons_model.dart';
 import 'package:loyalty_app/models/customer_model.dart';
+import 'package:loyalty_app/models/maintenance_model.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
 import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
@@ -21,4 +23,15 @@ class Repository {
 
   Future<ListCampaignModel> fetchCustomerCampaign() =>
       customerApiProvider.fetchCustomerCampaign();
+
+  dynamic buyCoupon(String couponId) => customerApiProvider.buyCoupon(couponId);
+
+  Future<ListCouponModel> fetchCustomerCoupon() =>
+      customerApiProvider.fetchCustomerCoupon();
+
+  Future<ListMaintenanceModel> fetchCustomerMaintenanceBooking() =>
+      customerApiProvider.fetchCustomerMaintenanceBooking();
+
+  // Future<Main> fetchCustomerMaintenanceBooking() =>
+  // customerApiProvider.fetchCustomerMaintenanceBooking();
 }

@@ -38,17 +38,14 @@ class AuthenBloc with ValidationMixin {
         (e, p, er) => true,
       );
 
-  var authInfo;
-
   dynamic login(BuildContext context) async {
-    authInfo = AuthService();
+    var authInfo = AuthService();
     //final res = await authInfo.login(_email.value, _password.value);
     final res = await authInfo.login("user@oloy.com", "loyalty");
     final data = jsonDecode(res) as Map<String, dynamic>;
     if (data.isNotEmpty) {
       AuthService.setToken(data['token'], data['refresh_token']);
       final decodedToken = decodeToken(data['token']) as Map<String, dynamic>;
-
       //save token and customerId into sharedPreferences
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', data['token']);

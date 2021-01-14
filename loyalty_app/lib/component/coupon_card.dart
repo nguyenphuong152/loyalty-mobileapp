@@ -5,22 +5,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:loyalty_app/bloc/coupon_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 
-class GradientCard extends StatelessWidget {
-  final String couponId;
-  final String name;
-  final String campaignActivity;
-  final String costInPoints;
+class CouponCard extends StatelessWidget {
+  final String status;
+  final String couponCode;
+  final String activeSince;
+  final String activeTo;
   final Color startColor;
   final Color endColor;
   final double _borderRadius = 24;
 
-  const GradientCard(
+  const CouponCard(
       {Key key,
-      this.name,
-      this.campaignActivity,
-      this.costInPoints,
+      this.activeSince,
+      this.activeTo,
+      this.couponCode,
       this.endColor,
-      this.couponId,
+      this.status,
       this.startColor})
       : super(key: key);
 
@@ -77,13 +77,13 @@ class GradientCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          name,
+                          status,
                           style: TextStyle(
                               fontSize: mFontTitle,
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          campaignActivity,
+                          activeSince,
                           style: TextStyle(
                             fontSize: mFontListTile,
                           ),
@@ -106,7 +106,7 @@ class GradientCard extends StatelessWidget {
                                       CrossAxisAlignment.baseline,
                                   children: [
                                     Text(
-                                      costInPoints,
+                                      activeTo,
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -119,19 +119,14 @@ class GradientCard extends StatelessWidget {
                                     ),
                                   ]),
                             ),
-                            InkWell(
-                              onTap: () => couponBloc.buyCoupon(couponId),
-                              child: Container(
-                                child: Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    "Đổi điểm",
-                                    style: TextStyle(
-                                        color: Colors.amber[900],
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Đổi điểm",
+                                style: TextStyle(
+                                    color: Colors.amber[900],
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700),
                               ),
                             )
                           ],
