@@ -80,10 +80,19 @@ class _BodyState extends State<Body> {
               child: Text('Xác nhận', style: TextStyle(fontSize: 18)),
               onPressed: () {
                 setState(() {
-                  maintenanceBookingBloc
-                      .booking(_productSku.text, _warrantyCenter, _currentDate,
-                          _time, DateTime.now())
-                      .then((value) => _showMaterialDialog());
+                  if (_productSku.text != null) {
+                    maintenanceBookingBloc
+                        .booking(_productSku.text, _warrantyCenter,
+                            _currentDate, _time, DateTime.now())
+                        .then((value) => {
+                              if (value != null)
+                                {_showMaterialDialog()}
+                              else
+                                {_showErrorDialog()}
+                            });
+                  } else {
+                    _showErrorDialog();
+                  }
                 });
               },
             ),
@@ -103,7 +112,7 @@ class _BodyState extends State<Body> {
               title: new Image(
                 width: 130,
                 height: 130,
-                image: AssetImage("assets/images/success.gif"),
+                image: AssetImage("assets/images/error.gif"),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -152,6 +161,54 @@ class _BodyState extends State<Body> {
                             })
                       ])
                 ],
+              ),
+            ));
+  }
+
+  _showErrorDialog() {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              title: Container(
+                child: Column(
+                  children: [
+                    Image(
+                      width: 250,
+                      height: 250,
+                      image: AssetImage("assets/images/error.gif"),
+                    ),
+                    Text(
+                      "Đăng ký không thành công",
+                      style: TextStyle(fontSize: mFontSize, color: Colors.red),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Bạn vui lòng kiểm tra lại thông tin đăng kí nhé!",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(color: Colors.black, fontSize: mFontSize),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: mPrimaryColor)),
+                        color: mPrimaryColor,
+                        child: Text('Quay lại',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        })
+                  ],
+                ),
               ),
             ));
   }
