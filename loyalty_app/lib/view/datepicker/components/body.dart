@@ -5,6 +5,9 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loyalty_app/view/card/card_screen.dart';
+import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -12,8 +15,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Future<String> _booking;
   DateTime _currentDate;
+  String _warrantyCenter = 'KTX Khu B';
   String formattedDate;
   EventList<Event> _markedDateMap;
   int tag = 0;
@@ -24,11 +27,12 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
         child: Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             "Chọn thời gian bạn muốn bảo trì sản phẩm",
@@ -62,22 +66,24 @@ class _BodyState extends State<Body> {
         setDate(),
         setTime(),
         setProduct(),
+        setWarrantyCenter(),
         Container(
-          padding: EdgeInsets.fromLTRB(0, 50.0, 0, 15.0),
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           child: SizedBox(
-            width: 200,
+            width: size.width,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   side: BorderSide(color: mPrimaryColor)),
               color: mPrimaryColor,
               textColor: Colors.white,
               child: Text('Xác nhận', style: TextStyle(fontSize: 18)),
               onPressed: () {
-                _showMaterialDialog();
                 setState(() {
-                  maintenanceBookingBloc.booking(_productSku.text, "KTX KHU B",
-                      _currentDate, _time, DateTime.now());
+                  maintenanceBookingBloc
+                      .booking(_productSku.text, _warrantyCenter, _currentDate,
+                          _time, DateTime.now())
+                      .then((value) => _showMaterialDialog());
                 });
               },
             ),
@@ -91,17 +97,62 @@ class _BodyState extends State<Body> {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-              title: new Text("Xác nhận đăng kí"),
-              content: new Text(
-                  "Hệ thống đã lưu lại thông tin đăng kí của bạn. Hãy mang sản phẩm đến bảo trì đúng thời gian nhé!"),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Đóng'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              title: new Image(
+                width: 130,
+                height: 130,
+                image: AssetImage("assets/images/success.gif"),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "Thông tin đăng kí của bạn đã được lưu lại!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                            child: Text('Quay lại',
+                                style: TextStyle(
+                                    color: mPrimaryColor, fontSize: 15)),
+                            onPressed: () {
+                              resetField();
+                              Navigator.of(context, rootNavigator: true).pop();
+                            }),
+                        RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: mPrimaryColor)),
+                            color: mPrimaryColor,
+                            child: Text('Xem chi tiết',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15)),
+                            onPressed: () {
+                              resetField();
+                              Navigator.of(context, rootNavigator: true).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MaintenanceBookingManagementScreen();
+                                  },
+                                ),
+                              );
+                            })
+                      ])
+                ],
+              ),
             ));
   }
 
@@ -249,5 +300,72 @@ class _BodyState extends State<Body> {
         ],
       ),
     );
+  }
+
+  Widget setWarrantyCenter() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.fromLTRB(0, 3.0, 0, 0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: [
+                  Text(
+                    "Trung tâm bảo hành: ",
+                    style: TextStyle(fontSize: mFontSize, color: Colors.grey),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  DropdownButton<String>(
+                    value: _warrantyCenter,
+                    icon: FaIcon(FontAwesomeIcons.caretDown),
+                    iconSize: 16,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: mPrimaryColor,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _warrantyCenter = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'KTX Khu B',
+                      'KTX Khu A',
+                      'Trà Vinh',
+                      'Vũng Tàu'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void resetField() {
+    setState(() {
+      _currentDate = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      _warrantyCenter = 'KTX Khu B';
+      formattedDate = DateFormat('dd-MM-yyyy').format(_currentDate);
+      tag = 0;
+      _time = '8:00';
+      _productSku = new TextEditingController();
+    });
   }
 }

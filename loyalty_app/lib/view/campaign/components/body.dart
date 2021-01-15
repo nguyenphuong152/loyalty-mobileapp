@@ -94,19 +94,6 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
           controller: _controller,
           children: [
             StreamBuilder(
-              stream: couponBloc.customerCoupon,
-              builder: (context, AsyncSnapshot<ListCouponModel> snapshot) {
-                print(
-                    "connection state: " + snapshot.connectionState.toString());
-                if (snapshot.hasData) {
-                  return buildListCoupon(snapshot);
-                } else if (snapshot.hasError) {
-                  return Text("LOi" + snapshot.error.toString());
-                }
-                return Center(child: CircularProgressIndicator());
-              },
-            ),
-            StreamBuilder(
               stream: campaignBloc.campaign,
               builder: (context, AsyncSnapshot<ListCampaignModel> snapshot) {
                 print(
@@ -115,6 +102,19 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                   return buildList(snapshot);
                 } else if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
+                }
+                return Center(child: CircularProgressIndicator());
+              },
+            ),
+            StreamBuilder(
+              stream: couponBloc.customerCoupon,
+              builder: (context, AsyncSnapshot<ListCouponModel> snapshot) {
+                print(
+                    "connection state: " + snapshot.connectionState.toString());
+                if (snapshot.hasData) {
+                  return buildListCoupon(snapshot);
+                } else if (snapshot.hasError) {
+                  return Text("LOi" + snapshot.error.toString());
                 }
                 return Center(child: CircularProgressIndicator());
               },

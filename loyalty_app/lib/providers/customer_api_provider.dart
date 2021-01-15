@@ -243,4 +243,47 @@ class CustomerApiProvider {
       }
     } finally {}
   }
+
+  Future<String> editBooking(
+    String productSku,
+    String warrantyCenter,
+    DateTime bookingDate,
+    String bookingTime,
+    DateTime createAt,
+    String maintenanceId,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    final data = jsonEncode({
+      "maintenance": {
+        "productSku": productSku,
+        "bookingDate": bookingDate.toIso8601String(),
+        "bookingTime": bookingTime,
+        "warrantyCenter": warrantyCenter,
+        "createdAt": createAt.toIso8601String(),
+        "active": true
+      }
+    });
+
+    print(data);
+
+    try {
+      var res = await http.put(
+        '$baseUrl/maintenance/$maintenanceId',
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        print("success");
+        return res.body;
+      } else {
+        return null;
+      }
+    } finally {}
+  }
 }

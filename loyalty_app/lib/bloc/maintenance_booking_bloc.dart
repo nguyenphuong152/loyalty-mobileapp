@@ -26,11 +26,26 @@ class MaintenanceBookingBloc {
     String bookingTime,
     DateTime createAt,
   ) async {
-    print("vo vo bloc");
-    var booking = CustomerApiProvider();
+    print("booking bloc");
 
-    final res = await booking.booking(
+    final res = await CustomerApiProvider().booking(
         productSku, warrantyCenter, bookingDate, bookingTime, createAt);
+    print(res.toString());
+    return res;
+  }
+
+  Future<String> editBooking(
+    String maintenanceId,
+    String productSku,
+    String warrantyCenter,
+    DateTime bookingDate,
+    String bookingTime,
+    DateTime createAt,
+  ) async {
+    print("edit booking bloc");
+
+    final res = await CustomerApiProvider().editBooking(productSku,
+        warrantyCenter, bookingDate, bookingTime, createAt, maintenanceId);
     print(res.toString());
     return res;
   }

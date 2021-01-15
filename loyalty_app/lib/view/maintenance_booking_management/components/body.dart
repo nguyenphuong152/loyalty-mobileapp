@@ -5,6 +5,8 @@ import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/maintenance_model.dart';
 import 'package:loyalty_app/view/home/components/app_bar.dart';
+import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -14,6 +16,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final MaintenanceBookingBloc maintenanceBookingBloc =
       MaintenanceBookingBloc();
+  String _time = "8:00";
+  String _warrantyCenter = "KTX Khu B";
+  String _maintenanceId;
+  DateTime _createAt;
+
+  TextEditingController productSku = new TextEditingController();
+  TextEditingController date = new TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -101,6 +111,7 @@ class _BodyState extends State<Body> {
               )
             ],
           ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
           Row(
             children: [
               Expanded(
@@ -122,6 +133,7 @@ class _BodyState extends State<Body> {
               )
             ],
           ),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
           Row(
             children: [
               Expanded(
@@ -140,6 +152,7 @@ class _BodyState extends State<Body> {
             ],
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
             children: [
               Expanded(
                 flex: 4,
@@ -157,9 +170,209 @@ class _BodyState extends State<Body> {
                         color: maintenanceModel.active
                             ? Colors.red
                             : Colors.grey)),
+              ),
+              Expanded(
+                flex: 2,
+                child: InkWell(
+                  onTap: () => {
+                    setState(() {
+                      _createAt = maintenanceModel.createdAt;
+                      _maintenanceId = maintenanceModel.maintenanceId;
+                      _time = maintenanceModel.bookingTime;
+                      _warrantyCenter = maintenanceModel.warrantyCenter;
+                      date.text = DateFormat("yyyy-MM-dd")
+                          .format(maintenanceModel.bookingDate);
+                      productSku.text = maintenanceModel.productSku;
+                    }),
+                    if (maintenanceModel.active &&
+                        maintenanceModel.bookingDate.day > DateTime.now().day)
+                      {_editDialog()}
+                  },
+                  child: FaIcon(
+                    maintenanceModel.active &&
+                            maintenanceModel.bookingDate.day >
+                                DateTime.now().day
+                        ? FontAwesomeIcons.penSquare
+                        : FontAwesomeIcons.ban,
+                    color: maintenanceModel.active &&
+                            maintenanceModel.bookingDate.day >
+                                DateTime.now().day
+                        ? Colors.green
+                        : Colors.red,
+                    size: 25,
+                  ),
+                ),
               )
             ],
           ),
         ]));
+  }
+
+  _editDialog() {
+    var maskFormatter = new MaskTextInputFormatter(
+        mask: '####-##-##', filter: {"#": RegExp(r'[0-9]')});
+    List<String> options = [
+      '8:00',
+      '8:30',
+      '9:00',
+      '9:30',
+      '10:00',
+      '10:30',
+      '11:00',
+      '11:30',
+      '13:00',
+      '13:30',
+      '14:00',
+      '14:30',
+      '15:00',
+      '15:30',
+      '16:00',
+      '16:30',
+    ];
+
+    List<String> centers = ['KTX Khu B', 'KTX Khu A', 'Trà Vinh', 'Vũng Tàu'];
+    showDialog(
+        context: context,
+        builder: (_) => StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return new AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  title: new Text(
+                    "Thay đổi thông tin đăng kí",
+                    style: TextStyle(
+                        color: mPrimaryColor, fontWeight: FontWeight.w400),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Mã sản phẩm:",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                      ),
+                      TextFormField(
+                        controller: productSku,
+                        decoration: InputDecoration(
+                            labelText: 'Nhập mã sản phẩm',
+                            hintText: 'VD: SP1521999',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 5.0),
+                            )),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                      ),
+                      Text("Ngày bảo hành:",
+                          style: TextStyle(color: Colors.grey)),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                      ),
+                      TextFormField(
+                        controller: date,
+                        inputFormatters: [maskFormatter],
+                        decoration: InputDecoration(
+                            labelText: 'Nhập ngày bạn đến (YYYYMMdd)',
+                            hintText: 'VD: 20200215',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 5.0),
+                            )),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                      ),
+                      Text("Trung tâm bảo bành:",
+                          style: TextStyle(color: Colors.grey)),
+                      DropdownButton<String>(
+                        value: _warrantyCenter,
+                        onChanged: (String value) {
+                          setState(() {
+                            _warrantyCenter = value;
+                          });
+                        },
+                        items: centers.map((String item) {
+                          return DropdownMenuItem<String>(
+                              value: item, child: Text(item));
+                        }).toList(),
+                      ),
+                      Row(
+                        children: [
+                          Text("Khung giờ:",
+                              style: TextStyle(color: Colors.grey)),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                          DropdownButton<String>(
+                            hint: Text("Select item"),
+                            value: _time,
+                            onChanged: (String value) {
+                              setState(() {
+                                _time = value;
+                              });
+                            },
+                            items: options.map((String item) {
+                              return DropdownMenuItem<String>(
+                                  value: item, child: Text(item));
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            FlatButton(
+                                child: Text('Quay lại',
+                                    style: TextStyle(
+                                        color: mPrimaryColor, fontSize: 15)),
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                }),
+                            RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(color: mPrimaryColor)),
+                                color: mPrimaryColor,
+                                child: Text('Xác nhận',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15)),
+                                onPressed: () {
+                                  setState(() {
+                                    print("date text:" + date.text);
+                                    maintenanceBookingBloc
+                                        .editBooking(
+                                          _maintenanceId,
+                                          productSku.text,
+                                          _warrantyCenter,
+                                          DateTime.parse(date.text),
+                                          _time,
+                                          DateTime.now(),
+                                        )
+                                        .then((value) => {
+                                              if (value.isNotEmpty)
+                                                {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return MaintenanceBookingManagementScreen();
+                                                      },
+                                                    ),
+                                                  )
+                                                }
+                                            });
+                                  });
+                                })
+                          ])
+                    ],
+                  ));
+            }));
   }
 }

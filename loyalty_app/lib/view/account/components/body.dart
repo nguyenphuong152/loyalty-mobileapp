@@ -43,7 +43,7 @@ class _BodyState extends State<Body> {
             FontAwesomeIcons.cogs,
             size: 18,
           ),
-          title: Text('Thông tin đăng ký bảo hành/ bảo trì',
+          title: Text('Thông tin đăng ký bảo hành',
               style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.push(

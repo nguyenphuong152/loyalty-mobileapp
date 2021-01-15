@@ -39,6 +39,7 @@ dependencies:
   jwt_decoder: ^1.0.3
   shared_preferences: ^0.5.12+4
   percent_indicator: ^2.1.9
+  mask_text_input_formatter: ^1.2.1
 
 dev_dependencies:
   flutter_test:
