@@ -4,7 +4,7 @@ class ChatMessageModel {
   String senderId;
   String senderName;
   String message;
-  DateTime messageTimestamp;
+  String messageTimestamp;
 
   ChatMessageModel(
       {this.conversationId,
@@ -16,7 +16,7 @@ class ChatMessageModel {
 
   ChatMessageModel.fromJson(Map<String, dynamic> json) {
     conversationId = json['conversationId'];
-    messageId = json['messageId'];
+    messageId = json['messageId']['messageId'];
     senderId = json['senderId'];
     senderName = json['senderName'];
     message = json['message'];

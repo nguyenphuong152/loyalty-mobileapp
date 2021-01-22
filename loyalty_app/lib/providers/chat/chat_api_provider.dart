@@ -44,7 +44,7 @@ class ChatApiProvider {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
     try {
-      var res = await http.post(
+      var res = await http.get(
         '$baseUrl/chat/customer/conversation',
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
@@ -59,7 +59,7 @@ class ChatApiProvider {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
     try {
-      var res = await http.post(
+      var res = await http.get(
         '$baseUrl/chat/customer/message',
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
@@ -71,10 +71,18 @@ class ChatApiProvider {
   }
 
   // Future<http.Response> storeMessage(MessageModal message) async {
-  //   return await api.httpPost('messages', {
-  //     'body': message.body,
-  //     'conversation_id': message.conversationId.toString()
-  //   });
+  //   final prefs = await SharedPreferences.getInstance();
+  //   String token = prefs.getString('token');
+  //   try {
+  //     var res = await http.get(
+  //       '$baseUrl/chat/customer/message',
+  //       headers: {
+  //         HttpHeaders.contentTypeHeader: "application/json",
+  //         HttpHeaders.authorizationHeader: "Bearer $token"
+  //       },
+  //     );
+  //     return res;
+  //   } finally {}
   // }
 
   // Future<void> sendChatMessage(ChatMessageModel chatMessage) async {

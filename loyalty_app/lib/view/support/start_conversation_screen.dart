@@ -26,9 +26,20 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
         onPressed: () async {
           final prefs = await SharedPreferences.getInstance();
           String customerId = prefs.getString('customerId');
-          startConversationBloc.startConversation().then((value) => {
-               
-              });
+          var value = await startConversationBloc.startConversation();
+          if (value.isNotEmpty) {
+            var listMess = await startConversationBloc.getChatMessage();
+            if (listMess.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SupportingScreen(customerId, listMess);
+                  },
+                ),
+              );
+            }
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
