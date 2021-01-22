@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loyalty_app/view/card/card_screen.dart';
 import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
 
 class Body extends StatefulWidget {

@@ -185,6 +185,7 @@ class CustomerApiProvider {
     );
 
     if (response.statusCode == 200) {
+      print(response.body);
       return ListMaintenanceModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load maintenance list');

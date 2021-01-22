@@ -18,6 +18,7 @@ class CouponBloc {
     if (!_customerCouponFetcher.isClosed) {
       print("fetch cus coupon bought");
       ListCouponModel couponModel = await _repository.fetchCustomerCoupon();
+      print(couponModel.total);
       _customerCouponFetcher.sink.add(couponModel);
     }
   }

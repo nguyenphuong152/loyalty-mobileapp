@@ -42,8 +42,6 @@ class MaintenanceBookingBloc {
     String bookingTime,
     DateTime createAt,
   ) async {
-    print("edit booking bloc");
-
     final res = await CustomerApiProvider().editBooking(productSku,
         warrantyCenter, bookingDate, bookingTime, createAt, maintenanceId);
     print(res.toString());

@@ -8,7 +8,7 @@ class ListCouponModel {
     total = parsedJson["total"];
     List<CouponModel> temp = [];
     for (int i = 0; i < total; i++) {
-      CouponModel coupon = CouponModel(parsedJson["CouponModel"][i]);
+      CouponModel coupon = CouponModel(parsedJson["campaigns"][i]);
       temp.add(coupon);
     }
     couponModel = temp;
@@ -16,11 +16,11 @@ class ListCouponModel {
 }
 
 class CouponModel {
-  String canBeUsed;
+  bool canBeUsed;
   String campaignId;
   DateTime purchaseAt;
   double costInPoints;
-  String used;
+  bool used;
   String couponId;
   String couponCode;
   String status;
