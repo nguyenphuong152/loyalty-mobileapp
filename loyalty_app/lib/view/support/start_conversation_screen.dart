@@ -19,6 +19,9 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ConversationProvider>(context).getMessages();
+    });
   }
 
   @override
@@ -40,7 +43,6 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
           _listChatMess =
               await Provider.of<ConversationProvider>(context).getMessages();
           if (value.isNotEmpty) {
-            print(_listChatMess);
             Navigator.push(
               context,
               MaterialPageRoute(

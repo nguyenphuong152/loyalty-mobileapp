@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 import 'package:loyalty_app/models/chat/conversation_model.dart';
 import 'package:loyalty_app/providers/chat/base_provider.dart';
@@ -14,7 +16,6 @@ class ConversationProvider extends BaseProvider {
     if (_conversation != null) return _conversation;
     setBusy(true);
     var response = await _chatApiProvider.getConversation();
-
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       int numb = data['total'] - 1;
@@ -31,10 +32,9 @@ class ConversationProvider extends BaseProvider {
     setBusy(true);
     var response = await _chatApiProvider.getMessages();
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      print("mess" + data["0"]["total"]);
-      // data['messages']
-      //     .forEach((mess) => _messages.add(ChatMessageModel.fromJson(mess)));
+      var data = json.decode(response.body);
+      data['messages']
+          .forEach((mess) => _messages.add(ChatMessageModel.fromJson(mess)));
       notifyListeners();
       setBusy(false);
     }
