@@ -15,7 +15,7 @@ class StartConversationBloc extends BaseProvider {
   }
 
   Future<List<ChatMessageModel>> getChatMessage() async {
-    if (_chatmessages != null) return _chatmessages;
+    if (_chatmessages.isNotEmpty) return _chatmessages;
     var response = await ChatApiProvider().getMessages();
     print(response.statusCode);
     if (response.statusCode == 200) {

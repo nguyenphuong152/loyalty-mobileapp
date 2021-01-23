@@ -1,6 +1,5 @@
 class ChatMessageModel {
   String conversationId;
-  String messageId;
   String senderId;
   String senderName;
   String message;
@@ -9,14 +8,12 @@ class ChatMessageModel {
   ChatMessageModel(
       {this.conversationId,
       this.message,
-      this.messageId,
       this.messageTimestamp,
       this.senderId,
       this.senderName});
 
   ChatMessageModel.fromJson(Map<String, dynamic> json) {
     conversationId = json['conversationId'];
-    messageId = json['messageId']['messageId'];
     senderId = json['senderId'];
     senderName = json['senderName'];
     message = json['message'];
@@ -26,7 +23,6 @@ class ChatMessageModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['conversationId'] = this.conversationId;
-    data['messageId'] = this.messageId;
     data['senderId'] = this.senderId;
     data['senderName'] = this.senderName;
     data['message'] = this.message;

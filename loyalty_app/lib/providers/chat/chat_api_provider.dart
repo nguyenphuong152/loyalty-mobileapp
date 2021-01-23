@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/models/chat/chat_message_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -70,57 +71,31 @@ class ChatApiProvider {
     } finally {}
   }
 
-  // Future<http.Response> storeMessage(MessageModal message) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   String token = prefs.getString('token');
-  //   try {
-  //     var res = await http.get(
-  //       '$baseUrl/chat/customer/message',
-  //       headers: {
-  //         HttpHeaders.contentTypeHeader: "application/json",
-  //         HttpHeaders.authorizationHeader: "Bearer $token"
-  //       },
-  //     );
-  //     return res;
-  //   } finally {}
-  // }
+  Future<http.Response> sendChatMessage(ChatMessageModel chatMessage) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
 
-  // Future<void> sendChatMessage(ChatMessageModel chatMessage) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   String name = prefs.getString('name');
-  //   String token = prefs.getString('token');
-  //   String conversationId = prefs.getString('conversationId');
-
-  //   final data = jsonEncode({
-  //     "message": {
-  //       "conversationId": conversationId,
-  //       "participantIds": [
-  //         "22200000-0000-474c-b092-b0dd880c07e2",
-  //         chatMessage.senderId
-  //       ],
-  //       "senderId": chatMessage.senderId,
-  //       "senderName": name,
-  //       "message": chatMessage.message,
-  //       "messageTimestamp": chatMessage.time
-  //     }
-  //   });
-
-  //   try {
-  //     var res = await http.post(
-  //       '$baseUrl/chat/message',
-  //       body: data,
-  //       headers: {
-  //         HttpHeaders.contentTypeHeader: "application/json",
-  //         HttpHeaders.authorizationHeader: "Bearer $token"
-  //       },
-  //     );
-  //     print(res.statusCode);
-  //     if (res.statusCode == 200) {
-  //       print("success");
-  //       return res.body;
-  //     } else {
-  //       return null;
-  //     }
-  //   } finally {}
-  // }
+    final data = jsonEncode({
+      "message": {
+        "conversationId": chatMessage.conversationId,
+        "conversationParticipantIds": [
+          "22200000-0000-474c-b092-b0dd880c07e2",
+          chatMessage.senderId
+        ],
+        "senderId": chatMessage.senderId,
+        "senderName": chatMessage.senderName,
+        "message": chatMessage.message,
+        "messageTimestamp": chatMessage.messageTimestamp
+      }
+    });
+    var res = await http.post(
+      '$baseUrl/chat/message',
+      body: data,
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+    );
+    return res;
+  }
 }
