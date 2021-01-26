@@ -144,6 +144,7 @@ class CustomerApiProvider {
 
     if (response.statusCode == 200) {
       print("success");
+      return response.body;
     } else {
       throw Exception('Failed to buy');
     }

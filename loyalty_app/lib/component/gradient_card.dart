@@ -119,11 +119,11 @@ class GradientCard extends StatelessWidget {
                                     ),
                                   ]),
                             ),
-                            InkWell(
-                              onTap: () => couponBloc.buyCoupon(couponId),
-                              child: Container(
-                                child: Expanded(
-                                  flex: 2,
+                            Expanded(
+                              flex: 2,
+                              child: InkWell(
+                                onTap: () => couponBloc.buyCoupon(couponId),
+                                child: Container(
                                   child: Text(
                                     "Đổi điểm",
                                     style: TextStyle(

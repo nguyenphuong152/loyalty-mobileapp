@@ -34,7 +34,9 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: list.length, vsync: this);
+    _controller =
+        TabController(length: list.length, vsync: this, initialIndex: 0);
+    campaignBloc.fetchCustomerCampaign();
     _controller.addListener(() {
       setState(() {
         _selectedIndex = _controller.index;

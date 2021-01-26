@@ -41,21 +41,34 @@ class ConversationProvider extends BaseProvider {
     return _messages;
   }
 
-  Future<void> storeMessage(ChatMessageModel message) async {
+  Future<String> storeMessage(ChatMessageModel message) async {
     setBusy(true);
     var response = await _chatApiProvider.sendChatMessage(message);
     if (response.statusCode == 200) {
       // var data = jsonDecode(response.body);
       setBusy(false);
       addMessageToConversation(message);
+      return (response.body);
     }
     setBusy(false);
+    return null;
   }
 
   addMessageToConversation(ChatMessageModel message) async {
     _messages.add(message);
-    // toTheTop(message);
     notifyListeners();
+  }
+
+  Future<String> updateConversation(ChatMessageModel message) async {
+    setBusy(true);
+    var response = await _chatApiProvider.updateConversation(message);
+    if (response.statusCode == 200) {
+      // var data = jsonDecode(response.body);
+      setBusy(false);
+      return (response.body);
+    }
+    setBusy(false);
+    return null;
   }
 
   toTheTop(ChatMessageModel mess) {

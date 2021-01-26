@@ -19,19 +19,16 @@ class SupportingScreen extends StatefulWidget {
 }
 
 class _SupportingScreenState extends State<SupportingScreen> {
-  SupportingScreenBloc supportingScreenBloc = SupportingScreenBloc();
   ScrollController _scrollController = ScrollController();
   TextEditingController messageTextEditController = TextEditingController();
   ChatMessageModel message;
-  List<ChatMessageModel> listMessage;
 
   @override
   void initState() {
     super.initState();
     message = ChatMessageModel();
     print("lenght" + widget.chatMessages.length.toString());
-    listMessage = [...widget.chatMessages];
-    message.conversationId = listMessage[0].conversationId;
+    message.conversationId = widget.chatMessages[0].conversationId;
     message.senderId = widget.customerId;
     message.senderName = widget.customerName;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -68,14 +65,14 @@ class _SupportingScreenState extends State<SupportingScreen> {
                 child: ListView.builder(
                     controller: _scrollController,
                     padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    itemCount: listMessage.length,
+                    itemCount: widget.chatMessages.length,
                     itemBuilder: (context, index) =>
-                        listMessage[index].senderId == widget.customerId
+                        widget.chatMessages[index].senderId == widget.customerId
                             ? MyMessageCard(
-                                message: listMessage[index],
+                                message: widget.chatMessages[index],
                               )
                             : ModeratorCard(
-                                message: listMessage[index],
+                                message: widget.chatMessages[index],
                               ))),
             Container(
               padding: EdgeInsets.all(8),
@@ -104,14 +101,16 @@ class _SupportingScreenState extends State<SupportingScreen> {
                                 messageTextEditController.text.trim();
                             message.messageTimestamp =
                                 DateTime.now().toString();
-                            print(message.toJson());
                             await Provider.of<ConversationProvider>(
                               context,
                             ).storeMessage(message);
-                            messageTextEditController.clear();
+                            Provider.of<ConversationProvider>(context)
+                                .updateConversation(message);
+
+                            //messageTextEditController.clear();
                             _scrollController.jumpTo(
                                 _scrollController.position.maxScrollExtent +
-                                    23);
+                                    30);
                           },
                           child: Container(
                             padding: EdgeInsets.all(10),

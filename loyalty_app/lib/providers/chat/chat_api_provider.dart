@@ -98,4 +98,29 @@ class ChatApiProvider {
     );
     return res;
   }
+
+  Future<http.Response> updateConversation(ChatMessageModel chatMessage) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+    String customerId = prefs.getString('customerId');
+    String name = prefs.getString('name');
+    final data = jsonEncode({
+      "conversation": {
+        // "participantIds": ["22200000-0000-474c-b092-b0dd880c07e2", customerId],
+        // "participantNames": ["admin", name],
+        "lastMessageSnippet": chatMessage.message,
+        "lastMessageTimestamp": chatMessage.messageTimestamp
+      }
+    });
+    var id = chatMessage.conversationId;
+    var res = await http.put(
+      '$baseUrl/chat/conversation/$id',
+      body: data,
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+    );
+    return res;
+  }
 }
