@@ -111,7 +111,7 @@ class _BodyState extends State<Body> {
               title: new Image(
                 width: 130,
                 height: 130,
-                image: AssetImage("assets/images/error.gif"),
+                image: AssetImage("assets/images/success.gif"),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,

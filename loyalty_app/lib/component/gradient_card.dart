@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_svg/svg.dart';
 import 'package:loyalty_app/bloc/coupon_bloc.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/view/campaign/campaign_screen.dart';
 
 class GradientCard extends StatelessWidget {
   final String couponId;
@@ -27,27 +28,31 @@ class GradientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CouponBloc couponBloc = CouponBloc();
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
         child: Stack(
           children: <Widget>[
-            Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(_borderRadius),
-                gradient: LinearGradient(
-                    colors: [startColor, endColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
-                boxShadow: [
-                  BoxShadow(
-                    color: endColor,
-                    blurRadius: 12,
-                    offset: Offset(0, 6),
-                  ),
-                ],
+            InkWell(
+              onTap: () => couponBloc
+                  .buyCoupon(couponId)
+                  .then((value) => {_showDialog(context)}),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(_borderRadius),
+                  gradient: LinearGradient(
+                      colors: [startColor, endColor],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight),
+                  boxShadow: [
+                    BoxShadow(
+                      color: endColor,
+                      blurRadius: 12,
+                      offset: Offset(0, 6),
+                    ),
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -121,16 +126,13 @@ class GradientCard extends StatelessWidget {
                             ),
                             Expanded(
                               flex: 2,
-                              child: InkWell(
-                                onTap: () => couponBloc.buyCoupon(couponId),
-                                child: Container(
-                                  child: Text(
-                                    "Đổi điểm",
-                                    style: TextStyle(
-                                        color: Colors.amber[900],
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700),
-                                  ),
+                              child: Container(
+                                child: Text(
+                                  "Đổi điểm",
+                                  style: TextStyle(
+                                      color: Colors.amber[900],
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
                             )
@@ -146,6 +148,53 @@ class GradientCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              title: Container(
+                child: Column(
+                  children: [
+                    Image(
+                      width: 250,
+                      height: 250,
+                      image: AssetImage("assets/images/success.gif"),
+                    ),
+                    Text(
+                      "Chúc mừng bạn đã đổi điểm thành công!",
+                      style: TextStyle(fontSize: 16, color: mPrimaryColor),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: mPrimaryColor)),
+                        color: mPrimaryColor,
+                        child: Text('Quay lại',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return CampaignScreen();
+                              },
+                            ),
+                          );
+                        })
+                  ],
+                ),
+              ),
+            ));
   }
 }
 

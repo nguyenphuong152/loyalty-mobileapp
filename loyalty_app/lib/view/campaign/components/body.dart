@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loyalty_app/bloc/coupon_bloc.dart';
 import 'package:loyalty_app/component/coupon_card.dart';
 import 'package:loyalty_app/constant.dart';
@@ -37,6 +38,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     _controller =
         TabController(length: list.length, vsync: this, initialIndex: 0);
     campaignBloc.fetchCustomerCampaign();
+    couponBloc.fetchCustomerCoupon();
     _controller.addListener(() {
       setState(() {
         _selectedIndex = _controller.index;
@@ -61,10 +63,17 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
+              onPressed: () => Navigator.of(context).pop()),
           centerTitle: true,
           backgroundColor: Colors.white,
           bottom: TabBar(
@@ -85,7 +94,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
             tabs: list,
           ),
           title: Text(
-            'Điểm thưởng',
+            'Tích điểm đổi quà',
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w400,
@@ -101,6 +110,27 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                 print(
                     "connection state: " + snapshot.connectionState.toString());
                 if (snapshot.hasData) {
+                  if (snapshot.data.total == 0) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: size.height * 0.2,
+                          ),
+                          Text("Hiện tại không có khuyến mãi nào!",
+                              style: TextStyle(
+                                  color: Colors.grey, fontSize: mFontSize)),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          SvgPicture.asset(
+                            "assets/images/empty.svg",
+                            height: size.height * 0.3,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                   return buildList(snapshot);
                 } else if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
@@ -114,6 +144,33 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                 print(
                     "connection state: " + snapshot.connectionState.toString());
                 if (snapshot.hasData) {
+                  if (snapshot.data.total == 0) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: size.height * 0.2,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 40.0),
+                            child: Text(
+                                "Hãy dùng điểm để đổi lấy các khuyến mãi giá trị nào!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: mFontSize)),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          SvgPicture.asset(
+                            "assets/images/empty.svg",
+                            height: size.height * 0.3,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                   return buildListCoupon(snapshot);
                 } else if (snapshot.hasError) {
                   return Text("LOi" + snapshot.error.toString());

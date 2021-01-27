@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
@@ -38,12 +39,51 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: homeAppBar(context),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.of(context).pop()),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Thông tin đăng kí bảo hành',
+          style: TextStyle(
+            fontSize: mFontSize,
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
       body: StreamBuilder(
         stream: maintenanceBookingBloc.maintenanceBook,
         builder: (context, AsyncSnapshot<ListMaintenanceModel> snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data.total == 0) {
+              return Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.2,
+                    ),
+                    Text("Hiện tại bạn chưa có thông tin đăng kí nào!",
+                        style:
+                            TextStyle(color: Colors.grey, fontSize: mFontSize)),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    SvgPicture.asset(
+                      "assets/images/empty.svg",
+                      height: size.height * 0.3,
+                    ),
+                  ],
+                ),
+              );
+            }
             return buildList(snapshot);
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
@@ -97,7 +137,7 @@ class _BodyState extends State<Body> {
           Row(
             children: [
               Expanded(
-                flex: 6,
+                flex: 8,
                 child: Text(
                   "Mã sản phẩm",
                   style: TextStyle(fontSize: mFontListTile),
@@ -115,7 +155,7 @@ class _BodyState extends State<Body> {
           Row(
             children: [
               Expanded(
-                flex: 6,
+                flex: 8,
                 child: Text(
                   "Thời gian đến",
                   style: TextStyle(fontSize: mFontListTile),
@@ -137,7 +177,7 @@ class _BodyState extends State<Body> {
           Row(
             children: [
               Expanded(
-                flex: 10,
+                flex: 12,
                 child: Text(
                   "Trung tâm bảo hành",
                   style: TextStyle(fontSize: mFontListTile),
@@ -155,7 +195,7 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             children: [
               Expanded(
-                flex: 4,
+                flex: 6,
                 child: Text(
                   "Tình trạng",
                   style: TextStyle(fontSize: mFontListTile),
@@ -185,18 +225,22 @@ class _BodyState extends State<Body> {
                       productSku.text = maintenanceModel.productSku;
                     }),
                     if (maintenanceModel.active &&
-                        maintenanceModel.bookingDate.day > DateTime.now().day)
+                        (maintenanceModel.bookingDate
+                                .compareTo(DateTime.now()) >
+                            0))
                       {_editDialog()}
                   },
                   child: FaIcon(
                     maintenanceModel.active &&
-                            maintenanceModel.bookingDate.day >
-                                DateTime.now().day
+                            (maintenanceModel.bookingDate
+                                    .compareTo(DateTime.now()) >
+                                0)
                         ? FontAwesomeIcons.penSquare
                         : FontAwesomeIcons.ban,
                     color: maintenanceModel.active &&
-                            maintenanceModel.bookingDate.day >
-                                DateTime.now().day
+                            (maintenanceModel.bookingDate
+                                    .compareTo(DateTime.now()) >
+                                0)
                         ? Colors.green
                         : Colors.red,
                     size: 25,

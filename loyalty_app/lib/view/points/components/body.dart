@@ -31,7 +31,24 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: homeAppBar(context),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.of(context).pop()),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Điểm của tôi',
+          style: TextStyle(
+            fontSize: mFontSize,
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
       backgroundColor: mSecondaryColor,
       body: StreamBuilder(
         stream: pointBloc.customerStatus,
@@ -185,7 +202,7 @@ class _BodyState extends State<Body> {
                     children: [
                       Text(
                         "Lịch sử điểm ",
-                        style: TextStyle(fontSize: 15, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 15, color: mPrimaryColor),
                       ),
                       SizedBox(
                         width: 5,
@@ -193,7 +210,7 @@ class _BodyState extends State<Body> {
                       FaIcon(
                         FontAwesomeIcons.angleRight,
                         size: 18,
-                        color: Colors.grey[500],
+                        color: mPrimaryColor,
                       )
                     ],
                   ),

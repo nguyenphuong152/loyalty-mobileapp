@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/coupon_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 
@@ -75,60 +76,56 @@ class CouponCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          status,
+                          status == 'inactive'
+                              ? 'Chưa kích hoạt'
+                              : 'Đã kích hoạt',
                           style: TextStyle(
-                              fontSize: mFontTitle,
-                              fontWeight: FontWeight.w700),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: mPrimaryColor),
                         ),
                         Text(
-                          activeSince,
-                          style: TextStyle(
-                            fontSize: mFontListTile,
-                          ),
+                          "Thời gian hiệu lực: ",
+                          style: TextStyle(fontSize: mFontListTile),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(
+                          height: 0.5,
+                        ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          children: <Widget>[
-                            Icon(
-                              Icons.offline_bolt_outlined,
-                              color: Colors.amber[900],
-                              size: 16,
+                          children: [
+                            Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(DateTime.parse(activeSince)),
+                              style: TextStyle(
+                                  fontSize: mFontListTile,
+                                  fontWeight: FontWeight.w700),
                             ),
-                            SizedBox(
-                              width: 8,
+                            Text(" - "),
+                            Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(DateTime.parse(activeTo)),
+                              style: TextStyle(
+                                  fontSize: mFontListTile,
+                                  fontWeight: FontWeight.w700),
                             ),
-                            Flexible(
-                              child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
-                                  children: [
-                                    Text(
-                                      activeTo,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    Text(
-                                      " điểm",
-                                      style: TextStyle(
-                                        fontSize: mFontSize,
-                                      ),
-                                    ),
-                                  ]),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                "Đổi điểm",
-                                style: TextStyle(
-                                    color: Colors.amber[900],
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            )
                           ],
                         ),
+                        Row(
+                          children: [
+                            Text(
+                              "Code: ",
+                              style: TextStyle(
+                                fontSize: mFontListTile,
+                              ),
+                            ),
+                            Text(
+                              couponCode,
+                              style: TextStyle(
+                                  fontSize: mFontListTile,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
