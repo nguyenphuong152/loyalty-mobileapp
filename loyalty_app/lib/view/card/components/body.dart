@@ -10,9 +10,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // static Future<CustomerModel> cardBloc;
-  // cardBloc =CardBloc().fetchCustomer('11111111-0000-474c-b092-b0dd880c07e1');
-
+  final CardBloc cardBloc = CardBloc();
   @override
   void initState() {
     super.initState();
@@ -78,7 +76,7 @@ class _BodyState extends State<Body> {
         Container(
           child: BarcodeWidget(
             barcode: Barcode.code128(), // Barcode type and settings
-            data: customer.customerId, // Content
+            data: customer.loyaltyCardNumber, // Content
             width: 310,
             height: 100,
           ),

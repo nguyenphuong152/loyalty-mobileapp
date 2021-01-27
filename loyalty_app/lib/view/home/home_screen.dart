@@ -3,6 +3,8 @@ import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/view/Datepicker/datepicker_screen.dart';
 import 'package:loyalty_app/view/account/account_screen.dart';
 import 'package:loyalty_app/view/card/card_screen.dart';
+import 'package:loyalty_app/view/support/start_conversation_screen.dart';
+import 'package:loyalty_app/view/support/supporting_screen.dart';
 
 import 'components/app_bar.dart';
 
@@ -28,10 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<Widget> _widgetOptions = <Widget>[
     CardScreen(),
     DatePickerScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    StartConverstionScreen(),
     AccountScreen()
   ];
 
