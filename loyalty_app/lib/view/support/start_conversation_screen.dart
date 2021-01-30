@@ -19,9 +19,9 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ConversationProvider>(context).getMessages();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Provider.of<ConversationProvider>(context).getMessages();
+    // });
   }
 
   @override
@@ -39,10 +39,9 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
           final prefs = await SharedPreferences.getInstance();
           String customerId = prefs.getString('customerId');
           String name = prefs.getString('name');
-          var value = await startConversationBloc.startConversation();
           _listChatMess =
               await Provider.of<ConversationProvider>(context).getMessages();
-          if (value.isNotEmpty) {
+          if (_listChatMess.isNotEmpty) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -51,6 +50,21 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
                 },
               ),
             );
+          } else {
+            //logic loi: neu k get dc list tn -> tao cuoc tro chuyen moi-> truyen tham so khac???
+            var value = await startConversationBloc.startConversation();
+            _listChatMess =
+                await Provider.of<ConversationProvider>(context).getMessages();
+            if (value.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SupportingScreen(customerId, _listChatMess, name);
+                  },
+                ),
+              );
+            }
           }
         },
         child: Padding(
