@@ -35,7 +35,8 @@ class _BodyState extends State<Body> {
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
-            onPressed: () => Navigator.of(context).pop()),
+            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                "/home", (Route<dynamic> route) => false)),
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
