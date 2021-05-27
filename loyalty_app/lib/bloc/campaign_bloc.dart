@@ -1,4 +1,3 @@
-import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/src/services/repository.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:loyalty_app/models/campaign_model.dart';

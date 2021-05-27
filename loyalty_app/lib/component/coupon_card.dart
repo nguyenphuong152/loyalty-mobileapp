@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:loyalty_app/bloc/coupon_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 
 class CouponCard extends StatelessWidget {

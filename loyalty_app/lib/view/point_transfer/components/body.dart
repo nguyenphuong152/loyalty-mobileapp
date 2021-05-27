@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/point_transfer_bloc.dart';
 import 'package:loyalty_app/constant.dart';
-import 'package:loyalty_app/view/home/components/app_bar.dart';
 import 'package:loyalty_app/models/point_model.dart';
 
 class Body extends StatefulWidget {

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/transaction_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
-import 'package:loyalty_app/view/home/components/app_bar.dart';
 
 class Body extends StatefulWidget {
   @override

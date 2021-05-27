@@ -3,7 +3,6 @@ import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/providers/chat/locator.dart';
 import 'package:loyalty_app/providers/chat/provider_setup.dart';
 import 'package:loyalty_app/view/welcome/login/login_screen.dart';
-import 'package:loyalty_app/view/welcome/welcomee/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {

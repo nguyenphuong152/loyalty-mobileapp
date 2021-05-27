@@ -1,0 +1,39 @@
+﻿{
+  "offices": [
+    {
+      "address": "109 Đường Nguyễn Duy Trinh, Phường Bình Trưng Tây, Quận 2, Thành phố Hồ Chí Minh",
+      "id": "aarhus",
+      "lat": 10.793487543228702,
+      "lng": 106.75771198934372,
+      "name": "Hasaki - Q2"
+    },
+    {
+      "address": "15-17 Võ Văn Ngân, Khu Phố 2, Thủ Đức, Thành phố Hồ Chí Minh",
+      "id": "amsterdam",
+      "lat": 10.865869608595741,
+      "lng": 106.75911095660031,
+      "name": "Hasaki - Võ Văn Ngân"
+    },
+    {
+      "address": "94 Lê Văn Việt, P, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+      "id": "ann-arbor",
+      "lat": 10.863008634833903,
+      "lng": 106.7799888197668,
+      "name": "Hasaki - Lê Văn Việt"
+    },
+    {
+      "address": "447 Đ. Phan Văn Trị, Phường 5, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam",
+      "id": "athens",
+      "lat": 10.839354944376128,
+      "lng": 106.68926449036736,
+      "name": "Hasaki - Phan Văn Trị"
+    },
+    {
+      "address": "119 Nguyễn Gia Trí, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+      "id": "atlanta",
+      "lat": 10.830575619731166,
+      "lng": 106.71733611509211,
+      "name": "Hasaki - D2"
+    }
+  ]
+}

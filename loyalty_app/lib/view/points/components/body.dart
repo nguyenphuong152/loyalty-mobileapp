@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
-import 'package:loyalty_app/view/home/components/app_bar.dart';
 import 'package:loyalty_app/bloc/point_bloc.dart';
 import 'package:loyalty_app/view/point_transfer/point_transfer_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
