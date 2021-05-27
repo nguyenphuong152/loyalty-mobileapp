@@ -28,16 +28,20 @@ class GradientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CouponBloc couponBloc = CouponBloc();
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-        child: Stack(
-          children: <Widget>[
-            InkWell(
-              onTap: () => couponBloc
-                  .buyCoupon(couponId)
-                  .then((value) => {_showDialog(context)}),
-              child: Container(
+        child: GestureDetector(
+          onTap: () {
+            _showWaitingDialog(context);
+            couponBloc
+                .buyCoupon(couponId)
+                .then((value) => {_showDialog(context)});
+          },
+          child: Stack(
+            children: <Widget>[
+              Container(
                 height: 150,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(_borderRadius),
@@ -54,103 +58,104 @@ class GradientCard extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              top: 0,
-              child: CustomPaint(
-                size: Size(100, 150),
-                painter:
-                    CustomCardShapePainter(_borderRadius, startColor, endColor),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                top: 0,
+                child: CustomPaint(
+                  size: Size(100, 150),
+                  painter: CustomCardShapePainter(
+                      _borderRadius, startColor, endColor),
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: SvgPicture.asset(
-                      "assets/images/present.svg",
-                      height: 70,
+              Positioned.fill(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SvgPicture.asset(
+                        "assets/images/present.svg",
+                        height: 70,
+                      ),
+                      flex: 2,
                     ),
-                    flex: 2,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          name,
-                          style: TextStyle(
-                              fontSize: mFontTitle,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          campaignActivity,
-                          style: TextStyle(
-                            fontSize: mFontListTile,
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontSize: mFontTitle,
+                                fontWeight: FontWeight.w700),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          children: <Widget>[
-                            Icon(
-                              Icons.offline_bolt_outlined,
-                              color: Colors.amber[900],
-                              size: 16,
+                          Text(
+                            campaignActivity,
+                            style: TextStyle(
+                              fontSize: mFontListTile,
                             ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
-                                  children: [
-                                    Text(
-                                      costInPoints,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    Text(
-                                      " điểm",
-                                      style: TextStyle(
-                                        fontSize: mFontSize,
-                                      ),
-                                    ),
-                                  ]),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: Text(
-                                  "Đổi điểm",
-                                  style: TextStyle(
-                                      color: Colors.amber[900],
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w700),
-                                ),
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            children: <Widget>[
+                              Icon(
+                                Icons.offline_bolt_outlined,
+                                color: Colors.amber[900],
+                                size: 16,
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.baseline,
+                                    children: [
+                                      Text(
+                                        costInPoints,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      Text(
+                                        " điểm",
+                                        style: TextStyle(
+                                          fontSize: mFontSize,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  child: Text(
+                                    "Đổi điểm",
+                                    style: TextStyle(
+                                        color: Colors.amber[900],
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   _showDialog(BuildContext context) {
+    Navigator.pop(context);
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
@@ -194,6 +199,17 @@ class GradientCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ));
+  }
+
+  _showWaitingDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              title: Center(child: CircularProgressIndicator()),
             ));
   }
 }
