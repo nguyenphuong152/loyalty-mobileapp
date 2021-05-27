@@ -4,7 +4,6 @@ import 'package:loyalty_app/view/Datepicker/datepicker_screen.dart';
 import 'package:loyalty_app/view/account/account_screen.dart';
 import 'package:loyalty_app/view/card/card_screen.dart';
 import 'package:loyalty_app/view/support/start_conversation_screen.dart';
-import 'package:loyalty_app/view/support/supporting_screen.dart';
 
 import 'components/app_bar.dart';
 
@@ -25,8 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     CardScreen(),
     DatePickerScreen(),

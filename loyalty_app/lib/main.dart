@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/providers/chat/locator.dart';
 import 'package:loyalty_app/providers/chat/provider_setup.dart';
+import 'package:loyalty_app/view/account/account_screen.dart';
+import 'package:loyalty_app/view/home/home_screen.dart';
+import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/view/support/supporting_screen.dart';
 import 'package:loyalty_app/view/welcome/login/login_screen.dart';
-import 'package:loyalty_app/view/welcome/welcomee/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,6 +31,11 @@ class StartApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: mPrimaryColor, scaffoldBackgroundColor: Colors.white),
       home: LoginScreen(),
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/maintenance': (context) => MaintenanceBookingManagementScreen(),
+        '/account': (context) => AccountScreen(),
+      },
     );
   }
 }

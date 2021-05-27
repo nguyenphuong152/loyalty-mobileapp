@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loyalty_app/bloc/chat_bloc/supporting_screen_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 import 'package:loyalty_app/providers/chat/conversation_provider.dart';
@@ -107,7 +106,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
                             Provider.of<ConversationProvider>(context)
                                 .updateConversation(message);
 
-                            //messageTextEditController.clear();
+                            messageTextEditController.clear();
                             _scrollController.jumpTo(
                                 _scrollController.position.maxScrollExtent +
                                     30);

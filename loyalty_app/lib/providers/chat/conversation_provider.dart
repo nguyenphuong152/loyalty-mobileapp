@@ -20,7 +20,6 @@ class ConversationProvider extends BaseProvider {
       var data = jsonDecode(response.body);
       int numb = data['total'] - 1;
       _conversation = ConversationModel.fromJson(data['conversations'][numb]);
-      print(response.body);
       notifyListeners();
       setBusy(false);
     }
@@ -28,6 +27,8 @@ class ConversationProvider extends BaseProvider {
   }
 
   Future<List<ChatMessageModel>> getMessages() async {
+    print("conversation prodivder: " + _messages.length.toString());
+
     if (_messages.isNotEmpty) return _messages;
     setBusy(true);
     var response = await _chatApiProvider.getMessages();

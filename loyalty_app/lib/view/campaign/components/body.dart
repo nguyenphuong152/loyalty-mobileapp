@@ -7,6 +7,7 @@ import 'package:loyalty_app/models/campaign_model.dart';
 import 'package:loyalty_app/models/coupons_model.dart';
 import 'package:loyalty_app/component/gradient_card.dart';
 import 'package:loyalty_app/bloc/campaign_bloc.dart';
+import 'package:loyalty_app/view/account/account_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -73,7 +74,8 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
-              onPressed: () => Navigator.of(context).pop()),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/home", (Route<dynamic> route) => false)),
           centerTitle: true,
           backgroundColor: Colors.white,
           bottom: TabBar(

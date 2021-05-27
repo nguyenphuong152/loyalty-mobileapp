@@ -9,7 +9,7 @@ const mLinear = Color(0xFF848ccf);
 const mFontSize = 16.0;
 const mFontTitle = 18.0;
 const mFontListTile = 14.0;
-const baseUrl = 'http://13.66.6.227/app_dev.php/api';
+const baseUrl = 'http://104.214.106.157/app_dev.php/api';
 
 class Constants {
   static final OutlineInputBorder border = OutlineInputBorder(
