@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 
 class ModeratorCard extends StatelessWidget {
-  final ChatMessageModel message;
+  final String message;
   const ModeratorCard({Key key, this.message}) : super(key: key);
 
   @override
@@ -28,9 +28,7 @@ class ModeratorCard extends StatelessWidget {
                   topRight: Radius.circular(28),
                   bottomRight: Radius.circular(28),
                 )),
-            child: Row(children: <Widget>[
-              Expanded(child: Text('${message.message}'))
-            ]),
+            child: Row(children: <Widget>[Expanded(child: Text('$message'))]),
           )
         ],
       ),
