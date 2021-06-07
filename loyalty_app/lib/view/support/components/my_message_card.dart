@@ -3,7 +3,7 @@ import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 
 class MyMessageCard extends StatelessWidget {
-  final ChatMessageModel message;
+  final String message;
   const MyMessageCard({Key key, this.message}) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class MyMessageCard extends StatelessWidget {
       child: Row(children: <Widget>[
         Expanded(
             child: Text(
-          '${message.message}',
+          '$message',
           style: TextStyle(color: Colors.white),
         ))
       ]),

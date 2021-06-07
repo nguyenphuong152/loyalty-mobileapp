@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <application android:usesCleartextTraffic="true"/>
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -13,10 +14,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="Melodi"
         android:icon="@mipmap/ic_launcher">
-
          <!-- TODO: Add your API key here -->
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDqCxQpwJF9MCKOtUyaf1_qQF51oTaL3Kk"/>
+        <meta-data android:name="com.google.android.gms.version" 
+        android:value="12451000" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -11,6 +11,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final CardBloc cardBloc = CardBloc();
+
   @override
   void initState() {
     super.initState();
