@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 
 class ModeratorCard extends StatelessWidget {
@@ -23,12 +24,14 @@ class ModeratorCard extends StatelessWidget {
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: Colors.grey[100],
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(28),
-                  topRight: Radius.circular(28),
-                  bottomRight: Radius.circular(28),
-                )),
-            child: Row(children: <Widget>[Expanded(child: Text('$message'))]),
+                borderRadius: BorderRadius.circular(10)),
+            child: Row(children: <Widget>[
+              Expanded(
+                  child: Text(
+                '$message',
+                style: TextStyle(fontSize: mFontSize),
+              ))
+            ]),
           )
         ],
       ),

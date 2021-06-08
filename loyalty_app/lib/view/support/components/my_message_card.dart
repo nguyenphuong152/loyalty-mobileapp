@@ -11,19 +11,14 @@ class MyMessageCard extends StatelessWidget {
     return Container(
       width: 300,
       margin: EdgeInsets.fromLTRB(50, 0, 0, 12),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: mPrimaryColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28),
-            topRight: Radius.circular(28),
-            bottomLeft: Radius.circular(28),
-          )),
+          color: mPrimaryColor, borderRadius: BorderRadius.circular(10)),
       child: Row(children: <Widget>[
         Expanded(
             child: Text(
           '$message',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: mFontSize),
         ))
       ]),
     );
