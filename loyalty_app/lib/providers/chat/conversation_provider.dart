@@ -46,6 +46,7 @@ class ConversationProvider extends BaseProvider {
     setBusy(true);
     var response = await _chatApiProvider.sendChatMessage(message);
     if (response.statusCode == 200) {
+      print("EEEEEEEERRR " + response.body);
       // var data = jsonDecode(response.body);
       setBusy(false);
       addMessageToConversation(message);

@@ -147,6 +147,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
 
     message.message = messageTextEditController.text.trim();
     message.messageTimestamp = DateTime.now().toString();
+
     await Provider.of<ConversationProvider>(
       context,
     ).storeMessage(message);
