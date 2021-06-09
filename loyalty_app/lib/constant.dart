@@ -9,8 +9,8 @@ const mLinear = Color(0xFF848ccf);
 const mFontSize = 16.0;
 const mFontTitle = 18.0;
 const mFontListTile = 14.0;
-const baseUrl = 'http://13.84.190.91/app_dev.php/api';
-const webSocket = 'ws://13.84.190.91:8080';
+const baseUrl = 'http://40.74.248.193/app_dev.php/api';
+const webSocket = 'ws://40.74.248.193:8080';
 
 class Constants {
   static final OutlineInputBorder border = OutlineInputBorder(

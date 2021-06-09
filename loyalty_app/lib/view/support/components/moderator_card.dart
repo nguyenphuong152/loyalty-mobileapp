@@ -17,11 +17,11 @@ class ModeratorCard extends StatelessWidget {
               backgroundColor: Colors.grey[350],
               backgroundImage: AssetImage("assets/images/moderator.png")),
           SizedBox(
-            width: 5,
+            width: 3,
           ),
           Container(
             width: 300,
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(10)),
