@@ -47,6 +47,7 @@ dependencies:
   geolocator: 6.2.1
   web_socket_channel: 1.2.0
   location: 3.2.4
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

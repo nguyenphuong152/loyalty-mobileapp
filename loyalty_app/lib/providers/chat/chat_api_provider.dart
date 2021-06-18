@@ -96,7 +96,6 @@ class ChatApiProvider {
         HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
-    print("ERRRRRRRRR" + res.body);
     return res;
   }
 

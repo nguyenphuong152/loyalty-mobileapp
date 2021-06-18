@@ -29,25 +29,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                "/home", (Route<dynamic> route) => false)),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'Lịch sử giao dịch',
-          style: TextStyle(
-            fontSize: mFontSize,
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ),
       body: StreamBuilder(
         stream: transactionBloc.transactions,
         builder: (context, AsyncSnapshot<ListTransactionModel> snapshot) {
