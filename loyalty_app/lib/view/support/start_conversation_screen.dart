@@ -26,56 +26,82 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: SizedBox(
-      width: 300,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: mPrimaryColor, width: 2.0)),
-        color: Colors.white,
-        textColor: mPrimaryColor,
-        onPressed: () async {
-          final prefs = await SharedPreferences.getInstance();
-          String customerId = prefs.getString('customerId');
-          String name = prefs.getString('name');
-          _listChatMess =
-              await Provider.of<ConversationProvider>(context).getMessages();
-          if (_listChatMess.isNotEmpty) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return SupportingScreen(customerId, _listChatMess, name);
-                },
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: mPrimaryColor,
+                size: 16,
               ),
-            );
-          } else {
-            //logic loi: neu k get dc list tn -> tao cuoc tro chuyen moi-> truyen tham so khac???
-            var value = await startConversationBloc.startConversation();
-            _listChatMess =
-                await Provider.of<ConversationProvider>(context).getMessages();
-            if (value.isNotEmpty) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SupportingScreen(customerId, _listChatMess, name);
-                  },
-                ),
-              );
-            }
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            "Bắt đầu cuộc trò chuyện với nhân viên hỗ trợ",
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
-            textAlign: TextAlign.center,
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/home", (Route<dynamic> route) => false)),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text(
+            'Hỗ trợ trực tuyến',
+            style: TextStyle(
+              fontSize: mFontSize,
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-      ),
-    ));
+        body: Center(
+          child: SizedBox(
+            width: 300,
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(color: mPrimaryColor, width: 2.0)),
+              color: Colors.white,
+              textColor: mPrimaryColor,
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                String customerId = prefs.getString('customerId');
+                String name = prefs.getString('name');
+                _listChatMess = await Provider.of<ConversationProvider>(context)
+                    .getMessages();
+                if (_listChatMess.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SupportingScreen(
+                            customerId, _listChatMess, name);
+                      },
+                    ),
+                  );
+                } else {
+                  //logic loi: neu k get dc list tn -> tao cuoc tro chuyen moi-> truyen tham so khac???
+                  var value = await startConversationBloc.startConversation();
+                  _listChatMess =
+                      await Provider.of<ConversationProvider>(context)
+                          .getMessages();
+                  if (value.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SupportingScreen(
+                              customerId, _listChatMess, name);
+                        },
+                      ),
+                    );
+                  }
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "Bắt đầu cuộc trò chuyện với nhân viên hỗ trợ",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

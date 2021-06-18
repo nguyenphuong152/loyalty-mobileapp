@@ -30,25 +30,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                "/home", (Route<dynamic> route) => false)),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'Điểm của tôi',
-          style: TextStyle(
-            fontSize: mFontSize,
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ),
       backgroundColor: mSecondaryColor,
       body: StreamBuilder(
         stream: pointBloc.customerStatus,
@@ -259,7 +240,7 @@ class _BodyState extends State<Body> {
         customerStatus.currency;
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
       width: size.width,
       color: Colors.white,
       child: Column(
