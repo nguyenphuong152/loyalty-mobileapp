@@ -8,6 +8,7 @@ import 'package:loyalty_app/models/carousel_model.dart';
 import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/campaign/campaign_screen.dart';
 import 'package:loyalty_app/view/datepicker/datepicker_screen.dart';
+import 'package:loyalty_app/view/product/product_screen.dart';
 import 'package:loyalty_app/view/stores/stores_screen.dart';
 import 'package:loyalty_app/view/support/start_conversation_screen.dart';
 
@@ -93,7 +94,7 @@ class _BodyState extends State<Body> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return DatePickerScreen();
+                                  return ProductScreen();
                                 },
                               ),
                             );

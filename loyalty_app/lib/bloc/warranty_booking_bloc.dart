@@ -1,31 +1,31 @@
-import 'package:loyalty_app/models/maintenance_model.dart';
+import 'package:loyalty_app/models/warranty_model.dart';
 import 'package:loyalty_app/providers/customer_api_provider.dart';
 import 'package:loyalty_app/src/services/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MaintenanceBookingBloc {
+class WarrantyBookingBloc {
   final _repository = Repository();
-  final _maintenanceBookFetcher = PublishSubject<ListMaintenanceModel>();
+  final _warrantyBookFetcher = PublishSubject<ListWarrantyModel>();
 
-  Stream<ListMaintenanceModel> get maintenanceBook =>
-      _maintenanceBookFetcher.stream;
+  Stream<ListWarrantyModel> get warrantyBook => _warrantyBookFetcher.stream;
 
-  fetchListMaintenanceBook() async {
-    if (!_maintenanceBookFetcher.isClosed) {
-      ListMaintenanceModel maintenanceBookModel =
-          await _repository.fetchCustomerMaintenanceBooking();
-      _maintenanceBookFetcher.sink.add(maintenanceBookModel);
+  fetchListWarrantyBook() async {
+    if (!_warrantyBookFetcher.isClosed) {
+      print("fetch points");
+      ListWarrantyModel warrantyBookModel =
+          await _repository.fetchCustomerWarrantyBooking();
+      _warrantyBookFetcher.sink.add(warrantyBookModel);
     }
   }
 
-  Future<String> booking(
+  Future<String> bookingWarranty(
     String productSku,
     String warrantyCenter,
     DateTime bookingDate,
     String bookingTime,
     DateTime createAt,
   ) async {
-    final res = await CustomerApiProvider().booking(
+    final res = await CustomerApiProvider().bookingWarranty(
         productSku, warrantyCenter, bookingDate, bookingTime, createAt);
     return res;
   }
@@ -41,7 +41,7 @@ class MaintenanceBookingBloc {
     String cost,
     String paymentStatus,
   ) async {
-    final res = await CustomerApiProvider().editBooking(
+    final res = await CustomerApiProvider().editBookingWarranty(
         productSku,
         warrantyCenter,
         bookingDate,
@@ -55,6 +55,6 @@ class MaintenanceBookingBloc {
   }
 
   dispose() {
-    _maintenanceBookFetcher.close();
+    _warrantyBookFetcher.close();
   }
 }

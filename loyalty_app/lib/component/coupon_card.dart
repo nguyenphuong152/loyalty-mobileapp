@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/view/campaign/components/voucher_detail.dart';
 
 class CouponCard extends StatelessWidget {
   final String status;
@@ -26,6 +27,7 @@ class CouponCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String status;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
@@ -124,7 +126,27 @@ class CouponCard extends StatelessWidget {
                                   fontWeight: FontWeight.w700),
                             ),
                           ],
-                        )
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                  child: const Text('Chi Tiết'),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return VoucherDetail(
+                                            status == 'inactive'
+                                                ? 'Chưa kích hoạt'
+                                                : 'Đã kích hoạt',
+                                            couponCode,
+                                            DateFormat('dd-MM-yyyy').format(
+                                                DateTime.parse(activeTo)));
+                                      },
+                                    ));
+                                  }),
+                              const SizedBox(width: 8)
+                            ])
                       ],
                     ),
                   ),

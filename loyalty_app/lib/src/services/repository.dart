@@ -4,6 +4,7 @@ import 'package:loyalty_app/models/maintenance_model.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
 import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
+import 'package:loyalty_app/models/warranty_model.dart';
 import 'package:loyalty_app/providers/customer_api_provider.dart';
 
 class Repository {
@@ -31,6 +32,9 @@ class Repository {
 
   Future<ListMaintenanceModel> fetchCustomerMaintenanceBooking() =>
       customerApiProvider.fetchCustomerMaintenanceBooking();
+
+  Future<ListWarrantyModel> fetchCustomerWarrantyBooking() =>
+      customerApiProvider.fetchCustomerWarrantyBooking();
 
   // Future<Main> fetchCustomerMaintenanceBooking() =>
   // customerApiProvider.fetchCustomerMaintenanceBooking();

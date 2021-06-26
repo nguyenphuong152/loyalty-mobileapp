@@ -106,20 +106,18 @@ class _SupportingScreenState extends State<SupportingScreen> {
                         border: InputBorder.none,
                         hintText: "Hãy viết gì đó ..."),
                   )),
-                  Provider.of<ConversationProvider>(context).busy
-                      ? CircularProgressIndicator()
-                      : InkWell(
-                          onTap: _sendMessage,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: mPrimaryColor,
-                            ),
-                            child: FaIcon(FontAwesomeIcons.paperPlane,
-                                color: Colors.white),
-                          ),
-                        )
+                  InkWell(
+                    onTap: _sendMessage,
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: mPrimaryColor,
+                      ),
+                      child: FaIcon(FontAwesomeIcons.paperPlane,
+                          color: Colors.white),
+                    ),
+                  )
                 ],
               ),
             )
@@ -145,6 +143,8 @@ class _SupportingScreenState extends State<SupportingScreen> {
       channel.sink.add(jsonString);
     }
 
+    messageTextEditController.clear();
+
     message.message = messageTextEditController.text.trim();
     message.messageTimestamp = DateTime.now().toString();
 
@@ -152,8 +152,6 @@ class _SupportingScreenState extends State<SupportingScreen> {
       context,
     ).storeMessage(message);
     Provider.of<ConversationProvider>(context).updateConversation(message);
-
-    messageTextEditController.clear();
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: Duration(milliseconds: 500),

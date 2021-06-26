@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/view/booking_management/MaintenanceBookingManagement.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -31,15 +31,8 @@ class _BodyState extends State<Body> {
         child: Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            "Chọn thời gian bạn muốn bảo trì sản phẩm",
-            style: TextStyle(color: Colors.grey, fontSize: mFontSize),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(color: Colors.white),
+          margin: EdgeInsets.symmetric(vertical: 10.0),
           child: CalendarCarousel<Event>(
             onDayPressed: (DateTime date, List<Event> events) {
               this.setState(() {
@@ -52,7 +45,7 @@ class _BodyState extends State<Body> {
             thisMonthDayBorderColor: Colors.grey,
             weekFormat: false,
             markedDatesMap: _markedDateMap,
-            height: 400.0,
+            height: 450.0,
             selectedDateTime: _currentDate,
             daysHaveCircularBorder: false,
             selectedDayBorderColor: mPrimaryColor,

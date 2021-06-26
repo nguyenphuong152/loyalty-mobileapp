@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
-import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/view/booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/view/booking_management/WarrantyBookingScreen.dart';
+import 'package:loyalty_app/view/support_request/support_request_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -40,7 +42,7 @@ class _BodyState extends State<Body> {
             FontAwesomeIcons.cogs,
             size: 18,
           ),
-          title: Text('Thông tin đăng ký bảo hành',
+          title: Text('Thông tin đăng ký bảo trì',
               style: TextStyle(fontSize: mFontSize)),
           onTap: () {
             Navigator.push(
@@ -48,6 +50,43 @@ class _BodyState extends State<Body> {
               MaterialPageRoute(
                 builder: (context) {
                   return MaintenanceBookingManagementScreen();
+                },
+              ),
+            );
+          },
+        ),
+        ListTile(
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.cogs,
+            size: 18,
+          ),
+          title: Text('Thông tin đăng ký bảo hành',
+              style: TextStyle(fontSize: mFontSize)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return WarrantyBookingManagement();
+                },
+              ),
+            );
+          },
+        ),
+        ListTile(
+          dense: true,
+          leading: FaIcon(
+            FontAwesomeIcons.cogs,
+            size: 18,
+          ),
+          title: Text('Hộp thư góp ý', style: TextStyle(fontSize: mFontSize)),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SupportRequestScreen();
                 },
               ),
             );

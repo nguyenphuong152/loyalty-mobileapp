@@ -10,6 +10,7 @@ import 'package:loyalty_app/models/maintenance_model.dart';
 import 'package:loyalty_app/models/transaction_model.dart';
 import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
+import 'package:loyalty_app/models/warranty_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerApiProvider {
@@ -172,7 +173,6 @@ class CustomerApiProvider {
   }
 
   Future<ListMaintenanceModel> fetchCustomerMaintenanceBooking() async {
-    print("entered");
     //get value store in SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
@@ -186,7 +186,6 @@ class CustomerApiProvider {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       return ListMaintenanceModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load maintenance list with status: ' +
@@ -216,6 +215,9 @@ class CustomerApiProvider {
           "bookingTime": bookingTime,
           "warrantyCenter": warrantyCenter,
           "createdAt": createAt.toIso8601String(),
+          "description": "test",
+          "cost": "1.000.000",
+          "paymentStatus": "unpaid",
           "active": true
         },
         "customerData": {
@@ -254,6 +256,9 @@ class CustomerApiProvider {
     String bookingTime,
     DateTime createAt,
     String maintenanceId,
+    String discription,
+    String cost,
+    String paymentStatus,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
@@ -265,15 +270,144 @@ class CustomerApiProvider {
         "bookingTime": bookingTime,
         "warrantyCenter": warrantyCenter,
         "createdAt": createAt.toIso8601String(),
-        "active": true
+        "active": true,
+        "description": discription,
+        "cost": cost,
+        "paymentStatus": paymentStatus
+      }
+    });
+    try {
+      var res = await http.put(
+        '$baseUrl/maintenance/$maintenanceId',
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+      print(data);
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        print("success");
+        return res.body;
+      } else {
+        return null;
+      }
+    } finally {}
+  }
+
+  Future<ListWarrantyModel> fetchCustomerWarrantyBooking() async {
+    //get value store in SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    Response response = await http.get(
+      '$baseUrl/warranty',
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      return ListWarrantyModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load maintenance list with status: ' +
+          response.statusCode.toString());
+    }
+  }
+
+  Future<String> bookingWarranty(
+    String productSku,
+    String warrantyCenter,
+    DateTime bookingDate,
+    String bookingTime,
+    DateTime createAt,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email');
+    String name = prefs.getString('name');
+    String phone = prefs.getString('phone');
+    String loyaltyCardNumber = prefs.getString('loyaltyCardNumber');
+    String token = prefs.getString('token');
+
+    final data = jsonEncode({
+      "warranty": {
+        "warrantyData": {
+          "productSku": productSku,
+          "bookingDate": bookingDate.toIso8601String(),
+          "bookingTime": bookingTime,
+          "warrantyCenter": warrantyCenter,
+          "createdAt": createAt.toIso8601String(),
+          "description": "test",
+          "cost": "1.000.000",
+          "paymentStatus": "unpaid",
+          "active": true
+        },
+        "customerData": {
+          "email": email,
+          "name": name,
+          "nip": "aaa",
+          "phone": phone,
+          "loyaltyCardNumber": loyaltyCardNumber,
+        }
       }
     });
 
+    try {
+      var res = await http.post(
+        '$baseUrl/warranty',
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        print("success");
+        return res.body;
+      } else {
+        return null;
+      }
+    } finally {}
+  }
+
+  Future<String> editBookingWarranty(
+    String productSku,
+    String warrantyCenter,
+    DateTime bookingDate,
+    String bookingTime,
+    DateTime createAt,
+    String maintenanceId,
+    String discription,
+    String cost,
+    String paymentStatus,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    final data = jsonEncode({
+      "warranty": {
+        "productSku": productSku,
+        "warrantyCenter": warrantyCenter,
+        "bookingDate": bookingDate.toIso8601String(),
+        "bookingTime": bookingTime,
+        "createdAt": createAt.toIso8601String(),
+        "active": true,
+        "description": discription,
+        "cost": cost,
+        "paymentStatus": paymentStatus
+      }
+    });
+
+    print(maintenanceId);
     print(data);
 
     try {
       var res = await http.put(
-        '$baseUrl/maintenance/$maintenanceId',
+        '$baseUrl/warranty/$maintenanceId',
         body: data,
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
