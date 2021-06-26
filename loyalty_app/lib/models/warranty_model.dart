@@ -1,21 +1,22 @@
-class ListMaintenanceModel {
+class ListWarrantyModel {
   int total;
-  List<MaintenanceModel> maintenanceModels = [];
+  List<WarrantyModel> warrantyModels = [];
 
-  ListMaintenanceModel({this.maintenanceModels, this.total});
+  ListWarrantyModel({this.warrantyModels, this.total});
 
-  ListMaintenanceModel.fromJson(Map<String, dynamic> parsedJson) {
+  ListWarrantyModel.fromJson(Map<String, dynamic> parsedJson) {
     total = parsedJson["total"];
-    List<MaintenanceModel> temp = [];
+    List<WarrantyModel> temp = [];
     for (int i = 0; i < total; i++) {
-      MaintenanceModel trans = MaintenanceModel(parsedJson["maintenances"][i]);
+      WarrantyModel trans = WarrantyModel(parsedJson["warrantys"][i]);
+      print(trans.maintenanceId);
       temp.add(trans);
     }
-    maintenanceModels = temp;
+    warrantyModels = temp;
   }
 }
 
-class MaintenanceModel {
+class WarrantyModel {
   String maintenanceId;
   String productSku;
   DateTime bookingDate;
@@ -27,15 +28,15 @@ class MaintenanceModel {
   String cost;
   String paymentStatus;
 
-  MaintenanceModel(item) {
-    maintenanceId = item["maintenanceId"];
+  WarrantyModel(item) {
+    maintenanceId = item["warrantyId"]["warrantyId"];
     productSku = item["productSku"];
     bookingDate = DateTime.parse(item["bookingDate"]).toLocal();
     bookingTime = item["bookingTime"];
     warrantyCenter = item["warrantyCenter"];
     createdAt = DateTime.parse(item["createdAt"]);
     active = item["active"];
-    discription = item["description"];
+    discription = item["discription"];
     cost = item["cost"];
     paymentStatus = item["paymentStatus"];
   }

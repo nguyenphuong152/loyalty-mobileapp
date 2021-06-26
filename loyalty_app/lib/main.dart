@@ -4,7 +4,7 @@ import 'package:loyalty_app/providers/chat/locator.dart';
 import 'package:loyalty_app/providers/chat/provider_setup.dart';
 import 'package:loyalty_app/view/account/account_screen.dart';
 import 'package:loyalty_app/view/home/home_screen.dart';
-import 'package:loyalty_app/view/maintenance_booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/view/booking_management/MaintenanceBookingManagement.dart';
 import 'package:loyalty_app/view/support/supporting_screen.dart';
 import 'package:loyalty_app/view/welcome/login/login_screen.dart';
 import 'package:provider/provider.dart';

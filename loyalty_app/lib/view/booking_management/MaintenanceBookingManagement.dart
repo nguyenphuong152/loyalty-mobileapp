@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loyalty_app/view/maintenance_booking_management/components/body.dart';
+import 'package:loyalty_app/view/booking_management/components/body.dart';
 
 class MaintenanceBookingManagementScreen extends StatefulWidget {
   @override
