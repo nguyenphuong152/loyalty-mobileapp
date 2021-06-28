@@ -30,12 +30,15 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: mPrimaryColor,
+              size: 16,
             ),
-            onPressed: () => Navigator.of(context).pop()),
+            onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                "/home", (Route<dynamic> route) => false)),
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
@@ -43,7 +46,7 @@ class _BodyState extends State<Body> {
           style: TextStyle(
             fontSize: mFontSize,
             color: Colors.black,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

@@ -72,7 +72,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
@@ -82,7 +82,10 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
             labelColor: mPrimaryColor,
             unselectedLabelColor: Colors.black,
             labelStyle: TextStyle(
-                fontSize: 16, color: mPrimaryColor), //For Selected tab
+              fontSize: mFontSize,
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ), //For Selected tab
             unselectedLabelStyle: TextStyle(fontSize: 16, color: Colors.black),
             indicatorColor: mPrimaryColor,
             onTap: (index) {

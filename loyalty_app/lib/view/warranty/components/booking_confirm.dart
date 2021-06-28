@@ -33,18 +33,18 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: mPrimaryColor,
                 size: 16,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
-          backgroundColor: mPrimaryColor,
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'Thông tin đăng kí',
             style: TextStyle(
               fontSize: mFontSize,
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -243,58 +243,38 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(color: Colors.white),
-      child: Column(
-        children: [
-          Row(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Text(
-                        "Ngày dự kiến: ",
-                        style:
-                            TextStyle(fontSize: mFontSize, color: Colors.grey),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        DateFormat('dd-MM-yyyy').format(widget._bookingDate),
-                        style: TextStyle(fontSize: 18.0),
-                      )
-                    ],
-                  ),
-                ],
+              Text(
+                "Ngày dự kiến: ",
+                style: TextStyle(fontSize: mFontSize, color: Colors.grey),
+              ),
+              Text(
+                "Thời gian: ",
+                style: TextStyle(fontSize: mFontSize, color: Colors.grey),
+              )
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat('dd-MM-yyyy').format(widget._bookingDate),
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                widget._time,
+                style: TextStyle(fontSize: 18.0),
               )
             ],
           ),
           SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                children: [
-                  Text(
-                    "Thời gian: ",
-                    style: TextStyle(fontSize: mFontSize, color: Colors.grey),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    widget._time,
-                    style: TextStyle(fontSize: 18.0),
-                  )
-                ],
-              ),
-            ],
-          ),
+            width: 20,
+          )
         ],
       ),
     );
@@ -311,7 +291,7 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
             children: <Widget>[
               Text(
                 "Trung tâm bảo hành (Nhấn để chọn)",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(fontSize: 14, color: mPrimaryColor),
               ),
               IconButton(
                   icon: Icon(

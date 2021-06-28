@@ -5,6 +5,7 @@ import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/view/booking_management/MaintenanceBookingManagement.dart';
 import 'package:loyalty_app/view/booking_management/WarrantyBookingScreen.dart';
 import 'package:loyalty_app/view/support_request/support_request_screen.dart';
+import 'package:loyalty_app/view/account/components/test.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -77,7 +78,7 @@ class _BodyState extends State<Body> {
         ListTile(
           dense: true,
           leading: FaIcon(
-            FontAwesomeIcons.cogs,
+            FontAwesomeIcons.mailBulk,
             size: 18,
           ),
           title: Text('Hộp thư góp ý', style: TextStyle(fontSize: mFontSize)),

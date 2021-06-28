@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,9 +29,16 @@ class SupportingScreen extends StatefulWidget {
 class _SupportingScreenState extends State<SupportingScreen> {
   ScrollController _scrollController = ScrollController();
   TextEditingController messageTextEditController = TextEditingController();
+
   ChatMessageModel message;
+
   final WebSocketChannel channel = IOWebSocketChannel.connect(webSocket);
   List<ChatMessageSocketModel> messageList = [];
+
+  PickedFile imageFile;
+  final ImagePicker picker = ImagePicker();
+
+  //1-cam 2-gallery
 
   @override
   void initState() {
@@ -41,22 +49,27 @@ class _SupportingScreenState extends State<SupportingScreen> {
     message.senderId = widget.customerId;
     message.senderName = widget.customerName;
 
-    channel.stream.listen((data) {
-      ChatMessageSocketModel mess =
-          ChatMessageSocketModel.fromJson(json.decode(data));
-      setState(() {
-        if (mess.from == "Me" || mess.customerId == widget.customerId) {
-          messageList.add(mess);
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            _scrollController.animateTo(
-              _scrollController.position.maxScrollExtent,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-            );
-          });
-        }
-      });
-    });
+//  userId: user_id,
+//       customerId: cusId,
+//       messId: messId,
+//       time: lastTime,
+//       type: media/text???
+    // channel.stream.listen((data) {
+    //   ChatMessageSocketModel mess =
+    //       ChatMessageSocketModel.fromJson(json.decode(data));
+    //   setState(() {
+    //     if (mess.from == "Me" || mess.customerId == widget.customerId) {
+    //       messageList.add(mess);
+    //       SchedulerBinding.instance.addPostFrameCallback((_) {
+    //         _scrollController.animateTo(
+    //           _scrollController.position.maxScrollExtent,
+    //           duration: Duration(milliseconds: 500),
+    //           curve: Curves.fastOutSlowIn,
+    //         );
+    //       });
+    //     }
+    //   });
+    // });
   }
 
   @override
@@ -64,12 +77,15 @@ class _SupportingScreenState extends State<SupportingScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: 16,
               ),
-              onPressed: () => Navigator.of(context).pop()),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/home", (Route<dynamic> route) => false)),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
@@ -77,7 +93,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
             style: TextStyle(
               fontSize: mFontSize,
               color: Colors.black,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
@@ -107,6 +123,26 @@ class _SupportingScreenState extends State<SupportingScreen> {
                         hintText: "Hãy viết gì đó ..."),
                   )),
                   InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: ((builder) => bottomSheet()),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: mPrimaryColor,
+                      ),
+                      child:
+                          FaIcon(FontAwesomeIcons.camera, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  InkWell(
                     onTap: _sendMessage,
                     child: Container(
                       padding: EdgeInsets.all(10),
@@ -131,27 +167,28 @@ class _SupportingScreenState extends State<SupportingScreen> {
     var userId = message.senderId;
     var cusId = "22200000-0000-474c-b092-b0dd880c07e2";
 
-    if (messageTextEditController.text.isNotEmpty) {
-      ChatMessageSocketModel mess = new ChatMessageSocketModel();
-      mess.userId = userId;
-      mess.customerId = cusId;
-      mess.msg = messageTextEditController.text;
-      mess.time = current;
-
-      var jsonString = json.encode(mess.toJson());
-
-      channel.sink.add(jsonString);
-    }
-
-    messageTextEditController.clear();
-
     message.message = messageTextEditController.text.trim();
     message.messageTimestamp = DateTime.now().toString();
 
-    await Provider.of<ConversationProvider>(
+    var messID = await Provider.of<ConversationProvider>(
       context,
-    ).storeMessage(message);
-    Provider.of<ConversationProvider>(context).updateConversation(message);
+    ).storeMessage(message, imageFile);
+
+    // if (messageTextEditController.text.isNotEmpty) {
+    //   ChatMessageSocketModel mess = new ChatMessageSocketModel();
+    //   mess.userId = userId;
+    //   mess.customerId = cusId;
+    //   mess.msg = messageTextEditController.text;
+    //   mess.time = current;
+
+    //   var jsonString = json.encode(mess.toJson());
+
+    //   channel.sink.add(jsonString);
+    // }
+
+    messageTextEditController.clear();
+
+    //Provider.of<ConversationProvider>(context).updateConversation(message);
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: Duration(milliseconds: 500),
@@ -179,6 +216,45 @@ class _SupportingScreenState extends State<SupportingScreen> {
       controller: _scrollController,
     );
   }
+
+  void _openGallary(ImageSource source) async {
+    final media = await picker.getImage(source: source);
+
+    this.setState(() {
+      imageFile = media;
+    });
+
+    _sendMessage();
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          Text("Chọn ảnh hoặc video"),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              FlatButton.icon(
+                  onPressed: () => _openGallary(ImageSource.camera),
+                  icon: Icon(Icons.camera),
+                  label: Text("Camera")),
+              FlatButton.icon(
+                  onPressed: () => _openGallary(ImageSource.gallery),
+                  icon: Icon(Icons.collections),
+                  label: Text("Thư viện"))
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  void addChatToSocket() {}
 
   @override
   void dispose() {

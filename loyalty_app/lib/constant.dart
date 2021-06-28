@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 const mPrimaryColor = Color(0xFF7579e7);
 const mSecondPrimaryColor = Color(0xFF2C2C2C);
@@ -9,11 +10,17 @@ const mLinear = Color(0xFF848ccf);
 const mFontSize = 16.0;
 const mFontTitle = 18.0;
 const mFontListTile = 14.0;
-const baseUrl = 'http://70.37.66.47/app_dev.php/api';
-const webSocket = 'ws://70.37.66.47:8080';
+const baseUrl = 'http://65.52.36.214/app_dev.php/api';
+const webSocket = 'ws://65.52.36.214:8080';
 
 TextStyle dayStyle(FontWeight fontWeight) {
   return TextStyle(color: Colors.black, fontWeight: fontWeight);
+}
+
+/// Function Format DateTime to String with layout string
+String formatNumber(double value) {
+  final f = new NumberFormat("#,###", "vi_VN");
+  return f.format(value);
 }
 
 class Constants {

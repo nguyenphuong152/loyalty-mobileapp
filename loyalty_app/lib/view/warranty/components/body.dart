@@ -83,7 +83,7 @@ class _BodyState extends State<Body> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
-                  color: mPrimaryColor,
+                  color: mLinear,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(56),
                       topRight: Radius.circular(56))),

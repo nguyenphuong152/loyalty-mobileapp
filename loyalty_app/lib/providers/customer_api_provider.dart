@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/coupons_model.dart';
@@ -11,7 +12,9 @@ import 'package:loyalty_app/models/transaction_model.dart';
 import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
 import 'package:loyalty_app/models/warranty_model.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loyalty_app/models/request_support_model.dart';
 
 class CustomerApiProvider {
   CustomerModel customer = CustomerModel();
@@ -422,5 +425,83 @@ class CustomerApiProvider {
         return null;
       }
     } finally {}
+  }
+
+  Future<String> pointTransfer(
+    String receiver,
+    double point,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    final data = jsonEncode({
+      "transfer": {
+        "receiver": "11111111-0000-474c-b092-b0dd880c07e1",
+        "points": point,
+      }
+    });
+    print(data);
+
+    try {
+      var res = await http.post(
+        '$baseUrl/customer/points/p2p-transfer',
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        print("success");
+        return res.body;
+      } else {
+        return null;
+      }
+    } finally {}
+  }
+
+  Future<String> requestSupport(RequestSupportModel requestSupportModel) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+    String customerId = prefs.getString('customerId');
+
+    final mimeTypeData =
+        lookupMimeType(requestSupportModel.photo, headerBytes: [0xFF, 0xD8])
+            .split('/');
+
+    final file = await http.MultipartFile.fromPath(
+        'suggestionBox[photo]', requestSupportModel.photo,
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+
+    Map<String, String> headers = {
+      // "content-Type": "multipart/form-data",
+      "Accept": "application/json",
+      "Authorization": "Bearer " + token
+    }; //
+
+    var request = new http.MultipartRequest(
+        "POST", Uri.parse(baseUrl + "/suggestion_box/"));
+
+    request.headers.addAll(headers);
+
+    request.fields['suggestionBox[senderId]'] = customerId;
+    request.fields['suggestionBox[senderName]'] =
+        requestSupportModel.senderName;
+    request.fields['suggestionBox[problemType]'] =
+        requestSupportModel.problemType;
+    request.fields['suggestionBox[description]'] =
+        requestSupportModel.description;
+    request.fields['suggestionBox[active]'] =
+        requestSupportModel.isActive ? "true" : "false";
+    request.files.add(file);
+    request.fields['suggestionBox[timestamp]'] =
+        DateTime.now().toIso8601String();
+
+    var response = await request.send();
+    // listen for response
+
+    var res = await http.Response.fromStream(response);
+    return json.decode(res.body)["suggestionBoxId"];
   }
 }

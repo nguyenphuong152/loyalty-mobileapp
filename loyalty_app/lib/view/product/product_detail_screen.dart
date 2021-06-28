@@ -75,28 +75,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 fontSize: mFontTitle,
                                 fontWeight: FontWeight.w700)),
                         SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Hạn bảo hành:"),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              DateFormat("dd-MM-yyyy")
-                                  .format(widget.product.warrantyExpired),
-                              style: TextStyle(
-                                  color: widget.product.warrantyExpired
-                                              .compareTo(DateTime.now()) >
-                                          0
-                                      ? Colors.black
-                                      : Colors.red),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -126,7 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 SizedBox(
                                   height: 6,
                                 ),
-                                Text(widget.product.price.toString(),
+                                Text(formatNumber(widget.product.price),
                                     style: Constants.contentProductDetail),
                               ],
                             ),
@@ -146,8 +124,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 12,
+                        Divider(
+                          color: mDividerColor,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -155,13 +133,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Text(
                               "Thông tin bảo hành",
                               style: TextStyle(
-                                  fontSize: mFontTitle,
-                                  fontWeight: FontWeight.w600),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: mPrimaryColor),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Hạn bảo hành:"),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              DateFormat("dd-MM-yyyy")
+                                  .format(widget.product.warrantyExpired),
+                              style: TextStyle(
+                                  color: widget.product.warrantyExpired
+                                              .compareTo(DateTime.now()) >
+                                          0
+                                      ? Colors.black
+                                      : Colors.red),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

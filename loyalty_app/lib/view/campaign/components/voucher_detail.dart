@@ -17,12 +17,15 @@ class _VoucherDetailState extends State<VoucherDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: 16,
               ),
-              onPressed: () => Navigator.of(context).pop()),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/home", (Route<dynamic> route) => false)),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
@@ -30,7 +33,7 @@ class _VoucherDetailState extends State<VoucherDetail> {
             style: TextStyle(
               fontSize: mFontSize,
               color: Colors.black,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),

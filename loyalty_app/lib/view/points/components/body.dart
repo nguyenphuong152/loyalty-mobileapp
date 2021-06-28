@@ -5,6 +5,7 @@ import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/bloc/point_bloc.dart';
+import 'package:loyalty_app/view/point_transfer/p2p_point_transfer.dart';
 import 'package:loyalty_app/view/point_transfer/point_transfer_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -46,18 +47,95 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildData(CustomerStatusModel customerStatus) {
-    return Column(
-      children: [
-        transactionAmount(customerStatus),
-        SizedBox(
-          height: 10,
-        ),
-        accumulated(customerStatus),
-        SizedBox(
-          height: 10,
-        ),
-        pointAmount(customerStatus),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          transactionAmount(customerStatus),
+          SizedBox(
+            height: 10,
+          ),
+          accumulated(customerStatus),
+          SizedBox(
+            height: 10,
+          ),
+          pointAmount(customerStatus),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PointTransfer();
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Lịch sử điểm ",
+                    style: TextStyle(fontSize: 15, color: mPrimaryColor),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.angleRight,
+                    size: 18,
+                    color: mPrimaryColor,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return P2PTransferPoint(customerStatus.points.toString());
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Chuyển điểm cho bạn bè",
+                    style: TextStyle(fontSize: 15, color: mPrimaryColor),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.angleRight,
+                    size: 18,
+                    color: mPrimaryColor,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 
@@ -155,49 +233,6 @@ class _BodyState extends State<Body> {
                         textAlign: TextAlign.end))
               ],
             ),
-            InkWell(
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AccountInfoScreen();
-                    },
-                  ),
-                )
-              },
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PointTransfer();
-                      },
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Lịch sử điểm ",
-                        style: TextStyle(fontSize: 15, color: mPrimaryColor),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.angleRight,
-                        size: 18,
-                        color: mPrimaryColor,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
           ],
         ));
   }

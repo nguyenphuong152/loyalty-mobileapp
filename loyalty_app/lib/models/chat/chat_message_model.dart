@@ -40,6 +40,7 @@ class ChatMessageSocketModel {
   String msg;
   String time;
   String from;
+  //String filePath;
 
   ChatMessageSocketModel(
       {this.customerId, this.userId, this.msg, this.time, this.from});

@@ -110,11 +110,11 @@ class _BodyState extends State<Body> {
                                     Border.all(color: mPrimaryColor, width: 1)),
                             child: Row(
                               children: <Widget>[
-                                Icon(Icons.calendar_view_day_outlined),
+                                Icon(Icons.local_mall_outlined),
                                 Padding(
                                     padding: EdgeInsets.only(left: 16),
                                     child: Text(
-                                      "Đặt lịch",
+                                      "Sản phẩm",
                                       style: Constants.titleService,
                                     ))
                               ],

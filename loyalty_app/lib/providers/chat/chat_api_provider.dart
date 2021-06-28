@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,32 +75,52 @@ class ChatApiProvider {
     } finally {}
   }
 
-  Future<http.Response> sendChatMessage(ChatMessageModel chatMessage) async {
+//test proto
+  Future<http.Response> sendChatMessage(
+      ChatMessageModel chatMessage, PickedFile media) async {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
 
-    final data = jsonEncode({
-      "message": {
-        "conversationId": chatMessage.conversationId,
-        "conversationParticipantIds": [
-          "22200000-0000-474c-b092-b0dd880c07e2",
-          chatMessage.senderId
-        ],
-        "senderId": chatMessage.senderId,
-        "senderName": chatMessage.senderName,
-        "message": chatMessage.message,
-        "messageTimestamp": chatMessage.messageTimestamp
-      }
-    });
-    var res = await http.post(
-      '$baseUrl/chat/message',
-      body: data,
-      headers: {
-        HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: "Bearer $token"
-      },
-    );
-    return res;
+    print(chatMessage.conversationId);
+    print(chatMessage.senderId);
+    print(chatMessage.senderName);
+    print(chatMessage.message);
+    print(chatMessage.messageTimestamp);
+
+    Map<String, String> headers = {
+      "Accept": "application/json",
+      "Authorization": "Bearer " + token
+    }; //
+
+    final mimeTypeData =
+        lookupMimeType(media.path, headerBytes: [0xFF, 0xD8]).split('/');
+
+    final file = await http.MultipartFile.fromPath(
+        'message[photoMessage]', media.path,
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+
+    var postUri = Uri.parse('$baseUrl/chat/message/photo');
+
+    var request = new http.MultipartRequest("POST", postUri);
+
+    request.headers.addAll(headers);
+
+    request.fields['massage[conversationId]'] = chatMessage.conversationId;
+    request.fields['massage[conversationParticipantIds][0]'] =
+        "22200000-0000-474c-b092-b0dd880c07e2";
+    request.fields['massage[conversationParticipantIds][1]'] =
+        chatMessage.senderId;
+    request.fields['massage[senderId]'] = chatMessage.senderId;
+    request.fields['massage[senderName]'] = chatMessage.senderName;
+    request.fields['massage[message]'] = chatMessage.message;
+    request.files.add(file);
+    request.fields['massage[messageTimestamp]'] = chatMessage.messageTimestamp;
+
+    var response = await request.send();
+    // listen for response
+
+    var res = await http.Response.fromStream(response);
+    return json.decode(res.body);
   }
 
   Future<http.Response> updateConversation(ChatMessageModel chatMessage) async {

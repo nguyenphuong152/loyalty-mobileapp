@@ -38,21 +38,23 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: 16,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
-            'Thông tin đăng kí bảo hành',
+            'Thông tin đăng ký bảo hành',
             style: TextStyle(
               fontSize: mFontSize,
               color: Colors.black,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
@@ -108,103 +110,76 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
         child: Column(children: [
           Row(
             children: [
-              Expanded(
-                flex: 10,
-                child: Row(
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.clock,
-                      color: Colors.grey,
-                      size: 13,
-                    ),
-                    SizedBox(
-                      width: 2.0,
-                    ),
-                    Text(
-                        DateFormat("dd-MM-yyyy hh:mm a")
-                            .format(warrantyModel.createdAt),
-                        style: TextStyle(fontSize: 12, color: Colors.grey))
-                  ],
-                ),
+              FaIcon(
+                FontAwesomeIcons.clock,
+                color: Colors.grey,
+                size: 13,
               ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Text(
+                  DateFormat("dd-MM-yyyy hh:mm a")
+                      .format(warrantyModel.createdAt),
+                  style: TextStyle(fontSize: 12, color: Colors.grey))
             ],
           ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Mã sản phẩm",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Mã sản phẩm",
+                    style: TextStyle(fontSize: mFontListTile),
+                  ),
+                  Text(
+                    "Thời gian đến",
+                    style: TextStyle(fontSize: mFontListTile),
+                  ),
+                  Text(
+                    "Trung tâm bảo hành",
+                    style: TextStyle(fontSize: mFontListTile),
+                  ),
+                  Text(
+                    "Tình trạng",
+                    style: TextStyle(fontSize: mFontListTile),
+                  ),
+                ],
               ),
-              Expanded(
-                flex: 16,
-                child: Text(warrantyModel.productSku,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+              SizedBox(
+                width: 30,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(warrantyModel.productSku,
+                      style: TextStyle(
+                          fontSize: mFontListTile,
+                          fontWeight: FontWeight.w700)),
+                  Text(
+                      DateFormat("dd-MM-yyyy")
+                              .format(warrantyModel.bookingDate) +
+                          " " +
+                          warrantyModel.bookingTime,
+                      style: TextStyle(
+                          fontSize: mFontListTile,
+                          fontWeight: FontWeight.w700)),
+                  Text(warrantyModel.warrantyCenter,
+                      style: TextStyle(
+                          fontSize: mFontListTile,
+                          fontWeight: FontWeight.w700)),
+                  Text(warrantyModel.active ? "Chưa đến" : "Đã đến",
+                      style: TextStyle(
+                          fontSize: mFontListTile,
+                          fontWeight: FontWeight.w700,
+                          color:
+                              warrantyModel.active ? Colors.red : Colors.grey)),
+                ],
               )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Thời gian đến",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(
-                    DateFormat("dd-MM-yyyy").format(warrantyModel.bookingDate) +
-                        " " +
-                        warrantyModel.bookingTime,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Trung tâm bảo hành",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(warrantyModel.warrantyCenter,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            children: [
-              Expanded(
-                flex: 6,
-                child: Text(
-                  "Tình trạng",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 15,
-                child: Text(warrantyModel.active ? "Chưa đến" : "Đã đến",
-                    style: TextStyle(
-                        fontSize: mFontListTile,
-                        fontWeight: FontWeight.w700,
-                        color:
-                            warrantyModel.active ? Colors.red : Colors.grey)),
-              ),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
@@ -233,4 +208,70 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
           ])
         ]));
   }
+
+  // Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 10,
+  //             child:
+  //           ),
+  //         ],
+  //       ),
+  //       const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //       Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 8,
+  //             child: Text(
+  //               "Mã sản phẩm",
+  //               style: TextStyle(fontSize: mFontListTile),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             flex: 16,
+  //             child:
+  //           )
+  //         ],
+  //       ),
+  //       const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //       Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 8,
+  //             child:
+  //           ),
+  //           Expanded(
+  //             flex: 16,
+  //             child:
+  //           )
+  //         ],
+  //       ),
+  //       const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //       Row(
+  //         children: [
+  //           Expanded(
+  //             flex: 12,
+  //             child:
+  //           ),
+  //           Expanded(
+  //             flex: 16,
+  //             child:
+  //           )
+  //         ],
+  //       ),
+  //       Row(
+  //         crossAxisAlignment: CrossAxisAlignment.baseline,
+  //         children: [
+  //           Expanded(
+  //             flex: 6,
+  //             child:
+  //           ),
+  //           Expanded(
+  //             flex: 15,
+  //             child:
+  //           ),
+  //         ],
+  //       ),
+
+  //     ])
 }

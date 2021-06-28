@@ -18,10 +18,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final MaintenanceBookingBloc maintenanceBookingBloc =
       MaintenanceBookingBloc();
-  String _time = "8:00";
-  String _warrantyCenter = "KTX Khu B";
-  String _maintenanceId;
-  DateTime _createAt;
+
   ProductModel product;
 
   TextEditingController productSku = new TextEditingController();
@@ -44,21 +41,23 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: mPrimaryColor,
+              size: 16,
             ),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 "/home", (Route<dynamic> route) => false)),
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          'Thông tin đăng kí bảo trì',
+          'Thông tin đăng ký bảo trì',
           style: TextStyle(
             fontSize: mFontSize,
             color: Colors.black,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -112,201 +111,343 @@ class _BodyState extends State<Body> {
   Widget bookingList(MaintenanceModel maintenanceModel) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-        child: Column(children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Row(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                FaIcon(
+                  FontAwesomeIcons.clock,
+                  color: Colors.grey,
+                  size: 13,
+                ),
+                SizedBox(
+                  width: 2.0,
+                ),
+                Text(
+                    DateFormat("dd-MM-yyyy hh:mm a")
+                        .format(maintenanceModel.createdAt),
+                    style: TextStyle(fontSize: 12, color: Colors.grey))
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FaIcon(
-                      FontAwesomeIcons.clock,
-                      color: Colors.grey,
-                      size: 13,
-                    ),
-                    SizedBox(
-                      width: 2.0,
+                    Text(
+                      "Mã sản phẩm",
+                      style: TextStyle(fontSize: mFontListTile),
                     ),
                     Text(
-                        DateFormat("dd-MM-yyyy hh:mm a")
-                            .format(maintenanceModel.createdAt),
-                        style: TextStyle(fontSize: 12, color: Colors.grey))
+                      "Thời gian đến",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
+                    Text(
+                      "Trung tâm bảo hành",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
+                    Text(
+                      "Phí bảo trì",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
+                    Text(
+                      "Mô tả",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
+                    Text(
+                      "Tình trạng thanh toán",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
+                    Text(
+                      "Tình trạng",
+                      style: TextStyle(fontSize: mFontListTile),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Mã sản phẩm",
-                  style: TextStyle(fontSize: mFontListTile),
+                SizedBox(
+                  width: 30,
                 ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(maintenanceModel.productSku,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Thời gian đến",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(
-                    DateFormat("dd-MM-yyyy")
-                            .format(maintenanceModel.bookingDate) +
-                        " " +
-                        maintenanceModel.bookingTime,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Trung tâm bảo hành",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(maintenanceModel.warrantyCenter,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Phí bảo trì",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(maintenanceModel.cost,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Mô tả",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(maintenanceModel.discription,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Tình trạng thanh toán",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(maintenanceModel.paymentStatus,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            children: [
-              Expanded(
-                flex: 6,
-                child: Text(
-                  "Tình trạng",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 15,
-                child: Text(maintenanceModel.active ? "Chưa đến" : "Đã đến",
-                    style: TextStyle(
-                        fontSize: mFontListTile,
-                        fontWeight: FontWeight.w700,
-                        color: maintenanceModel.active
-                            ? Colors.red
-                            : Colors.grey)),
-              ),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-            TextButton(
-                child: const Text('Chỉnh sửa'),
-                onPressed: () {
-                  setState(() {
-                    product = getProduct(maintenanceModel.productSku);
-                  });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return EditBookingScreen(
-                        product,
-                        maintenanceModel.bookingDate,
-                        maintenanceModel.bookingTime,
-                        maintenanceModel.warrantyCenter,
-                        maintenanceModel.maintenanceId,
-                        maintenanceModel.discription,
-                        maintenanceModel.cost,
-                        maintenanceModel.paymentStatus,
-                        2);
-                  }));
-                }),
-            maintenanceModel.paymentStatus == "unpaid"
-                ? TextButton(
-                    child: const Text('Thanh toán'),
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return ProductDetailScreen(product);
-                      //     },
-                      //   ),
-                      // );
-                    },
-                  )
-                : SizedBox(width: 1),
-            const SizedBox(width: 8)
-          ])
-        ]));
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(maintenanceModel.productSku,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(
+                        DateFormat("dd-MM-yyyy")
+                                .format(maintenanceModel.bookingDate) +
+                            " " +
+                            maintenanceModel.bookingTime,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(maintenanceModel.warrantyCenter,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(maintenanceModel.cost,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(maintenanceModel.discription,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(maintenanceModel.paymentStatus,
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700)),
+                    Text(maintenanceModel.active ? "Chưa đến" : "Đã đến",
+                        style: TextStyle(
+                            fontSize: mFontListTile,
+                            fontWeight: FontWeight.w700,
+                            color: maintenanceModel.active
+                                ? Colors.red
+                                : Colors.grey)),
+                  ],
+                )
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+              TextButton(
+                  child: const Text('Chỉnh sửa'),
+                  onPressed: () {
+                    setState(() {
+                      product = getProduct(maintenanceModel.productSku);
+                    });
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return EditBookingScreen(
+                          product,
+                          maintenanceModel.bookingDate,
+                          maintenanceModel.bookingTime,
+                          maintenanceModel.warrantyCenter,
+                          maintenanceModel.maintenanceId,
+                          maintenanceModel.discription,
+                          maintenanceModel.cost,
+                          maintenanceModel.paymentStatus,
+                          2);
+                    }));
+                  }),
+              maintenanceModel.paymentStatus == "unpaid"
+                  ? TextButton(
+                      child: const Text('Thanh toán'),
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return ProductDetailScreen(product);
+                        //     },
+                        //   ),
+                        // );
+                      },
+                    )
+                  : SizedBox(width: 1),
+              const SizedBox(width: 8)
+            ])
+          ],
+        ));
   }
+
+  //  Column(children: [
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 10,
+  //               child: Row(
+  //                 children: [
+  //                   FaIcon(
+  //                     FontAwesomeIcons.clock,
+  //                     color: Colors.grey,
+  //                     size: 13,
+  //                   ),
+  //                   SizedBox(
+  //                     width: 2.0,
+  //                   ),
+  //                   Text(
+  //                       DateFormat("dd-MM-yyyy hh:mm a")
+  //                           .format(maintenanceModel.createdAt),
+  //                       style: TextStyle(fontSize: 12, color: Colors.grey))
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 8,
+  //               child: Text(
+  //                 "Mã sản phẩm",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(maintenanceModel.productSku,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 8,
+  //               child: Text(
+  //                 "Thời gian đến",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(
+  //                   DateFormat("dd-MM-yyyy")
+  //                           .format(maintenanceModel.bookingDate) +
+  //                       " " +
+  //                       maintenanceModel.bookingTime,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 12,
+  //               child: Text(
+  //                 "Trung tâm bảo hành",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(maintenanceModel.warrantyCenter,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 12,
+  //               child: Text(
+  //                 "Phí bảo trì",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(maintenanceModel.cost,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 12,
+  //               child: Text(
+  //                 "Mô tả",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(maintenanceModel.discription,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 12,
+  //               child: Text(
+  //                 "Tình trạng thanh toán",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 16,
+  //               child: Text(maintenanceModel.paymentStatus,
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile, fontWeight: FontWeight.w700)),
+  //             )
+  //           ],
+  //         ),
+  //         Row(
+  //           crossAxisAlignment: CrossAxisAlignment.baseline,
+  //           children: [
+  //             Expanded(
+  //               flex: 6,
+  //               child: Text(
+  //                 "Tình trạng",
+  //                 style: TextStyle(fontSize: mFontListTile),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 15,
+  //               child: Text(maintenanceModel.active ? "Chưa đến" : "Đã đến",
+  //                   style: TextStyle(
+  //                       fontSize: mFontListTile,
+  //                       fontWeight: FontWeight.w700,
+  //                       color: maintenanceModel.active
+  //                           ? Colors.red
+  //                           : Colors.grey)),
+  //             ),
+  //           ],
+  //         ),
+  //         Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+  //           TextButton(
+  //               child: const Text('Chỉnh sửa'),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   product = getProduct(maintenanceModel.productSku);
+  //                 });
+  //                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //                   return EditBookingScreen(
+  //                       product,
+  //                       maintenanceModel.bookingDate,
+  //                       maintenanceModel.bookingTime,
+  //                       maintenanceModel.warrantyCenter,
+  //                       maintenanceModel.maintenanceId,
+  //                       maintenanceModel.discription,
+  //                       maintenanceModel.cost,
+  //                       maintenanceModel.paymentStatus,
+  //                       2);
+  //                 }));
+  //               }),
+  //           maintenanceModel.paymentStatus == "unpaid"
+  //               ? TextButton(
+  //                   child: const Text('Thanh toán'),
+  //                   onPressed: () {
+  //                     // Navigator.push(
+  //                     //   context,
+  //                     //   MaterialPageRoute(
+  //                     //     builder: (context) {
+  //                     //       return ProductDetailScreen(product);
+  //                     //     },
+  //                     //   ),
+  //                     // );
+  //                   },
+  //                 )
+  //               : SizedBox(width: 1),
+  //           const SizedBox(width: 8)
+  //         ])
+  //       ])
 }
