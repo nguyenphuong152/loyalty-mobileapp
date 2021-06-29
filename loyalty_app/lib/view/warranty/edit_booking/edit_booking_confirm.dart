@@ -50,30 +50,30 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
-                size: 16,
+                color: mPrimaryColor,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
-          backgroundColor: mPrimaryColor,
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'Thông tin đăng kí',
             style: TextStyle(
-              fontSize: mFontSize,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontSize: subhead,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
         body: Container(
-          margin: EdgeInsets.only(top: 5),
+          margin: EdgeInsets.only(top: space_height),
           child: Column(
             children: [
               info(),
-              SizedBox(height: 6),
+              SizedBox(height: space_height),
               time(),
-              SizedBox(height: 6),
+              SizedBox(height: space_height),
               warrantyCenter(),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -82,7 +82,7 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
                   width: MediaQuery.of(context).size.width,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(16.0),
                         side: BorderSide(color: mPrimaryColor)),
                     color: mPrimaryColor,
                     textColor: Colors.white,
@@ -229,7 +229,7 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
                     ),
                     Text(
                       "Đăng ký không thành công",
-                      style: TextStyle(fontSize: mFontSize, color: Colors.red),
+                      style: TextStyle(fontSize: subhead, color: Colors.red),
                     ),
                     SizedBox(
                       height: 10,
@@ -237,8 +237,7 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
                     Text(
                       "Bạn vui lòng kiểm tra lại thông tin đăng kí nhé!",
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: Colors.black, fontSize: mFontSize),
+                      style: TextStyle(color: Colors.black, fontSize: subhead),
                     ),
                     SizedBox(
                       height: 10,
@@ -262,63 +261,36 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
 
   Widget time() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(color: Colors.white),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Text(
-                        "Ngày dự kiến: ",
-                        style:
-                            TextStyle(fontSize: mFontSize, color: Colors.grey),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        DateFormat('dd-MM-yyyy').format(widget.bookingDate),
-                        style: TextStyle(fontSize: 18.0),
-                      )
-                    ],
-                  ),
-                ],
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                "Ngày dự kiến: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
+              ),
+              Text(
+                "Thời gian: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
               )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                children: [
-                  Text(
-                    "Thời gian: ",
-                    style: TextStyle(fontSize: mFontSize, color: Colors.grey),
-                  )
-                ],
+            ]),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                DateFormat('dd-MM-yyyy').format(widget.bookingDate),
+                style: TextStyle(fontSize: subhead),
               ),
-              Column(
-                children: [
-                  Text(
-                    widget.bookingTime,
-                    style: TextStyle(fontSize: 18.0),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+              Text(
+                widget.bookingTime,
+                style: TextStyle(fontSize: subhead),
+              )
+            ]),
+            SizedBox(
+              width: 20,
+            )
+          ],
+        ));
   }
 
   Widget warrantyCenter() {
@@ -332,13 +304,13 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
             children: <Widget>[
               Text(
                 "Trung tâm bảo hành (Nhấn để chọn)",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
               ),
               IconButton(
                   icon: Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: mPrimaryColor,
-                    size: 13,
+                    size: subhead,
                   ),
                   onPressed: () => Navigator.push(
                         context,
@@ -364,7 +336,7 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
             children: <Widget>[
               Text(
                 widget.center.isNotEmpty ? widget.center : "",
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                style: TextStyle(fontSize: subhead, color: Colors.black),
               ),
             ],
           ),
@@ -383,16 +355,21 @@ class _EditBookingConfirmState extends State<EditBookingConfirm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Tên sản phẩm: ",
-            style: TextStyle(fontSize: mFontSize, color: Colors.grey),
+          Row(
+            children: [
+              Text(
+                "Tên sản phẩm: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            widget.product.productName,
-            style: TextStyle(fontSize: 18.0),
+          Row(
+            children: [
+              Text(
+                widget.product.productName,
+                style: TextStyle(fontSize: subhead),
+              )
+            ],
           )
         ],
       ),

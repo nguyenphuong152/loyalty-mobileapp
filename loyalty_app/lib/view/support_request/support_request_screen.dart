@@ -36,12 +36,11 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
-        elevation: 0,
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
               color: mPrimaryColor,
-              size: 16,
+              size: subhead,
             ),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 "/home", (Route<dynamic> route) => false)),
@@ -50,9 +49,9 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
         title: Text(
           'Trung tâm hỗ trợ',
           style: TextStyle(
-            fontSize: mFontSize,
+            fontSize: subhead,
             color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -61,7 +60,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: EdgeInsets.only(top: space_height),
                 color: Colors.white,
                 padding: EdgeInsets.all(20),
                 child: problem.isEmpty
@@ -70,7 +69,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                         children: [
                           Text("Chọn vấn đề hỗ trợ",
                               style: TextStyle(
-                                  fontSize: mFontSize,
+                                  fontSize: footnote,
                                   color: mPrimaryColor,
                                   fontWeight: FontWeight.w600)),
                           IconButton(
@@ -98,7 +97,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                                                       child: Text(
                                                     "Loại vấn đề",
                                                     style: TextStyle(
-                                                        fontSize: mFontSize,
+                                                        fontSize: footnote,
                                                         fontWeight:
                                                             FontWeight.w600),
                                                   ))
@@ -125,7 +124,10 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                                                     },
                                                     child: ListTile(
                                                       title: Text(
-                                                          '${problems[index]}'),
+                                                        '${problems[index]}',
+                                                        style: TextStyle(
+                                                            fontSize: footnote),
+                                                      ),
                                                     ),
                                                   );
                                                 },
@@ -142,7 +144,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                           Text(
                             problem,
                             style: TextStyle(
-                                fontSize: mFontSize,
+                                fontSize: footnote,
                                 color: mPrimaryColor,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -171,7 +173,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                                                       child: Text(
                                                     "Loại vấn đề",
                                                     style: TextStyle(
-                                                        fontSize: mFontSize,
+                                                        fontSize: footnote,
                                                         fontWeight:
                                                             FontWeight.w600),
                                                   ))
@@ -198,7 +200,10 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                                                     },
                                                     child: ListTile(
                                                       title: Text(
-                                                          '${problems[index]}'),
+                                                          '${problems[index]}',
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  footnote)),
                                                     ),
                                                   );
                                                 },
@@ -210,7 +215,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                         ],
                       )),
             SizedBox(
-              height: 10,
+              height: space_height,
             ),
             Container(
               padding: EdgeInsets.all(20),
@@ -225,12 +230,12 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(6)),
                   ),
                   hintText: 'Mô tả',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: footnote),
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: space_height,
             ),
             Container(
               padding: EdgeInsets.only(left: 20, top: 20, bottom: 5, right: 20),
@@ -238,7 +243,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Chọn hình ảnh"),
+                  Text("Chọn hình ảnh", style: TextStyle(fontSize: footnote)),
                   InkWell(
                     onTap: () {
                       showModalBottomSheet(
@@ -252,8 +257,11 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
                         shape: BoxShape.circle,
                         color: mPrimaryColor,
                       ),
-                      child:
-                          FaIcon(FontAwesomeIcons.camera, color: Colors.white),
+                      child: FaIcon(
+                        FontAwesomeIcons.camera,
+                        color: Colors.white,
+                        size: footnote,
+                      ),
                     ),
                   ),
                 ],
@@ -271,17 +279,17 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(16.0),
               child: SizedBox(
                 width: size.width,
-                height: 50,
+                height: 46,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
                       side: BorderSide(color: mPrimaryColor)),
                   color: mPrimaryColor,
                   textColor: Colors.white,
-                  child: Text("Gửi", style: TextStyle(fontSize: 18)),
+                  child: Text("Gửi", style: TextStyle(fontSize: subhead)),
                   onPressed: () async {
                     setState(() {
                       requestModel.photo = imageFile.path;
@@ -441,8 +449,8 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
     } else {
       return Image.file(
         File(imageFile.path),
-        width: 300,
-        height: 300,
+        width: 60,
+        height: 60,
       );
     }
   }
@@ -454,7 +462,7 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: [
-          Text("Chọn ảnh hoặc video"),
+          Text("Chọn ảnh hoặc video", style: TextStyle(fontSize: footnote)),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -462,11 +470,11 @@ class _SupportRequestScreenState extends State<SupportRequestScreen> {
               FlatButton.icon(
                   onPressed: () => _openGallary(ImageSource.camera),
                   icon: Icon(Icons.camera),
-                  label: Text("Camera")),
+                  label: Text("Camera", style: TextStyle(fontSize: footnote))),
               FlatButton.icon(
                   onPressed: () => _openGallary(ImageSource.gallery),
                   icon: Icon(Icons.collections),
-                  label: Text("Thư viện"))
+                  label: Text("Thư viện", style: TextStyle(fontSize: footnote)))
             ],
           )
         ],

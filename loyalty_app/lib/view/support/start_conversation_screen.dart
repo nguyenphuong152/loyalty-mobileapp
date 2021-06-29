@@ -27,13 +27,14 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: mPrimaryColor,
-                size: 16,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
@@ -42,9 +43,9 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
           title: Text(
             'Hỗ trợ trực tuyến',
             style: TextStyle(
-              fontSize: mFontSize,
+              fontSize: subhead,
               color: Colors.black,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -53,8 +54,8 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
             width: 300,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  side: BorderSide(color: mPrimaryColor, width: 2.0)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               color: Colors.white,
               textColor: mPrimaryColor,
               onPressed: () async {
@@ -96,7 +97,8 @@ class _StartConverstionScreenState extends State<StartConverstionScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Bắt đầu cuộc trò chuyện với nhân viên hỗ trợ",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  style:
+                      TextStyle(fontSize: subhead, fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -16,16 +16,20 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.zero,
+      // padding: EdgeInsets.only(top: space_height),
       children: <Widget>[
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.user,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Thông tin tài khoản',
-              style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Thông tin tài khoản',
+                style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -37,14 +41,19 @@ class _BodyState extends State<Body> {
             );
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.cogs,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Thông tin đăng ký bảo trì',
-              style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Thông tin đăng ký bảo trì',
+                style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -56,14 +65,19 @@ class _BodyState extends State<Body> {
             );
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
-            FontAwesomeIcons.cogs,
-            size: 18,
+            FontAwesomeIcons.briefcase,
+            size: footnote,
           ),
-          title: Text('Thông tin đăng ký bảo hành',
-              style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Thông tin đăng ký bảo hành',
+                style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -75,13 +89,18 @@ class _BodyState extends State<Body> {
             );
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.mailBulk,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Hộp thư góp ý', style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Hộp thư góp ý', style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -93,39 +112,55 @@ class _BodyState extends State<Body> {
             );
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.questionCircle,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Hướng dẫn', style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Hướng dẫn', style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.slidersH,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Cài đặt', style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Cài đặt', style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
         ),
+        Divider(),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.signOutAlt,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Đăng xuất', style: TextStyle(fontSize: mFontSize)),
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+          title: Transform.translate(
+            offset: Offset(-16, 0),
+            child: Text('Đăng xuất', style: TextStyle(fontSize: footnote)),
+          ),
           onTap: () {
             Navigator.pop(context);
           },
         ),
+        Divider(),
       ],
     );
   }

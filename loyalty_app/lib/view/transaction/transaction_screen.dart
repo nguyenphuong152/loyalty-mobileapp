@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loyalty_app/view/transaction/components/body.dart';
+import 'package:loyalty_app/view/transaction/components/sample_transaction.dart';
 
 class TransactionScreen extends StatefulWidget {
   @override
@@ -10,6 +10,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[50],
       body: Body(),
     );
   }

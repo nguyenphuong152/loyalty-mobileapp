@@ -106,7 +106,7 @@ class _BodyState extends State<Body> {
                         child: Text(
                       "Danh sách cửa hàng",
                       style: TextStyle(
-                          fontSize: mFontSize, fontWeight: FontWeight.w600),
+                          fontSize: subhead, fontWeight: FontWeight.w600),
                     ))
                   ],
                 ),

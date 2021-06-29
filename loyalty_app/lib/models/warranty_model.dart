@@ -29,7 +29,7 @@ class WarrantyModel {
   String paymentStatus;
 
   WarrantyModel(item) {
-    maintenanceId = item["warrantyId"]["warrantyId"];
+    maintenanceId = item["warrantyId"];
     productSku = item["productSku"];
     bookingDate = DateTime.parse(item["bookingDate"]).toLocal();
     bookingTime = item["bookingTime"];

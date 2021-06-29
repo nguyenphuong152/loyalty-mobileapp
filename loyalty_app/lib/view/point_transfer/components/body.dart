@@ -29,14 +29,11 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
-        elevation: 0,
         leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: mPrimaryColor,
-              size: 16,
-            ),
+            icon:
+                Icon(Icons.arrow_back_ios, color: mPrimaryColor, size: subhead),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 "/home", (Route<dynamic> route) => false)),
         backgroundColor: Colors.white,
@@ -44,9 +41,9 @@ class _BodyState extends State<Body> {
         title: Text(
           'Lịch sử sử dụng điểm',
           style: TextStyle(
-            fontSize: mFontSize,
+            fontSize: subhead,
             color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -86,10 +83,7 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildList(AsyncSnapshot<ListPointTransferModel> snapshot) {
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(
-        color: mDividerColor,
-      ),
+    return ListView.builder(
       itemCount: snapshot.data.total,
       itemBuilder: (context, index) {
         return pointTransfer(snapshot.data.pointTransferModels[index]);
@@ -98,14 +92,24 @@ class _BodyState extends State<Body> {
   }
 
   Widget pointTransfer(PointTransferModel pointTransferModel) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-        child: Column(children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Row(
+    return Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.white70, width: 1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.fromLTRB(5, space_height, 5, 0),
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: Container(
+              width: 300,
+              height: 180,
+              padding: EdgeInsets.fromLTRB(30, 20, 10, 0),
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     FaIcon(
                       FontAwesomeIcons.clock,
@@ -113,106 +117,83 @@ class _BodyState extends State<Body> {
                       size: 13,
                     ),
                     SizedBox(
-                      width: 2.0,
+                      width: 20,
                     ),
                     Text(
-                        DateFormat("dd-MM-yyyy hh:mm a")
+                        DateFormat("dd/MM/yyyy hh:mm a")
                             .format(pointTransferModel.createdAt),
-                        style: TextStyle(fontSize: 12, color: Colors.grey))
+                        style: TextStyle(fontSize: 12, color: Colors.grey)),
                   ],
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: FaIcon(
-                  pointTransferModel.state == "active"
-                      ? FontAwesomeIcons.solidCheckSquare
-                      : FontAwesomeIcons.solidMinusSquare,
-                  color: pointTransferModel.state == "active"
-                      ? Colors.green
-                      : Colors.red,
-                  size: 16,
+                SizedBox(
+                  height: space_height,
                 ),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text(
-                  "Điểm",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 15,
-                child: Text(pointTransferModel.value.toString(),
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text(
-                  "Loại",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 15,
-                child: Text(
-                    pointTransferModel.type == "adding"
-                        ? "Tích điểm"
-                        : "Sử dụng điểm",
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 4,
-                child: Text(
-                  "Nội dung",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 13,
-                child: Text(
-                    pointTransferModel.comment == null
-                        ? ""
-                        : pointTransferModel.comment,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 6,
-                child: Text(
-                  "Hạn sử dụng",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 12,
-                child: Text(
-                    DateFormat("dd-MM-yyyy hh:mm a")
-                        .format(pointTransferModel.expiresAt),
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-        ]));
+                Row(
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Điểm",
+                            style: Constants.titleProductDetail,
+                          ),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                            "Loại",
+                            style: Constants.titleProductDetail,
+                          ),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                            "Nội dung",
+                            style: Constants.titleProductDetail,
+                          ),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                            "Hạn sử dụng",
+                            style: Constants.titleProductDetail,
+                          ),
+                        ]),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(pointTransferModel.value.toString(),
+                              style: Constants.contentProductDetail),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                              pointTransferModel.type == "adding"
+                                  ? "Tích điểm"
+                                  : "Sử dụng điểm",
+                              style: Constants.contentProductDetail),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                              pointTransferModel.comment == null
+                                  ? ""
+                                  : "Chào bạn mới",
+                              style: Constants.contentProductDetail),
+                          SizedBox(
+                            height: space_height * 2,
+                          ),
+                          Text(
+                              DateFormat("dd/MM/yyyy hh:mm a")
+                                  .format(pointTransferModel.expiresAt),
+                              style: Constants.contentProductDetail),
+                        ])
+                  ],
+                )
+              ])),
+        ));
   }
 }

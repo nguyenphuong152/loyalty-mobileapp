@@ -85,25 +85,29 @@ class GradientCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            name,
+                            name == "Inactive"
+                                ? "Khuyến mãi 20%"
+                                : "Khuyễn mãi 5%",
                             style: TextStyle(
-                                fontSize: mFontTitle,
+                                fontSize: footnote,
                                 fontWeight: FontWeight.w700),
                           ),
+                          SizedBox(height: 10),
                           Text(
                             campaignActivity,
                             style: TextStyle(
-                              fontSize: mFontListTile,
+                              fontSize: footnote,
                             ),
                           ),
                           SizedBox(height: 10),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Icon(
                                 Icons.offline_bolt_outlined,
                                 color: Colors.amber[900],
-                                size: 16,
+                                size: footnote,
                               ),
                               SizedBox(
                                 width: 8,
@@ -116,26 +120,26 @@ class GradientCard extends StatelessWidget {
                                       Text(
                                         costInPoints,
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: footnote,
                                         ),
                                       ),
                                       Text(
                                         " điểm",
                                         style: TextStyle(
-                                          fontSize: mFontSize,
+                                          fontSize: footnote,
                                         ),
                                       ),
                                     ]),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: 1,
                                 child: Container(
                                   child: Text(
                                     "Đổi điểm",
                                     style: TextStyle(
                                         color: Colors.amber[900],
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700),
+                                        fontSize: footnote,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               )

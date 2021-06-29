@@ -76,7 +76,7 @@ class ChatApiProvider {
   }
 
 //test proto
-  Future<http.Response> sendChatMessage(
+  Future<String> sendChatMessage(
       ChatMessageModel chatMessage, PickedFile media) async {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
@@ -120,6 +120,7 @@ class ChatApiProvider {
     // listen for response
 
     var res = await http.Response.fromStream(response);
+    print(res);
     return json.decode(res.body);
   }
 

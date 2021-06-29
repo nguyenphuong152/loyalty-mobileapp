@@ -24,7 +24,7 @@ class Body extends StatelessWidget {
               height: size.height * 0.35,
             ),
             RoundedInputField(
-              hintText: "Số điện thoại",
+              hintText: "Email",
               onChanged: (value) {},
             ),
             RoundedPasswordField(
@@ -40,8 +40,8 @@ class Body extends StatelessWidget {
                 textColor: Colors.white,
                 onPressed: () {},
                 child: Text(
-                  "Đăng kí".toUpperCase(),
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  "Đăng kí",
+                  style: TextStyle(fontSize: body, fontWeight: FontWeight.w500),
                 ),
               ),
             ),

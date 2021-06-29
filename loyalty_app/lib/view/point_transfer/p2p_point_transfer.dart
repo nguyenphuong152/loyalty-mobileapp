@@ -40,12 +40,11 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
     return Scaffold(
         backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
-          elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: mPrimaryColor,
-                size: 16,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
@@ -54,9 +53,9 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
           title: Text(
             'Chuyển điểm',
             style: TextStyle(
-              fontSize: mFontSize,
+              fontSize: subhead,
               color: Colors.black,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -65,21 +64,23 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
             children: [
               phoneInput(),
               SizedBox(
-                height: 10,
+                height: space_height,
               ),
               pointData(),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: SizedBox(
                   width: size.width,
-                  height: 50,
+                  height: 46,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         side: BorderSide(color: mPrimaryColor)),
                     color: mPrimaryColor,
                     textColor: Colors.white,
-                    child: Text("Chuyển điểm", style: TextStyle(fontSize: 18)),
+                    child: Text("Chuyển điểm",
+                        style: TextStyle(
+                            fontSize: subhead, fontWeight: FontWeight.w500)),
                     onPressed: () {
                       if (double.parse(point) >=
                           double.parse(pointController.text)) {
@@ -135,9 +136,9 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         FlatButton(
-                            child: Text('Quay lại',
+                            child: Text('Màn hình chính',
                                 style: TextStyle(
-                                    color: mPrimaryColor, fontSize: 15)),
+                                    color: mPrimaryColor, fontSize: subhead)),
                             onPressed: () {
                               setState(() {
                                 point = (double.parse(point) -
@@ -147,7 +148,7 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
                                 pointController.text = "";
                                 pointTransferBloc.fetchPointTransfer();
                               });
-                              // Navigator.popAndPushNamed(context, '/point');
+                              Navigator.popAndPushNamed(context, '/home');
                             }),
                       ])
                 ],
@@ -171,7 +172,7 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
                       image: AssetImage("assets/images/error.gif"),
                     ),
                     Text(
-                      "Đăng ký không thành công",
+                      "Thất bại",
                       style: TextStyle(fontSize: mFontSize, color: Colors.red),
                     ),
                     SizedBox(
@@ -205,13 +206,16 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
 
   Widget phoneInput() {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: space_height),
       color: Colors.white,
       padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Nhập số điện thoại"),
+          Text(
+            "Nhập số điện thoại",
+            style: TextStyle(fontSize: footnote),
+          ),
           SizedBox(
             height: 10,
           ),
@@ -224,7 +228,7 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
           ),
           Text(
             phoneController.text == "0909090909" ? "John Doe" : "",
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: footnote),
           )
         ],
       ),
@@ -240,12 +244,15 @@ class _P2PTransferPointState extends State<P2PTransferPoint> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Điểm khả dụng"), Text(point + " Điểm")],
+            children: [
+              Text("Điểm khả dụng", style: TextStyle(fontSize: footnote)),
+              Text(point + " Điểm", style: TextStyle(fontSize: footnote))
+            ],
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          Text("Nhập số điểm"),
+          Text("Nhập số điểm", style: TextStyle(fontSize: footnote)),
           SizedBox(
             height: 10,
           ),

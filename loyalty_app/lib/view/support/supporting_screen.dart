@@ -75,14 +75,14 @@ class _SupportingScreenState extends State<SupportingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: mPrimaryColor,
-                size: 16,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
@@ -91,9 +91,9 @@ class _SupportingScreenState extends State<SupportingScreen> {
           title: Text(
             'Hỗ trợ trực tuyến',
             style: TextStyle(
-              fontSize: mFontSize,
+              fontSize: subhead,
               color: Colors.black,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -106,7 +106,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
               child: getMessageList(),
             )),
             Container(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               margin: EdgeInsets.all(8),
               decoration: BoxDecoration(
                   border: Border.all(color: mPrimaryColor),
@@ -117,6 +117,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
                 children: <Widget>[
                   Expanded(
                       child: TextField(
+                    style: TextStyle(fontSize: footnote),
                     controller: messageTextEditController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -135,8 +136,8 @@ class _SupportingScreenState extends State<SupportingScreen> {
                         shape: BoxShape.circle,
                         color: mPrimaryColor,
                       ),
-                      child:
-                          FaIcon(FontAwesomeIcons.camera, color: Colors.white),
+                      child: FaIcon(FontAwesomeIcons.camera,
+                          color: Colors.white, size: footnote),
                     ),
                   ),
                   SizedBox(
@@ -151,7 +152,7 @@ class _SupportingScreenState extends State<SupportingScreen> {
                         color: mPrimaryColor,
                       ),
                       child: FaIcon(FontAwesomeIcons.paperPlane,
-                          color: Colors.white),
+                          color: Colors.white, size: footnote),
                     ),
                   )
                 ],

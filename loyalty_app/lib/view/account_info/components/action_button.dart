@@ -10,7 +10,7 @@ class _ActionButtonState extends State<ActionButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       color: mSecondaryColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -21,7 +21,7 @@ class _ActionButtonState extends State<ActionButton> {
                 side: BorderSide(color: mPrimaryColor)),
             color: mPrimaryColor,
             textColor: Colors.white,
-            child: Text('Chỉnh sửa thông tin',
+            child: Text('Sửa thông tin',
                 style: TextStyle(
                     fontSize: mFontSize, fontWeight: FontWeight.w400)),
             onPressed: () {},
@@ -32,7 +32,7 @@ class _ActionButtonState extends State<ActionButton> {
                 side: BorderSide(color: Colors.deepOrange)),
             color: Colors.deepOrange,
             textColor: Colors.white,
-            child: Text('Thay đổi mật khẩu',
+            child: Text('Đổi mật khẩu',
                 style: TextStyle(
                     fontSize: mFontSize, fontWeight: FontWeight.w400)),
             onPressed: () {},

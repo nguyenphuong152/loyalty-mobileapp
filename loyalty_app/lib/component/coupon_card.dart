@@ -81,72 +81,75 @@ class CouponCard extends StatelessWidget {
                               ? 'Chưa kích hoạt'
                               : 'Đã kích hoạt',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: mPrimaryColor),
+                              fontSize: footnote,
+                              color: mPrimaryColor,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: space_height,
                         ),
                         Text(
                           "Thời gian hiệu lực: ",
-                          style: TextStyle(fontSize: mFontListTile),
+                          style: TextStyle(fontSize: footnote),
                         ),
                         SizedBox(
-                          height: 0.5,
+                          height: space_height,
                         ),
                         Row(
                           children: [
                             Text(
-                              DateFormat('dd-MM-yyyy')
+                              DateFormat('dd/MM/yyyy')
                                   .format(DateTime.parse(activeSince)),
                               style: TextStyle(
-                                  fontSize: mFontListTile,
-                                  fontWeight: FontWeight.w700),
+                                fontSize: footnote,
+                              ),
                             ),
                             Text(" - "),
                             Text(
-                              DateFormat('dd-MM-yyyy')
-                                  .format(DateTime.parse(activeTo)),
-                              style: TextStyle(
-                                  fontSize: mFontListTile,
-                                  fontWeight: FontWeight.w700),
-                            ),
+                                DateFormat('dd/MM/yyyy')
+                                    .format(DateTime.parse(activeTo)),
+                                style: TextStyle(
+                                  fontSize: footnote,
+                                )),
                           ],
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
                               "Code: ",
                               style: TextStyle(
-                                fontSize: mFontListTile,
+                                fontSize: footnote,
                               ),
                             ),
+                            SizedBox(width: 4),
                             Text(
                               couponCode,
                               style: TextStyle(
-                                  fontSize: mFontListTile,
+                                  fontSize: footnote,
                                   fontWeight: FontWeight.w700),
                             ),
+                            SizedBox(width: 28),
+                            TextButton(
+                                child: const Text(
+                                  'Chi Tiết',
+                                  style: TextStyle(color: mPrimaryColor),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return VoucherDetail(
+                                          status == 'inactive'
+                                              ? 'Chưa kích hoạt'
+                                              : 'Đã kích hoạt',
+                                          couponCode,
+                                          DateFormat('dd/MM/yyyy').format(
+                                              DateTime.parse(activeTo)));
+                                    },
+                                  ));
+                                }),
                           ],
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              TextButton(
-                                  child: const Text('Chi Tiết'),
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return VoucherDetail(
-                                            status == 'inactive'
-                                                ? 'Chưa kích hoạt'
-                                                : 'Đã kích hoạt',
-                                            couponCode,
-                                            DateFormat('dd-MM-yyyy').format(
-                                                DateTime.parse(activeTo)));
-                                      },
-                                    ));
-                                  }),
-                              const SizedBox(width: 8)
-                            ])
                       ],
                     ),
                   ),

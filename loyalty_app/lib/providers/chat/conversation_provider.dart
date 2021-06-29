@@ -48,12 +48,13 @@ class ConversationProvider extends BaseProvider {
       ChatMessageModel message, PickedFile media) async {
     setBusy(true);
     var response = await _chatApiProvider.sendChatMessage(message, media);
-    if (response.statusCode == 200) {
-      // var data = jsonDecode(response.body);
-      setBusy(false);
-      addMessageToConversation(message);
-      return (response.body);
-    }
+    print(response);
+    // if (response.statusCode == 200) {
+    //   // var data = jsonDecode(response.body);
+    //   setBusy(false);
+    //   addMessageToConversation(message);
+    //   return (response.body);
+    // }
     setBusy(false);
     return null;
   }
