@@ -21,13 +21,13 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     Tab(
       child: Text(
         "Mới nhất",
-        style: TextStyle(color: Colors.black, fontSize: 16),
+        style: TextStyle(color: Colors.black, fontSize: subhead),
       ),
     ),
     Tab(
       child: Text(
         "Đã đổi",
-        style: TextStyle(color: Colors.black, fontSize: 16),
+        style: TextStyle(color: Colors.black, fontSize: subhead),
       ),
     ),
   ];
@@ -68,11 +68,13 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
@@ -82,7 +84,10 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
             labelColor: mPrimaryColor,
             unselectedLabelColor: Colors.black,
             labelStyle: TextStyle(
-                fontSize: 16, color: mPrimaryColor), //For Selected tab
+              fontSize: mFontSize,
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ), //For Selected tab
             unselectedLabelStyle: TextStyle(fontSize: 16, color: Colors.black),
             indicatorColor: mPrimaryColor,
             onTap: (index) {
@@ -99,8 +104,8 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
             'Tích điểm đổi quà',
             style: TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: mFontTitle),
+                fontWeight: FontWeight.w500,
+                fontSize: subhead),
           ),
         ),
         body: TabBarView(
@@ -143,8 +148,6 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
             StreamBuilder(
               stream: couponBloc.customerCoupon,
               builder: (context, AsyncSnapshot<ListCouponModel> snapshot) {
-                print(
-                    "connection state: " + snapshot.connectionState.toString());
                 if (snapshot.hasData) {
                   if (snapshot.data.total == 0) {
                     return Center(
@@ -201,7 +204,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
         child: GradientCard(
           couponId: campaignModel.campaignId,
           name: campaignModel.name,
-          campaignActivity: "All time active",
+          campaignActivity: "Chào mừng khách hàng mới",
           costInPoints: campaignModel.costInPoints.toString(),
           startColor: Color(0xfffdfcfb),
           endColor: Color(0xffe2d1c3),

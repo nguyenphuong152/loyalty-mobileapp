@@ -17,7 +17,7 @@ class _GetMyStoresState extends State<GetMyStores> {
             icon: Icon(
               Icons.arrow_back_ios,
               color: mPrimaryColor,
-              size: 16,
+              size: subhead,
             ),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 "/home", (Route<dynamic> route) => false)),
@@ -26,9 +26,9 @@ class _GetMyStoresState extends State<GetMyStores> {
         title: Text(
           'Tìm cửa hàng',
           style: TextStyle(
-            fontSize: mFontSize,
+            fontSize: subhead,
             color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

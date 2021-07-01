@@ -18,7 +18,7 @@ class _ProductScreenState extends State<ProductScreen> {
             icon: Icon(
               Icons.arrow_back_ios,
               color: mPrimaryColor,
-              size: 16,
+              size: subhead,
             ),
             onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 "/home", (Route<dynamic> route) => false)),
@@ -27,9 +27,9 @@ class _ProductScreenState extends State<ProductScreen> {
         title: Text(
           'Sản phẩm của bạn',
           style: TextStyle(
-            fontSize: mFontSize,
+            fontSize: subhead,
             color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

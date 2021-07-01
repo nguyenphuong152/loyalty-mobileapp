@@ -20,6 +20,7 @@ class CardBloc {
       prefs.setString('email', customerModel.email);
       prefs.setString('phone', customerModel.phone);
       prefs.setString('loyaltyCardNumber', customerModel.loyaltyCardNumber);
+      prefs.setString('id', customerModel.customerId);
 
       _customerFetcher.sink.add(customerModel);
     }

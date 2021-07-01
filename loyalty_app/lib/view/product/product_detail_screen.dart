@@ -17,23 +17,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: mPrimaryColor,
+      backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: Colors.white,
-              size: 16,
+              color: mPrimaryColor,
+              size: subhead,
             ),
             onPressed: () => Navigator.of(context).pop()),
-        backgroundColor: mPrimaryColor,
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
           'Thông tin sản phẩm',
           style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
+            fontSize: subhead,
+            color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -42,14 +42,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         Stack(
           children: [
             Positioned(
-              top: size.height * 0.01,
+              top: size.height * 0.008,
               bottom: 0,
               child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(56),
-                        topLeft: Radius.circular(56)),
+                    // borderRadius: BorderRadius.only(
+                    //     topRight: Radius.circular(56),
+                    //     topLeft: Radius.circular(56)),
                   ),
                   width: size.width,
                   height: 30,
@@ -59,8 +59,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          width: 300,
-                          height: 200,
+                          width: 280,
+                          height: 180,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
                               image: DecorationImage(
@@ -74,28 +74,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             style: TextStyle(
                                 fontSize: mFontTitle,
                                 fontWeight: FontWeight.w700)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Hạn bảo hành:"),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              DateFormat("dd-MM-yyyy")
-                                  .format(widget.product.warrantyExpired),
-                              style: TextStyle(
-                                  color: widget.product.warrantyExpired
-                                              .compareTo(DateTime.now()) >
-                                          0
-                                      ? Colors.black
-                                      : Colors.red),
-                            ),
-                          ],
-                        ),
                         SizedBox(
                           height: 10,
                         ),
@@ -126,7 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 SizedBox(
                                   height: 6,
                                 ),
-                                Text(widget.product.price.toString(),
+                                Text(formatNumber(widget.product.price),
                                     style: Constants.contentProductDetail),
                               ],
                             ),
@@ -147,7 +125,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 5,
+                        ),
+                        Divider(
+                          color: mDividerColor,
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -155,13 +139,51 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Text(
                               "Thông tin bảo hành",
                               style: TextStyle(
-                                  fontSize: mFontTitle,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: subhead,
+                                  color: mPrimaryColor),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Hạn bảo hành:",
+                              style: Constants.titleProductDetail,
+                            ),
+                            Text(
+                              DateFormat("dd/MM/yyyy")
+                                  .format(widget.product.warrantyExpired),
+                              style: TextStyle(
+                                  fontSize: footnote,
+                                  color: widget.product.warrantyExpired
+                                              .compareTo(DateTime.now()) >
+                                          0
+                                      ? Colors.black
+                                      : Colors.red),
+                            ),
+                            Text(
+                              widget.product.warrantyExpired
+                                          .compareTo(DateTime.now()) >
+                                      0
+                                  ? "(Còn hạn)"
+                                  : "(Hết hạn)",
+                              style: TextStyle(
+                                  fontSize: footnote,
+                                  color: widget.product.warrantyExpired
+                                              .compareTo(DateTime.now()) >
+                                          0
+                                      ? Colors.black
+                                      : Colors.red),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,7 +197,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   height: 6,
                                 ),
                                 Text(
-                                    DateFormat("dd-MM-yyyy")
+                                    DateFormat("dd/MM/yyyy")
                                         .format(widget.product.purchaseDate),
                                     style: Constants.contentProductDetail),
                               ],
@@ -195,7 +217,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 16,
                         ),
                         SizedBox(
                           width: size.width,
@@ -210,9 +232,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 widget.product.warrantyExpired
                                             .compareTo(DateTime.now()) >
                                         0
-                                    ? 'Đặt Lịch Bảo Hành'
-                                    : 'Đặt Lịch Bảo Trì',
-                                style: TextStyle(fontSize: 18)),
+                                    ? 'Đặt lịch bảo hành'
+                                    : 'Đặt lịch bảo trì',
+                                style: TextStyle(
+                                    fontSize: body,
+                                    fontWeight: FontWeight.w500)),
                             onPressed: () {
                               Navigator.push(
                                 context,

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:loyalty_app/mixins/validator_mixin.dart';
+import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/src/services/auth_service.dart';
+import 'package:loyalty_app/src/services/repository.dart';
 import 'package:loyalty_app/view/home/home_screen.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,8 +42,13 @@ class AuthenBloc with ValidationMixin {
 
   dynamic login(BuildContext context) async {
     var authInfo = AuthService();
+    final _repository = Repository();
+
     //final res = await authInfo.login(_email.value, _password.value);
     final res = await authInfo.login("user@oloy.com", "loyalty");
+
+    //CustomerModel customerModel = await _repository.fetchCustomerData();
+
     final data = jsonDecode(res) as Map<String, dynamic>;
     if (data.isNotEmpty) {
       AuthService.setToken(data['token'], data['refresh_token']);
@@ -50,6 +57,11 @@ class AuthenBloc with ValidationMixin {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('token', data['token']);
       prefs.setString('customerId', decodedToken['id']);
+      // prefs.setString(
+      //     'name', customerModel.lastName + " " + customerModel.firstName);
+      // prefs.setString('email', customerModel.email);
+      // prefs.setString('phone', customerModel.phone);
+      // prefs.setString('loyaltyCardNumber', customerModel.loyaltyCardNumber);
 
       Navigator.push(
         context,

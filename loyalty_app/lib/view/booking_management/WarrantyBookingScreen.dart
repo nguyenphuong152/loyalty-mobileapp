@@ -37,22 +37,25 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
+          elevation: 0,
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
-            'Thông tin đăng kí bảo hành',
+            'Thông tin đăng ký bảo hành',
             style: TextStyle(
-              fontSize: mFontSize,
+              fontSize: subhead,
               color: Colors.black,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -91,10 +94,7 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
   }
 
   Widget buildList(AsyncSnapshot<ListWarrantyModel> snapshot) {
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(
-        color: mDividerColor,
-      ),
+    return ListView.builder(
       itemCount: snapshot.data.total,
       itemBuilder: (context, index) {
         return bookingList(snapshot.data.warrantyModels[index]);
@@ -103,14 +103,23 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
   }
 
   Widget bookingList(WarrantyModel warrantyModel) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-        child: Column(children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Row(
+    return Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.white70, width: 1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.fromLTRB(5, space_height, 5, 0),
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: Container(
+              width: 300,
+              height: 160,
+              padding: EdgeInsets.fromLTRB(30, 20, 10, 20),
+              child: Column(children: [
+                Row(
                   children: [
                     FaIcon(
                       FontAwesomeIcons.clock,
@@ -123,114 +132,105 @@ class _WarrantyBookingManagementState extends State<WarrantyBookingManagement> {
                     Text(
                         DateFormat("dd-MM-yyyy hh:mm a")
                             .format(warrantyModel.createdAt),
-                        style: TextStyle(fontSize: 12, color: Colors.grey))
+                        style: TextStyle(fontSize: 12, color: Colors.grey)),
+                    SizedBox(
+                      width: 130,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          product = getProduct(warrantyModel.productSku);
+                        });
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return EditBookingScreen(
+                                product,
+                                warrantyModel.bookingDate,
+                                warrantyModel.bookingTime,
+                                warrantyModel.warrantyCenter,
+                                warrantyModel.maintenanceId,
+                                warrantyModel.discription,
+                                warrantyModel.cost,
+                                warrantyModel.paymentStatus,
+                                1);
+                          },
+                        ));
+                      },
+                      child: FaIcon(
+                        FontAwesomeIcons.edit,
+                        color: Colors.grey,
+                        size: footnote,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Mã sản phẩm",
-                  style: TextStyle(fontSize: mFontListTile),
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(warrantyModel.productSku,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 8,
-                child: Text(
-                  "Thời gian đến",
-                  style: TextStyle(fontSize: mFontListTile),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Mã sản phẩm",
+                          style: Constants.titleProductDetail,
+                        ),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(
+                          "Thời gian đến",
+                          style: Constants.titleProductDetail,
+                        ),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(
+                          "Trung tâm bảo hành",
+                          style: Constants.titleProductDetail,
+                        ),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(
+                          "Tình trạng",
+                          style: Constants.titleProductDetail,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(warrantyModel.productSku,
+                            style: Constants.contentProductDetail),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(
+                            DateFormat("dd-MM-yyyy")
+                                    .format(warrantyModel.bookingDate) +
+                                " " +
+                                warrantyModel.bookingTime,
+                            style: Constants.contentProductDetail),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(warrantyModel.warrantyCenter,
+                            style: Constants.contentProductDetail),
+                        SizedBox(
+                          height: space_height,
+                        ),
+                        Text(warrantyModel.active ? "Chưa đến" : "Đã đến",
+                            style: Constants.contentProductDetail),
+                      ],
+                    )
+                  ],
                 ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(
-                    DateFormat("dd-MM-yyyy").format(warrantyModel.bookingDate) +
-                        " " +
-                        warrantyModel.bookingTime,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Text(
-                  "Trung tâm bảo hành",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 16,
-                child: Text(warrantyModel.warrantyCenter,
-                    style: TextStyle(
-                        fontSize: mFontListTile, fontWeight: FontWeight.w700)),
-              )
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            children: [
-              Expanded(
-                flex: 6,
-                child: Text(
-                  "Tình trạng",
-                  style: TextStyle(fontSize: mFontListTile),
-                ),
-              ),
-              Expanded(
-                flex: 15,
-                child: Text(warrantyModel.active ? "Chưa đến" : "Đã đến",
-                    style: TextStyle(
-                        fontSize: mFontListTile,
-                        fontWeight: FontWeight.w700,
-                        color:
-                            warrantyModel.active ? Colors.red : Colors.grey)),
-              ),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-            TextButton(
-                child: const Text('Chỉnh sửa'),
-                onPressed: () {
-                  setState(() {
-                    product = getProduct(warrantyModel.productSku);
-                  });
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return EditBookingScreen(
-                          product,
-                          warrantyModel.bookingDate,
-                          warrantyModel.bookingTime,
-                          warrantyModel.warrantyCenter,
-                          warrantyModel.maintenanceId,
-                          warrantyModel.discription,
-                          warrantyModel.cost,
-                          warrantyModel.paymentStatus,
-                          1);
-                    },
-                  ));
-                }),
-            const SizedBox(width: 8)
-          ])
-        ]));
+              ])),
+        ));
   }
 }

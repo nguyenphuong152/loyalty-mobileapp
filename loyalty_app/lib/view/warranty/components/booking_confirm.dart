@@ -33,43 +33,45 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
-                size: 16,
+                color: mPrimaryColor,
+                size: subhead,
               ),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home", (Route<dynamic> route) => false)),
-          backgroundColor: mPrimaryColor,
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'Thông tin đăng kí',
             style: TextStyle(
-              fontSize: mFontSize,
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+              fontSize: subhead,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
         body: Container(
-          margin: EdgeInsets.only(top: 5),
+          margin: EdgeInsets.only(top: space_height),
           child: Column(
             children: [
               info(),
-              SizedBox(height: 6),
+              SizedBox(height: space_height),
               time(),
-              SizedBox(height: 6),
+              SizedBox(height: space_height),
               warrantyCenter(),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: SizedBox(
-                  height: 50,
+                  height: 46,
                   width: MediaQuery.of(context).size.width,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(16.0),
                         side: BorderSide(color: mPrimaryColor)),
                     color: mPrimaryColor,
                     textColor: Colors.white,
-                    child: Text('Xác nhận', style: TextStyle(fontSize: 18)),
+                    child: Text('Xác nhận',
+                        style: TextStyle(
+                            fontSize: subhead, fontWeight: FontWeight.w500)),
                     onPressed: () {
                       setState(() {
                         if (widget.product.warrantyExpired
@@ -89,6 +91,8 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
                                       else
                                         {_showErrorDialog()}
                                     });
+                          } else {
+                            _showErrorDialog();
                           }
                         } else {
                           if (widget._center != null) {
@@ -105,6 +109,8 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
                                       else
                                         {_showErrorDialog()}
                                     });
+                          } else {
+                            _showErrorDialog();
                           }
                         }
                       });
@@ -243,58 +249,44 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(color: Colors.white),
-      child: Column(
-        children: [
-          Row(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Text(
-                        "Ngày dự kiến: ",
-                        style:
-                            TextStyle(fontSize: mFontSize, color: Colors.grey),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        DateFormat('dd-MM-yyyy').format(widget._bookingDate),
-                        style: TextStyle(fontSize: 18.0),
-                      )
-                    ],
-                  ),
-                ],
+              Text(
+                "Ngày dự kiến: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
+              ),
+              SizedBox(
+                height: space_height * 2,
+              ),
+              Text(
+                "Thời gian: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
+              )
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat('dd-MM-yyyy').format(widget._bookingDate),
+                style: TextStyle(fontSize: subhead),
+              ),
+              SizedBox(
+                height: space_height * 2,
+              ),
+              Text(
+                widget._time,
+                style: TextStyle(fontSize: subhead),
               )
             ],
           ),
           SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
-                children: [
-                  Text(
-                    "Thời gian: ",
-                    style: TextStyle(fontSize: mFontSize, color: Colors.grey),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    widget._time,
-                    style: TextStyle(fontSize: 18.0),
-                  )
-                ],
-              ),
-            ],
-          ),
+            width: 20,
+          )
         ],
       ),
     );
@@ -310,14 +302,14 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Trung tâm bảo hành (Nhấn để chọn)",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                "Chọn trung tâm bảo hành",
+                style: TextStyle(fontSize: subhead, color: mPrimaryColor),
               ),
               IconButton(
                   icon: Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: mPrimaryColor,
-                    size: 13,
+                    size: subhead,
                   ),
                   onPressed: () => Navigator.push(
                         context,
@@ -335,7 +327,7 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
             children: <Widget>[
               Text(
                 widget._center.isNotEmpty ? widget._center : "",
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                style: TextStyle(fontSize: subhead, color: Colors.black),
               ),
             ],
           ),
@@ -354,16 +346,24 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Tên sản phẩm: ",
-            style: TextStyle(fontSize: mFontSize, color: Colors.grey),
+          Row(
+            children: [
+              Text(
+                "Tên sản phẩm: ",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
+              ),
+            ],
           ),
           SizedBox(
-            height: 10,
+            height: space_height * 2,
           ),
-          Text(
-            widget.product.productName,
-            style: TextStyle(fontSize: 18.0),
+          Row(
+            children: [
+              Text(
+                widget.product.productName,
+                style: TextStyle(fontSize: subhead),
+              )
+            ],
           )
         ],
       ),

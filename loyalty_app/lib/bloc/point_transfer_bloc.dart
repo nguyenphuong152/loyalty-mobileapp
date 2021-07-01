@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:loyalty_app/providers/customer_api_provider.dart';
 import 'package:loyalty_app/src/services/repository.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:loyalty_app/models/point_model.dart';
@@ -16,6 +19,14 @@ class PointTransferBloc {
           await _repository.fetchPointTransfer();
       _pointTransferFetcher.sink.add(pointTransferModel);
     }
+  }
+
+  Future<String> transferPoint(
+    String receiver,
+    double point,
+  ) async {
+    final res = await _repository.pointTransfer(receiver, point);
+    return res;
   }
 
   dispose() {

@@ -8,9 +8,9 @@ AppBar homeAppBar(BuildContext context) {
     elevation: 0,
     leadingWidth: 0,
     title: Text(
-      "Melodi 🌟",
+      "Melodi",
       style: TextStyle(
-          color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.w700),
+          color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.w600),
     ),
     actions: <Widget>[
       IconButton(

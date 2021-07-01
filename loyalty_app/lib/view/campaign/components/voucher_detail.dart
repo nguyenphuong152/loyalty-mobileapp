@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class VoucherDetail extends StatefulWidget {
   final String status;
@@ -16,21 +17,24 @@ class _VoucherDetailState extends State<VoucherDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.blueGrey[50],
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: mPrimaryColor,
+                size: subhead,
               ),
-              onPressed: () => Navigator.of(context).pop()),
+              onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/home", (Route<dynamic> route) => false)),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'Voucher',
             style: TextStyle(
-              fontSize: mFontSize,
+              fontSize: subhead,
               color: Colors.black,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -40,20 +44,22 @@ class _VoucherDetailState extends State<VoucherDetail> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                 child: Card(
-                  color: Color(0xffd8e2dc),
+                  color: Colors.white,
                   child: Column(
                     children: [
                       SizedBox(
                         height: 20,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 24),
                             child: Text(
                               "Giảm 20% tối đa 100.000đ",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w700),
+                                  fontSize: subhead,
+                                  fontWeight: FontWeight.w700),
                             ),
                           )
                         ],
@@ -65,57 +71,64 @@ class _VoucherDetailState extends State<VoucherDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            padding: EdgeInsets.symmetric(horizontal: 30),
                             child: Text(
                               "Trạng thái",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w400),
+                                  fontSize: footnote, color: Colors.grey),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            padding: EdgeInsets.symmetric(horizontal: 30),
                             child: Text(
                               widget.status,
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700),
+                                  fontSize: footnote, color: Colors.green),
                             ),
                           )
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: space_height,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            padding: EdgeInsets.symmetric(horizontal: 30),
                             child: Text(
                               "Hết hạn",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w400),
+                                  fontSize: footnote, color: Colors.grey),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 24),
+                            padding: EdgeInsets.symmetric(horizontal: 30),
                             child: Text(
                               widget.time,
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700),
+                              style: TextStyle(fontSize: footnote),
                             ),
                           )
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: space_height,
                       ),
                       QrImage(
                         data: widget.code,
                         version: QrVersions.auto,
-                        size: 200.0,
+                        size: 220.0,
                       ),
-                      Center(
-                        child: Text(widget.code),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      BarcodeWidget(
+                        barcode: Barcode.code128(), // Barcode type and settings
+                        data: "123", // Content
+                        width: 200,
+                        height: 80,
+                        color: Colors.black,
+                        drawText: true,
                       ),
                       SizedBox(
                         height: 20,

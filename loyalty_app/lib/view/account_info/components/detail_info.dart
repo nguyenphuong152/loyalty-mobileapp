@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loyalty_app/constant.dart';
 
 class DetailInfo extends StatelessWidget {
   @override
@@ -12,65 +13,66 @@ class DetailInfo extends StatelessWidget {
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.user,
-            size: 18,
+            size: footnote,
           ),
           title: Text('song thị méo'.toUpperCase(),
-              style: TextStyle(fontSize: 14)),
+              style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.venusMars,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('Cái', style: TextStyle(fontSize: 14)),
+          title: Text('Nữ', style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.birthdayCake,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('26/05/2018', style: TextStyle(fontSize: 14)),
+          title: Text('26/05/2018', style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.flag,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('viet nam'.toUpperCase(), style: TextStyle(fontSize: 14)),
+          title: Text('viet nam'.toUpperCase(),
+              style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.idCard,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('1234555577', style: TextStyle(fontSize: 14)),
+          title: Text('1234555577', style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.phone,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('1900068887', style: TextStyle(fontSize: 14)),
+          title: Text('1900068887', style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           dense: true,
           leading: FaIcon(
             FontAwesomeIcons.envelope,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('meomeo@gmail.com', style: TextStyle(fontSize: 14)),
+          title: Text('meomeo@gmail.com', style: TextStyle(fontSize: footnote)),
         ),
         ListTile(
           leading: FaIcon(
             FontAwesomeIcons.mapMarkerAlt,
-            size: 18,
+            size: footnote,
           ),
-          title: Text('KTX khu B, ĐHQG', style: TextStyle(fontSize: 14)),
+          title: Text('KTX khu B, ĐHQG', style: TextStyle(fontSize: footnote)),
         ),
       ],
     );

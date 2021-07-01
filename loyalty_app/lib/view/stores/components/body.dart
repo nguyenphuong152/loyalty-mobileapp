@@ -97,39 +97,60 @@ class _BodyState extends State<Body> {
         future: locations.getStores(),
         builder: (context, AsyncSnapshot<locations.Locations> snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                      color: mDividerColor,
-                    ),
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => {moveCamera(snapshot.data.offices[index].id)},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: ListTile(
-                            title: Text(
-                              '${snapshot.data.offices[index].name}',
-                              style: TextStyle(
-                                  color: mPrimaryColor,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            subtitle: Text(
-                              '${snapshot.data.offices[index].address}',
-                              style: TextStyle(fontSize: mFontListTile),
-                            ),
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: Text(
+                      "Danh sách cửa hàng",
+                      style: TextStyle(
+                          fontSize: subhead, fontWeight: FontWeight.w600),
+                    ))
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
+                            color: mDividerColor,
                           ),
-                        ),
-                        Text(
-                          '${snapshot.data.offices[index].distance} km',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  );
-                });
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () =>
+                              {moveCamera(snapshot.data.offices[index].id)},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ListTile(
+                                  title: Text(
+                                    '${snapshot.data.offices[index].name}',
+                                    style: TextStyle(
+                                        color: mPrimaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  subtitle: Text(
+                                    '${snapshot.data.offices[index].address}',
+                                    style: TextStyle(fontSize: mFontListTile),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${snapshot.data.offices[index].distance} km',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            );
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {

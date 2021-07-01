@@ -64,9 +64,9 @@ class Body extends StatelessWidget {
                         authen.login(context);
                       },
                       child: Text(
-                        "đăng nhập".toUpperCase(),
+                        "Đăng nhập",
                         style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.w400),
+                            fontSize: body, fontWeight: FontWeight.w500),
                       ),
                     );
                   }),

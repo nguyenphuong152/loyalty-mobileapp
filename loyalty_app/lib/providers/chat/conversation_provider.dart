@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
 import 'package:loyalty_app/models/chat/conversation_model.dart';
 import 'package:loyalty_app/providers/chat/base_provider.dart';
@@ -42,15 +44,29 @@ class ConversationProvider extends BaseProvider {
     return _messages;
   }
 
-  Future<String> storeMessage(ChatMessageModel message) async {
+  Future<String> storeMessage(ChatMessageModel message, String media) async {
     setBusy(true);
-    var response = await _chatApiProvider.sendChatMessage(message);
-    if (response.statusCode == 200) {
-      print("EEEEEEEERRR " + response.body);
+    var response = await _chatApiProvider.sendChatMessage(message, media);
+    print(response);
+    if (response != null) {
       // var data = jsonDecode(response.body);
       setBusy(false);
       addMessageToConversation(message);
-      return (response.body);
+      return (response);
+    }
+    setBusy(false);
+    return null;
+  }
+
+  Future<String> storeMessageText(ChatMessageModel message) async {
+    setBusy(true);
+    var response = await _chatApiProvider.sendChatMessageText(message);
+    print(response);
+    if (response != null) {
+      // var data = jsonDecode(response.body);
+      setBusy(false);
+      addMessageToConversation(message);
+      return (response);
     }
     setBusy(false);
     return null;

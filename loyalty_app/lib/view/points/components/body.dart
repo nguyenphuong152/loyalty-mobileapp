@@ -5,6 +5,7 @@ import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/account_info/account_info_screen.dart';
 import 'package:loyalty_app/bloc/point_bloc.dart';
+import 'package:loyalty_app/view/point_transfer/p2p_point_transfer.dart';
 import 'package:loyalty_app/view/point_transfer/point_transfer_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -46,18 +47,95 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildData(CustomerStatusModel customerStatus) {
-    return Column(
-      children: [
-        transactionAmount(customerStatus),
-        SizedBox(
-          height: 10,
-        ),
-        accumulated(customerStatus),
-        SizedBox(
-          height: 10,
-        ),
-        pointAmount(customerStatus),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          transactionAmount(customerStatus),
+          SizedBox(
+            height: space_height,
+          ),
+          accumulated(customerStatus),
+          SizedBox(
+            height: space_height,
+          ),
+          pointAmount(customerStatus),
+          SizedBox(
+            height: space_height,
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PointTransfer();
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Lịch sử điểm ",
+                    style: TextStyle(fontSize: footnote, color: mPrimaryColor),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.angleRight,
+                    size: footnote,
+                    color: mPrimaryColor,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: space_height,
+          ),
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return P2PTransferPoint(customerStatus.points.toString());
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Chuyển điểm cho bạn bè",
+                    style: TextStyle(fontSize: footnote, color: mPrimaryColor),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.angleRight,
+                    size: footnote,
+                    color: mPrimaryColor,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
     );
   }
 
@@ -65,7 +143,7 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     return Container(
         //margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         width: size.width,
         color: Colors.white,
         child: Column(
@@ -75,8 +153,7 @@ class _BodyState extends State<Body> {
             Text(
               "Điểm",
               textAlign: TextAlign.left,
-              style:
-                  TextStyle(fontSize: mFontTitle, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: footnote, fontWeight: FontWeight.w500),
             ),
             const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
             Row(
@@ -86,16 +163,19 @@ class _BodyState extends State<Body> {
                     child: Text(
                       "Tổng điểm",
                       style: TextStyle(
-                          fontSize: mFontSize, color: Colors.grey[600]),
+                          fontSize: footnote, color: Colors.grey[600]),
                     )),
                 Expanded(
                     flex: 2,
                     child: Text(
                       customerStatus.totalEarnedPoints.toString(),
-                      style: TextStyle(fontSize: mFontSize),
+                      style: TextStyle(fontSize: footnote),
                       textAlign: TextAlign.end,
                     ))
               ],
+            ),
+            SizedBox(
+              height: space_height * 2,
             ),
             Row(
               children: [
@@ -103,14 +183,17 @@ class _BodyState extends State<Body> {
                   flex: 4,
                   child: Text("Điểm khả dụng",
                       style: TextStyle(
-                          fontSize: mFontSize, color: Colors.grey[600])),
+                          fontSize: footnote, color: Colors.grey[600])),
                 ),
                 Expanded(
                     flex: 2,
                     child: Text(customerStatus.points.toString(),
-                        style: TextStyle(fontSize: mFontSize),
+                        style: TextStyle(fontSize: footnote),
                         textAlign: TextAlign.end))
               ],
+            ),
+            SizedBox(
+              height: space_height * 2,
             ),
             Row(
               children: [
@@ -118,14 +201,17 @@ class _BodyState extends State<Body> {
                   flex: 4,
                   child: Text("Điểm đã sử dụng",
                       style: TextStyle(
-                          fontSize: mFontSize, color: Colors.grey[600])),
+                          fontSize: footnote, color: Colors.grey[600])),
                 ),
                 Expanded(
                     flex: 2,
                     child: Text(customerStatus.usedPoints.toString(),
-                        style: TextStyle(fontSize: mFontSize),
+                        style: TextStyle(fontSize: footnote),
                         textAlign: TextAlign.end))
               ],
+            ),
+            SizedBox(
+              height: space_height * 2,
             ),
             Row(
               children: [
@@ -133,13 +219,16 @@ class _BodyState extends State<Body> {
                     flex: 4,
                     child: Text("Điểm bị khoá",
                         style: TextStyle(
-                            fontSize: mFontSize, color: Colors.grey[600]))),
+                            fontSize: footnote, color: Colors.grey[600]))),
                 Expanded(
                     flex: 2,
                     child: Text(customerStatus.lockedPoints.toString(),
-                        style: TextStyle(fontSize: mFontSize),
+                        style: TextStyle(fontSize: footnote),
                         textAlign: TextAlign.end))
               ],
+            ),
+            SizedBox(
+              height: space_height * 2,
             ),
             Row(
               children: [
@@ -147,57 +236,14 @@ class _BodyState extends State<Body> {
                     flex: 4,
                     child: Text("Điểm hết hạn",
                         style: TextStyle(
-                            fontSize: mFontSize, color: Colors.grey[600]))),
+                            fontSize: footnote, color: Colors.grey[600]))),
                 Expanded(
                     flex: 2,
                     child: Text(customerStatus.expiredPoints.toString(),
-                        style: TextStyle(fontSize: mFontSize),
+                        style: TextStyle(fontSize: footnote),
                         textAlign: TextAlign.end))
               ],
             ),
-            InkWell(
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AccountInfoScreen();
-                    },
-                  ),
-                )
-              },
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PointTransfer();
-                      },
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Lịch sử điểm ",
-                        style: TextStyle(fontSize: 15, color: mPrimaryColor),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      FaIcon(
-                        FontAwesomeIcons.angleRight,
-                        size: 18,
-                        color: mPrimaryColor,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
           ],
         ));
   }
@@ -208,7 +254,7 @@ class _BodyState extends State<Body> {
         " " +
         customerStatus.currency;
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         width: size.width,
         color: Colors.white,
         child: Column(
@@ -218,18 +264,18 @@ class _BodyState extends State<Body> {
               Text(
                 "Quá trình tích luỹ",
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: mFontTitle, fontWeight: FontWeight.w600),
+                style:
+                    TextStyle(fontSize: footnote, fontWeight: FontWeight.w500),
               ),
               const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
               Text(
-                "Giá trị giao dịch cần đạt để thăng hạng là " + amount,
-                style: TextStyle(fontSize: mFontSize),
+                "Bạn cần thêm " + amount + " để thăng hạng",
+                style: TextStyle(fontSize: footnote, color: Colors.grey),
               ),
               const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
               Text(
                 "Chiết khấu cấp tiếp theo " + customerStatus.nextLevel,
-                style: TextStyle(fontSize: mFontSize),
+                style: TextStyle(fontSize: footnote, color: Colors.grey),
               )
             ]));
   }
@@ -264,7 +310,7 @@ class _BodyState extends State<Body> {
                   customerStatus.transactionsAmountToNextLevel,
               center: Text(
                 totalTransaction,
-                style: new TextStyle(fontSize: mFontSize),
+                style: new TextStyle(fontSize: footnote),
               ),
               trailing: Icon(Icons.mood),
               linearStrokeCap: LinearStrokeCap.roundAll,
@@ -277,7 +323,7 @@ class _BodyState extends State<Body> {
               alignment: Alignment.center,
               child: Text(
                   "Chiết khấu hiện tại" + " " + customerStatus.level.toString(),
-                  style: TextStyle(fontSize: mFontSize)))
+                  style: TextStyle(fontSize: footnote)))
         ],
       ),
     );

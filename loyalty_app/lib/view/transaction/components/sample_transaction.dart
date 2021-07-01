@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
         },
         child: Container(
           width: 300,
-          height: 180,
+          height: 184,
           padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
           child: ListTile(
               leading: Image(
@@ -61,7 +61,7 @@ class _BodyState extends State<Body> {
                         style: Constants.titleProductDetail,
                       ),
                       Text(
-                        DateFormat("dd/MM/yyyy").format(purchaseDate),
+                        DateFormat("dd-MM-yyyy").format(purchaseDate),
                         style: Constants.contentProductDetail,
                       )
                     ],
@@ -73,12 +73,11 @@ class _BodyState extends State<Body> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Bảo hành đến",
+                        "Giá",
                         style: Constants.titleProductDetail,
                       ),
                       Text(
-                        DateFormat("dd/MM/yyyy")
-                            .format(product.warrantyExpired),
+                        formatNumber(product.price),
                         style: Constants.contentProductDetail,
                       )
                     ],
@@ -87,13 +86,26 @@ class _BodyState extends State<Body> {
                     height: space_height,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Cửa hàng",
+                        style: Constants.titleProductDetail,
+                      ),
+                      Text(
+                        product.store,
+                        style: Constants.contentProductDetail,
+                      )
+                    ],
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       TextButton(
                         child: const Text(
                           'Chi tiết',
                           style: TextStyle(
-                              fontSize: mFontListTile, color: mPrimaryColor),
+                              fontSize: footnote, color: mPrimaryColor),
                         ),
                         onPressed: () {
                           Navigator.push(

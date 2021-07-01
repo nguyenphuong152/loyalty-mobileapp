@@ -6,6 +6,7 @@ import 'package:loyalty_app/models/point_model.dart';
 import 'package:loyalty_app/models/campaign_model.dart';
 import 'package:loyalty_app/models/warranty_model.dart';
 import 'package:loyalty_app/providers/customer_api_provider.dart';
+import 'package:loyalty_app/models/request_support_model.dart';
 
 class Repository {
   final customerApiProvider = CustomerApiProvider();
@@ -35,6 +36,12 @@ class Repository {
 
   Future<ListWarrantyModel> fetchCustomerWarrantyBooking() =>
       customerApiProvider.fetchCustomerWarrantyBooking();
+
+  dynamic pointTransfer(String receiver, double point) =>
+      customerApiProvider.pointTransfer(receiver, point);
+
+  dynamic sendRequest(RequestSupportModel request) =>
+      customerApiProvider.requestSupport(request);
 
   // Future<Main> fetchCustomerMaintenanceBooking() =>
   // customerApiProvider.fetchCustomerMaintenanceBooking();

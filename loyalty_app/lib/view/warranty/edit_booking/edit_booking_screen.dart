@@ -87,7 +87,11 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: 10,
+                height: 30,
+              ),
+              Text(
+                "Vui lòng chọn thời gian đến",
+                style: TextStyle(fontSize: subhead, color: Colors.grey),
               ),
               TableCalendar(
                 initialSelectedDay: widget.bookingDate,
@@ -103,17 +107,17 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
                 calendarStyle: CalendarStyle(
                   weekdayStyle: dayStyle(FontWeight.normal),
                   weekendStyle: dayStyle(FontWeight.normal),
-                  selectedColor: mSecondPrimaryColor,
+                  selectedColor: mPrimaryColor,
                 ),
                 daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: TextStyle(
-                        color: Colors.blue,
+                        color: mPrimaryColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                        fontSize: footnote),
                     weekendStyle: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16)),
+                        fontSize: footnote)),
                 headerStyle: HeaderStyle(
                     formatButtonVisible: false, centerHeaderTitle: true),
               ),
@@ -142,8 +146,8 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
                               side: BorderSide(color: mPrimaryColor)),
                           color: Colors.white,
                           textColor: mPrimaryColor,
-                          child:
-                              Text("Tiếp Theo", style: TextStyle(fontSize: 18)),
+                          child: Text("Tiếp Theo",
+                              style: TextStyle(fontSize: body)),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -187,7 +191,7 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Sáng ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(
@@ -209,7 +213,7 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Trưa ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(
@@ -231,7 +235,7 @@ class _EditBookingScreenState extends State<EditBookingScreen> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Chiều ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(

@@ -47,7 +47,11 @@ class _BodyState extends State<Body> {
         child: Column(
           children: [
             SizedBox(
-              height: 10,
+              height: 30,
+            ),
+            Text(
+              "Vui lòng chọn thời gian đến",
+              style: TextStyle(fontSize: subhead, color: Colors.grey),
             ),
             TableCalendar(
               onDaySelected: (selectedDay, focusedDay) {
@@ -62,17 +66,17 @@ class _BodyState extends State<Body> {
               calendarStyle: CalendarStyle(
                   weekdayStyle: dayStyle(FontWeight.normal),
                   weekendStyle: dayStyle(FontWeight.normal),
-                  selectedColor: mSecondPrimaryColor,
-                  todayColor: mPrimaryColor),
+                  selectedColor: mPrimaryColor,
+                  todayColor: Colors.blue),
               daysOfWeekStyle: DaysOfWeekStyle(
                   weekdayStyle: TextStyle(
-                      color: Colors.blue,
+                      color: mPrimaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16),
+                      fontSize: footnote),
                   weekendStyle: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16)),
+                      fontSize: footnote)),
               headerStyle: HeaderStyle(
                   formatButtonVisible: false, centerHeaderTitle: true),
             ),
@@ -83,7 +87,8 @@ class _BodyState extends State<Body> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
-                  color: mPrimaryColor,
+                  color: mLinear,
+                  boxShadow: [Constants.cardShadow],
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(56),
                       topRight: Radius.circular(56))),
@@ -101,8 +106,9 @@ class _BodyState extends State<Body> {
                             side: BorderSide(color: mPrimaryColor)),
                         color: Colors.white,
                         textColor: mPrimaryColor,
-                        child:
-                            Text("Tiếp Theo", style: TextStyle(fontSize: 18)),
+                        child: Text("Tiếp theo",
+                            style: TextStyle(
+                                fontSize: body, fontWeight: FontWeight.w500)),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -169,7 +175,7 @@ class _BodyState extends State<Body> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Sáng ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(
@@ -191,7 +197,7 @@ class _BodyState extends State<Body> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Trưa ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(
@@ -213,7 +219,7 @@ class _BodyState extends State<Body> {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               "Chiều ",
-              style: TextStyle(fontSize: mFontSize, color: Colors.white),
+              style: TextStyle(fontSize: subhead, color: Colors.white),
             ),
           ),
           ChipsChoice<int>.single(

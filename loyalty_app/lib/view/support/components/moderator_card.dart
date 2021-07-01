@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ModeratorCard extends StatelessWidget {
-  final String message;
+class ModeratorCard extends StatefulWidget {
+  final ChatMessageSocketModel message;
   const ModeratorCard({Key key, this.message}) : super(key: key);
 
   @override
+  _ModeratorCardState createState() => _ModeratorCardState();
+}
+
+class _ModeratorCardState extends State<ModeratorCard> {
+  String token;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
+  }
+
+  void getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String photo = widget.message.messId;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -19,20 +42,46 @@ class ModeratorCard extends StatelessWidget {
           SizedBox(
             width: 3,
           ),
-          Container(
-            width: 300,
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(children: <Widget>[
-              Expanded(
-                  child: Text(
-                '$message',
-                style: TextStyle(fontSize: mFontSize),
-              ))
-            ]),
-          )
+          widget.message.type == "text"
+              ? Container(
+                  width: 300,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(children: <Widget>[
+                    Expanded(
+                        child: Text(
+                      widget.message.text,
+                      style: TextStyle(color: Colors.black, fontSize: footnote),
+                    ))
+                  ]),
+                )
+              : Container(
+                  child: SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: Image.network(
+                      "$baseUrl/chat/message/photo/$photo",
+                      headers: {
+                        "authorization": "Bearer $token",
+                        // Other headers if wanted
+                      },
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                )
         ],
       ),
     );
