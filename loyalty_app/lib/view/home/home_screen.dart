@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loyalty_app/bloc/card_bloc.dart';
 import 'package:loyalty_app/constant.dart';
+import 'package:loyalty_app/models/customer_model.dart';
 import 'package:loyalty_app/view/account/account_screen.dart';
 import 'package:loyalty_app/view/card/card_screen.dart';
 import 'package:loyalty_app/view/points/point_screen.dart';
 import 'package:loyalty_app/view/transaction/transaction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    Key key,
-  }) : super(key: key);
+  HomeScreen({Key key}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void _onItemTapped(int index) {
     setState(() {

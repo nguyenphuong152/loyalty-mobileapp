@@ -1,17 +1,17 @@
 class CustomerModel {
-  final String customerId;
-  final bool active;
-  final String firstName;
-  final String lastName;
-  final String gender;
-  final String email;
-  final String phone;
-  final String birthDate;
-  final String levelId;
-  final String loyaltyCardNumber;
-  final bool agreement1;
-  final bool agreement2;
-  final bool agreement3;
+  String customerId;
+  bool active;
+  String firstName;
+  String lastName;
+  String gender;
+  String email;
+  String phone;
+  String birthDate;
+  String levelId;
+  String loyaltyCardNumber;
+  bool agreement1;
+  bool agreement2;
+  bool agreement3;
 
   CustomerModel(
       {this.customerId,

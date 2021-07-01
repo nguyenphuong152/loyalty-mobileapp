@@ -10,8 +10,8 @@ const mLinear = Color(0xFF848ccf);
 const mFontSize = 16.0;
 const mFontTitle = 18.0;
 const mFontListTile = 14.0;
-const baseUrl = 'http://104.215.112.142/app_dev.php/api';
-const webSocket = 'ws://104.215.112.142:8080';
+const baseUrl = 'http://20.97.50.91/app_dev.php/api';
+const webSocket = 'ws://20.97.50.91:8080';
 
 const title1 = 34.0;
 const title2 = 22.0;

@@ -37,20 +37,21 @@ class ChatMessageModel {
 class ChatMessageSocketModel {
   String userId;
   String customerId;
-  String msg;
-  String time;
+  String messId;
+  String type;
   String from;
+  String text;
   //String filePath;
 
   ChatMessageSocketModel(
-      {this.customerId, this.userId, this.msg, this.time, this.from});
+      {this.customerId, this.userId, this.messId, this.type, this.from});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['customerId'] = this.customerId;
-    data['msg'] = this.msg;
-    data['time'] = this.time;
+    data['messId'] = this.messId;
+    data['type'] = this.type;
 
     return data;
   }
@@ -58,8 +59,17 @@ class ChatMessageSocketModel {
   ChatMessageSocketModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     customerId = json['customerId'];
-    msg = json['msg'];
-    time = json['time'];
+    messId = json['messId'];
+    type = json['type'];
     from = json['from'];
+  }
+}
+
+class MessId {
+  String messId;
+  MessId({this.messId});
+
+  MessId.fromJson(Map<String, dynamic> json) {
+    messId = json['messageId'];
   }
 }

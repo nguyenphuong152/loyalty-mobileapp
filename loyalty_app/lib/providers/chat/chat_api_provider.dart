@@ -76,16 +76,10 @@ class ChatApiProvider {
   }
 
 //test proto
-  Future<String> sendChatMessage(
-      ChatMessageModel chatMessage, PickedFile media) async {
+  Future<dynamic> sendChatMessage(
+      ChatMessageModel chatMessage, String media) async {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
-
-    print(chatMessage.conversationId);
-    print(chatMessage.senderId);
-    print(chatMessage.senderName);
-    print(chatMessage.message);
-    print(chatMessage.messageTimestamp);
 
     Map<String, String> headers = {
       "Accept": "application/json",
@@ -93,10 +87,10 @@ class ChatApiProvider {
     }; //
 
     final mimeTypeData =
-        lookupMimeType(media.path, headerBytes: [0xFF, 0xD8]).split('/');
+        lookupMimeType(media, headerBytes: [0xFF, 0xD8]).split('/');
 
     final file = await http.MultipartFile.fromPath(
-        'message[photoMessage]', media.path,
+        'message[photoMessage]', media,
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
 
     var postUri = Uri.parse('$baseUrl/chat/message/photo');
@@ -105,23 +99,78 @@ class ChatApiProvider {
 
     request.headers.addAll(headers);
 
-    request.fields['massage[conversationId]'] = chatMessage.conversationId;
-    request.fields['massage[conversationParticipantIds][0]'] =
+    request.fields['message[conversationId]'] = chatMessage.conversationId;
+    request.fields['message[conversationParticipantIds][0]'] =
         "22200000-0000-474c-b092-b0dd880c07e2";
-    request.fields['massage[conversationParticipantIds][1]'] =
+    request.fields['message[conversationParticipantIds][1]'] =
         chatMessage.senderId;
-    request.fields['massage[senderId]'] = chatMessage.senderId;
-    request.fields['massage[senderName]'] = chatMessage.senderName;
-    request.fields['massage[message]'] = chatMessage.message;
+    request.fields['message[senderId]'] = chatMessage.senderId;
+    request.fields['message[senderName]'] = chatMessage.senderName;
+    request.fields['message[message]'] = "Đã gửi một ảnh";
     request.files.add(file);
-    request.fields['massage[messageTimestamp]'] = chatMessage.messageTimestamp;
+    request.fields['message[messageTimestamp]'] = chatMessage.messageTimestamp;
+
+    print(media);
 
     var response = await request.send();
     // listen for response
 
     var res = await http.Response.fromStream(response);
-    print(res);
-    return json.decode(res.body);
+
+    MessId mess = MessId.fromJson(json.decode(res.body));
+
+    return mess.messId;
+  }
+
+  Future<dynamic> sendChatMessageText(ChatMessageModel chatMessage) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+
+    Map<String, String> headers = {
+      "Accept": "application/json",
+      "Authorization": "Bearer " + token
+    }; //
+
+    var postUri = Uri.parse('$baseUrl/chat/message');
+
+    var request = new http.MultipartRequest("POST", postUri);
+
+    request.headers.addAll(headers);
+
+    request.fields['message[conversationId]'] = chatMessage.conversationId;
+    request.fields['message[conversationParticipantIds][0]'] =
+        "22200000-0000-474c-b092-b0dd880c07e2";
+    request.fields['message[conversationParticipantIds][1]'] =
+        chatMessage.senderId;
+    request.fields['message[senderId]'] = chatMessage.senderId;
+    request.fields['message[senderName]'] = chatMessage.senderName;
+    request.fields['message[message]'] = chatMessage.message;
+    request.fields['message[messageTimestamp]'] = chatMessage.messageTimestamp;
+
+    var response = await request.send();
+    // listen for response
+
+    var res = await http.Response.fromStream(response);
+
+    MessId mess = MessId.fromJson(json.decode(res.body));
+
+    return mess.messId;
+  }
+
+  Future<String> getMess(String messId) async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token');
+    try {
+      var res = await http.get(
+        '$baseUrl/chat/$messId',
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        },
+      );
+      print(res.statusCode);
+      return json.decode(res.body)["message"];
+    } finally {}
   }
 
   Future<http.Response> updateConversation(ChatMessageModel chatMessage) async {

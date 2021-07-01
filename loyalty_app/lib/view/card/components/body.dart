@@ -75,18 +75,14 @@ class _BodyState extends State<Body> {
               child: Text(
                 "Danh mục dịch vụ",
                 style: TextStyle(
-                    fontSize: subhead,
+                    fontSize: mFontSize,
                     color: Colors.black,
                     fontWeight: FontWeight.w700),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
             Container(
-              height: 164,
-              //decoration: BoxDecoration(color: Colors.blueGrey[50]),
-              //margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+              height: 144,
+              margin: EdgeInsets.only(left: 16, right: 16, top: 10),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -104,24 +100,21 @@ class _BodyState extends State<Body> {
                             );
                           },
                           child: Container(
-                            margin:
-                                EdgeInsets.only(right: 8, left: 26, top: 10),
+                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.only(left: 16),
                             height: 64,
                             decoration: BoxDecoration(
-                              boxShadow: [Constants.cardShadow],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            // border:
-                            //     Border.all(color: mPrimaryColor, width: 1)),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(color: mPrimaryColor, width: 1)),
                             child: Row(
                               children: <Widget>[
-                                Icon(Icons.local_mall_outlined),
+                                Icon(Icons.calendar_view_day_outlined),
                                 Padding(
                                     padding: EdgeInsets.only(left: 16),
                                     child: Text(
-                                      "Sản phẩm",
+                                      "Đặt lịch",
                                       style: Constants.titleService,
                                     ))
                               ],
@@ -142,14 +135,14 @@ class _BodyState extends State<Body> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(right: 26, top: 10),
+                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.only(left: 16),
                             height: 64,
                             decoration: BoxDecoration(
-                              boxShadow: [Constants.cardShadow],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(color: mPrimaryColor, width: 1)),
                             child: Row(
                               children: <Widget>[
                                 Icon(Icons.support_agent_outlined),
@@ -184,14 +177,14 @@ class _BodyState extends State<Body> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(right: 8, left: 26),
+                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.only(left: 16),
                             height: 64,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [Constants.cardShadow],
-                            ),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(color: mPrimaryColor, width: 1)),
                             child: Row(
                               children: <Widget>[
                                 FaIcon(
@@ -222,14 +215,14 @@ class _BodyState extends State<Body> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(right: 26),
+                            margin: EdgeInsets.only(right: 8),
                             padding: EdgeInsets.only(left: 18),
                             height: 64,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [Constants.cardShadow],
-                            ),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(color: mPrimaryColor, width: 1)),
                             child: Row(
                               children: <Widget>[
                                 FaIcon(
@@ -257,14 +250,33 @@ class _BodyState extends State<Body> {
               child: Text(
                 "Khuyến mãi hấp dẫn 🎉",
                 style: TextStyle(
-                    fontSize: subhead,
+                    fontSize: mFontSize,
                     color: Colors.black,
                     fontWeight: FontWeight.w700),
               ),
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Row(
+            //       children: map<Widget>(carousels, (index, image) {
+            //         return Container(
+            //           alignment: Alignment.centerLeft,
+            //           height: 6,
+            //           width: 6,
+            //           margin: EdgeInsets.only(right: 8),
+            //           decoration: BoxDecoration(
+            //               shape: BoxShape.circle,
+            //               color:
+            //                   _current == index ? mPrimaryColor : Colors.grey),
+            //         );
+            //       }),
+            //     )
+            //   ],
+            // ),
             Container(
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 16, right: 16, top: 20),
+                margin: EdgeInsets.only(left: 16, right: 16, top: 14),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +299,6 @@ class _BodyState extends State<Body> {
                           return Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                boxShadow: [Constants.cardShadow],
                                 image: DecorationImage(
                                     image: AssetImage(carousels[index].image),
                                     fit: BoxFit.cover)),
@@ -320,16 +331,16 @@ class _BodyState extends State<Body> {
                   Text(
                     "Tên khách hàng",
                     style: TextStyle(
-                        fontSize: footnote,
+                        fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
                     _fullName,
                     style: TextStyle(
-                        fontSize: body,
+                        fontSize: 20,
                         color: Colors.white,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -339,16 +350,16 @@ class _BodyState extends State<Body> {
                   Text(
                     "ID",
                     style: TextStyle(
-                        fontSize: footnote,
+                        fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
                     customer.loyaltyCardNumber,
                     style: TextStyle(
-                        fontSize: body,
+                        fontSize: 20,
                         color: Colors.white,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w700),
                   ),
                 ],
               )

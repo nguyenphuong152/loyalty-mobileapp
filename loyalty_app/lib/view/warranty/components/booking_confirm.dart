@@ -91,6 +91,8 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
                                       else
                                         {_showErrorDialog()}
                                     });
+                          } else {
+                            _showErrorDialog();
                           }
                         } else {
                           if (widget._center != null) {
@@ -103,10 +105,12 @@ class _BookingConfirmedState extends State<BookingConfirmed> {
                                     DateTime.now())
                                 .then((value) => {
                                       if (value != null)
-                                        {_showErrorDialog()}
+                                        {_showMaterialDialog()}
                                       else
                                         {_showErrorDialog()}
                                     });
+                          } else {
+                            _showErrorDialog();
                           }
                         }
                       });

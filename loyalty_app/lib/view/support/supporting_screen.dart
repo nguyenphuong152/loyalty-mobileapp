@@ -6,8 +6,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loyalty_app/bloc/chat_bloc/supporting_screen_bloc.dart';
+import 'package:loyalty_app/bloc/support_request_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/chat/chat_message_model.dart';
+import 'package:loyalty_app/providers/chat/chat_api_provider.dart';
 import 'package:loyalty_app/providers/chat/conversation_provider.dart';
 import 'package:loyalty_app/view/support/components/moderator_card.dart';
 import 'package:loyalty_app/view/support/components/my_message_card.dart';
@@ -32,11 +35,14 @@ class _SupportingScreenState extends State<SupportingScreen> {
 
   ChatMessageModel message;
 
+  SupportingScreenBloc _supportingScreenBloc = new SupportingScreenBloc();
+
   final WebSocketChannel channel = IOWebSocketChannel.connect(webSocket);
   List<ChatMessageSocketModel> messageList = [];
 
   PickedFile imageFile;
   final ImagePicker picker = ImagePicker();
+  String content;
 
   //1-cam 2-gallery
 
@@ -49,27 +55,32 @@ class _SupportingScreenState extends State<SupportingScreen> {
     message.senderId = widget.customerId;
     message.senderName = widget.customerName;
 
-//  userId: user_id,
-//       customerId: cusId,
-//       messId: messId,
-//       time: lastTime,
-//       type: media/text???
-    // channel.stream.listen((data) {
-    //   ChatMessageSocketModel mess =
-    //       ChatMessageSocketModel.fromJson(json.decode(data));
-    //   setState(() {
-    //     if (mess.from == "Me" || mess.customerId == widget.customerId) {
-    //       messageList.add(mess);
-    //       SchedulerBinding.instance.addPostFrameCallback((_) {
-    //         _scrollController.animateTo(
-    //           _scrollController.position.maxScrollExtent,
-    //           duration: Duration(milliseconds: 500),
-    //           curve: Curves.fastOutSlowIn,
-    //         );
-    //       });
-    //     }
-    //   });
-    // });
+    channel.stream.listen((data) async {
+      ChatMessageSocketModel mess =
+          ChatMessageSocketModel.fromJson(json.decode(data));
+
+      String m;
+      if (mess.type == "text") {
+        m = await _supportingScreenBloc.getMess(mess.messId);
+      } else {
+        m = "";
+      }
+      mess.text = m;
+
+      setState(() {
+        if (mess.from == "Me" || mess.customerId == widget.customerId) {
+          messageList.add(mess);
+
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.fastOutSlowIn,
+            );
+          });
+        }
+      });
+    });
   }
 
   @override
@@ -144,7 +155,9 @@ class _SupportingScreenState extends State<SupportingScreen> {
                     width: 6,
                   ),
                   InkWell(
-                    onTap: _sendMessage,
+                    onTap: () {
+                      _sendMessage("text");
+                    },
                     child: Container(
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -162,34 +175,39 @@ class _SupportingScreenState extends State<SupportingScreen> {
         ));
   }
 
-  void _sendMessage() async {
-    DateTime now = DateTime.now();
-    String current = "${now.hour.toString()}:${now.minute.toString()}";
+  void _sendMessage(String type) async {
     var userId = message.senderId;
     var cusId = "22200000-0000-474c-b092-b0dd880c07e2";
+    String messId;
 
     message.message = messageTextEditController.text.trim();
     message.messageTimestamp = DateTime.now().toString();
 
-    var messID = await Provider.of<ConversationProvider>(
-      context,
-    ).storeMessage(message, imageFile);
+    if (type == "media") {
+      messId = await Provider.of<ConversationProvider>(
+        context,
+      ).storeMessage(message, imageFile.path);
+    } else {
+      messId = await Provider.of<ConversationProvider>(
+        context,
+      ).storeMessageText(message);
+    }
 
-    // if (messageTextEditController.text.isNotEmpty) {
-    //   ChatMessageSocketModel mess = new ChatMessageSocketModel();
-    //   mess.userId = userId;
-    //   mess.customerId = cusId;
-    //   mess.msg = messageTextEditController.text;
-    //   mess.time = current;
+    if (messId != null) {
+      ChatMessageSocketModel mess = new ChatMessageSocketModel();
+      mess.userId = userId;
+      mess.customerId = cusId;
+      mess.messId = messId;
+      mess.type = type;
 
-    //   var jsonString = json.encode(mess.toJson());
+      var jsonString = json.encode(mess.toJson());
 
-    //   channel.sink.add(jsonString);
-    // }
+      channel.sink.add(jsonString);
+    }
 
     messageTextEditController.clear();
 
-    //Provider.of<ConversationProvider>(context).updateConversation(message);
+    Provider.of<ConversationProvider>(context).updateConversation(message);
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
       duration: Duration(milliseconds: 500),
@@ -202,12 +220,10 @@ class _SupportingScreenState extends State<SupportingScreen> {
 
     for (ChatMessageSocketModel message in messageList) {
       if (message.from == "Me") {
-        listWidget.add(MyMessageCard(
-          message: message.msg,
-        ));
+        listWidget.add(MyMessageCard(message: message));
       } else {
         listWidget.add(ModeratorCard(
-          message: message.msg,
+          message: message,
         ));
       }
     }
@@ -220,12 +236,15 @@ class _SupportingScreenState extends State<SupportingScreen> {
 
   void _openGallary(ImageSource source) async {
     final media = await picker.getImage(source: source);
+    if (media != null) {
+      this.setState(() {
+        imageFile = media;
+      });
 
-    this.setState(() {
-      imageFile = media;
-    });
+      _sendMessage("media");
+    }
 
-    _sendMessage();
+    Navigator.of(context).pop();
   }
 
   Widget bottomSheet() {
@@ -254,8 +273,6 @@ class _SupportingScreenState extends State<SupportingScreen> {
       ),
     );
   }
-
-  void addChatToSocket() {}
 
   @override
   void dispose() {

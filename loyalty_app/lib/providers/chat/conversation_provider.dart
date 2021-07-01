@@ -44,17 +44,30 @@ class ConversationProvider extends BaseProvider {
     return _messages;
   }
 
-  Future<String> storeMessage(
-      ChatMessageModel message, PickedFile media) async {
+  Future<String> storeMessage(ChatMessageModel message, String media) async {
     setBusy(true);
     var response = await _chatApiProvider.sendChatMessage(message, media);
     print(response);
-    // if (response.statusCode == 200) {
-    //   // var data = jsonDecode(response.body);
-    //   setBusy(false);
-    //   addMessageToConversation(message);
-    //   return (response.body);
-    // }
+    if (response != null) {
+      // var data = jsonDecode(response.body);
+      setBusy(false);
+      addMessageToConversation(message);
+      return (response);
+    }
+    setBusy(false);
+    return null;
+  }
+
+  Future<String> storeMessageText(ChatMessageModel message) async {
+    setBusy(true);
+    var response = await _chatApiProvider.sendChatMessageText(message);
+    print(response);
+    if (response != null) {
+      // var data = jsonDecode(response.body);
+      setBusy(false);
+      addMessageToConversation(message);
+      return (response);
+    }
     setBusy(false);
     return null;
   }

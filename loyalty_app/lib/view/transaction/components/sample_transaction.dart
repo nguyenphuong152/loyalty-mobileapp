@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
         },
         child: Container(
           width: 300,
-          height: 164,
+          height: 184,
           padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
           child: ListTile(
               leading: Image(
@@ -78,6 +78,22 @@ class _BodyState extends State<Body> {
                       ),
                       Text(
                         formatNumber(product.price),
+                        style: Constants.contentProductDetail,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: space_height,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Cửa hàng",
+                        style: Constants.titleProductDetail,
+                      ),
+                      Text(
+                        product.store,
                         style: Constants.contentProductDetail,
                       )
                     ],
