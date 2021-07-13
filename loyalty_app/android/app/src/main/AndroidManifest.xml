@@ -50,6 +50,14 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="demozpdk"
+                    android:host="app" />
+            </intent-filter>
+
         </activity>
 
         <provider
@@ -65,5 +73,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.vng.zalo.sdk.APP_ID"
+            android:value="2553" />
+        <meta-data
+            android:name="com.vng.zalo.sdk.ENVIRONMENT"
+            android:value="SANDBOX" />
     </application>
 </manifest>

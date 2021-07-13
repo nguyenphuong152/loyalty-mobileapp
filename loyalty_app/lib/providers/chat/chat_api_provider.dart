@@ -106,7 +106,7 @@ class ChatApiProvider {
         chatMessage.senderId;
     request.fields['message[senderId]'] = chatMessage.senderId;
     request.fields['message[senderName]'] = chatMessage.senderName;
-    request.fields['message[message]'] = "Đã gửi một ảnh";
+    request.fields['message[message]'] = "photo";
     request.files.add(file);
     request.fields['message[messageTimestamp]'] = chatMessage.messageTimestamp;
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loyalty_app/bloc/maintenance_booking_bloc.dart';
 import 'package:loyalty_app/constant.dart';
 import 'package:loyalty_app/models/maintenance_model.dart';
 import 'package:loyalty_app/models/product_model.dart';
-import 'package:loyalty_app/view/booking_management/MaintenanceBookingManagement.dart';
+import 'package:loyalty_app/providers/payment.dart';
 import 'package:loyalty_app/view/warranty/edit_booking/edit_booking_screen.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -24,6 +24,9 @@ class _BodyState extends State<Body> {
   TextEditingController productSku = new TextEditingController();
   TextEditingController date = new TextEditingController();
 
+  String zpTransToken = "";
+  String payResult = "";
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +37,27 @@ class _BodyState extends State<Body> {
   void dispose() {
     maintenanceBookingBloc.dispose();
     super.dispose();
+  }
+
+  void _onEvent(Object event) {
+    print("_onEvent: '$event'.");
+    var res = Map<String, dynamic>.from(event);
+    setState(() {
+      if (res["errorCode"] == 1) {
+        payResult = "Thanh toán thành công";
+      } else if (res["errorCode"] == 4) {
+        payResult = "User hủy thanh toán";
+      } else {
+        payResult = "Giao dịch thất bại";
+      }
+    });
+  }
+
+  void _onError(Object error) {
+    print("_onError: '$error'.");
+    setState(() {
+      payResult = "Giao dịch thất bại";
+    });
   }
 
   @override
@@ -292,15 +316,19 @@ class _BodyState extends State<Body> {
                                   style: TextStyle(
                                       color: mPrimaryColor, fontSize: footnote),
                                 ),
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) {
-                                  //       return ProductDetailScreen(product);
-                                  //     },
-                                  //   ),
-                                  // );
+                                onPressed: () async {
+                                  var result = await createOrder(10000);
+                                  if (result != null) {
+                                    zpTransToken = result.zptranstoken;
+                                    print("zp $zpTransToken");
+                                    setState(() {
+                                      zpTransToken = result.zptranstoken;
+                                    });
+
+                                    FlutterZaloPaySdk.payOrder(
+                                            zpToken: zpTransToken)
+                                        .listen((event) {});
+                                  }
                                 },
                               )
                             : SizedBox(width: 1),
