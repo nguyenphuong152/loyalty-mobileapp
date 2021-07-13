@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loyalty_app/providers/payment.dart';
+import 'package:sprintf/sprintf.dart';
 
 const mPrimaryColor = Color(0xFF7579e7);
 const mSecondPrimaryColor = Color(0xFF2C2C2C);
@@ -10,8 +15,8 @@ const mLinear = Color(0xFF848ccf);
 const mFontSize = 16.0;
 const mFontTitle = 18.0;
 const mFontListTile = 14.0;
-const baseUrl = 'http://20.97.50.91/app_dev.php/api';
-const webSocket = 'ws://20.97.50.91:8080';
+const baseUrl = 'http://70.37.98.42/app_dev.php/api';
+const webSocket = 'ws://70.37.98.42:8080';
 
 const title1 = 34.0;
 const title2 = 22.0;
@@ -59,4 +64,38 @@ class Constants {
 
   static final TextStyle contentProductDetail =
       TextStyle(fontSize: footnote, color: Colors.black);
+}
+
+///zalopay
+
+String formatDateTime(DateTime dateTime, String layout) {
+  return DateFormat(layout).format(dateTime).toString();
+}
+
+int transIdDefault = 1;
+String getAppTransId() {
+  if (transIdDefault >= 100000) {
+    transIdDefault = 1;
+  }
+
+  transIdDefault += 1;
+  var timeString = formatDateTime(DateTime.now(), "yyMMdd_hhmmss");
+
+  return sprintf("%s%06d", [timeString, transIdDefault]);
+}
+
+String getBankCode() => "zalopayapp";
+
+String getDescription(String apptransid) =>
+    "Merchant Demo thanh toán cho đơn hàng  #$apptransid";
+
+String getMacCreateOrder(String data) {
+  var hmac2 = new Hmac(sha256, utf8.encode(ZaloPayConfig.key1));
+  var hmac = hmac2;
+  return hmac.convert(utf8.encode(data)).toString();
+}
+
+class Endpoints {
+  static final String createOrderUrl =
+      "https://sb-openapi.zalopay.vn/v2/create";
 }
